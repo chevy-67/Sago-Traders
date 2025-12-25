@@ -1,0 +1,157 @@
+.deals-container {
+    width: 100%;
+    padding: 40px 40px;
+    background: #F5F5F5;
+}
+
+/* Header with Title and Arrows */
+.deals-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.deals-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #212121;
+}
+
+.scroll-arrows {
+    display: flex;
+    gap: 10px;
+}
+
+.arrow-btn {
+    background: #EEE;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.arrow-btn:hover {
+    background: #E0E0E0;
+}
+
+/* Scrollable Grid */
+.deals-grid {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    /* Space for scrollbar if visible */
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE/Edge */
+}
+
+.deals-grid::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari */
+}
+
+.deal-card {
+    background: white;
+    border: 1px solid #eee;
+    padding: 15px;
+    border-radius: 8px;
+    position: relative;
+
+    width: 254px;
+    /* ✅ fixed width */
+    height: 361px;
+    /* ✅ fixed height */
+
+    text-align: center;
+    flex-shrink: 0;
+    /* keep horizontal scroll working */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.off-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #D32F2F;
+    color: white;
+    font-size: 0.7rem;
+    padding: 3px 6px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-img {
+    width: 201px;
+    height: 148px;
+    object-fit: contain;
+    margin: 50px auto 10px auto;
+}
+
+.product-info h4 {
+    font-size: 0.85rem;
+}
+
+
+.pricing {
+    margin-bottom: 10px;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Center since text-align is center on card */
+}
+
+.current-price {
+    font-weight: bold;
+    color: #D32F2F;
+    font-size: 1.1rem;
+    margin-right: 10px;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: #9E9E9E;
+    font-size: 0.9rem;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.btn-group button {
+    flex: 1;
+    padding: 5px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.add-cart {
+    background-color: #702602;
+    color: white;
+}
+
+.book-now {
+    background-color: #DC7835;
+    color: rgb(0, 0, 0);
+}

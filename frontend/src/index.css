@@ -1,0 +1,29 @@
+:root {
+  --primary-orange: #E85D04; /* Vibrant orange from the "Sago" branding */
+  --secondary-brown: #3E2723; /* Dark brown for footer/accents */
+  --text-dark: #212121;
+  --text-light: #757575;
+  --bg-light: #F5F5F5;
+  --white: #FFFFFF;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Standard readable font */
+}
+
+body {
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}

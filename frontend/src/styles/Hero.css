@@ -1,0 +1,174 @@
+.hero-section {
+    padding: 0;
+    /* Remove top padding for full bleed */
+    background-color: #fff;
+    width: 100%;
+}
+
+.carousel-container {
+    position: relative;
+    width: 100%;
+}
+
+.hero-banner {
+    width: 100%;
+    /* Full width */
+    min-height: 400px;
+    /* Force height so it looks like a banner */
+    background: linear-gradient(90deg, #FDB813 0%, #F57C00 100%);
+    color: #3E2723;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.banner-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 5%;
+    /* Use percentage padding instead of fixed px */
+    max-width: 1400px;
+    /* Allow it to go wider but keep content readable */
+    margin: 0 auto;
+}
+
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-btn:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.prev {
+    left: 20px;
+}
+
+.next {
+    right: 20px;
+}
+
+.carousel-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.dot.active {
+    background: white;
+}
+
+.banner-left {
+    text-align: left;
+}
+
+.banner-left h2 {
+    font-size: 2.5vw;
+    /* Responsive font size */
+    margin: 0;
+    line-height: 1;
+}
+
+.banner-left h1 {
+    font-size: 5vw;
+    /* Responsive font size */
+    font-weight: 900;
+    margin: 0;
+    line-height: 1;
+    color: #3E2723;
+    text-shadow: 2px 2px 0px #FFF;
+}
+
+.dhamaka {
+    color: #D32F2F !important;
+    font-style: italic;
+}
+
+.banner-right {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.price-tag {
+    background: yellow;
+    padding: 10px;
+    border: 2px dashed #D32F2F;
+    text-align: center;
+    transform: rotate(-5deg);
+}
+
+.ibo-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.price {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #D32F2F;
+}
+
+.save-tag {
+    display: block;
+    background: #D32F2F;
+    color: white;
+    padding: 2px 5px;
+    font-size: 0.8rem;
+    margin-top: 5px;
+}
+
+.delivery-info {
+    background: white;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .banner-content {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .banner-left,
+    .banner-right {
+        text-align: center;
+    }
+
+    .banner-left h1 {
+        font-size: 3rem;
+    }
+}
