@@ -1,0 +1,65 @@
+.footer {
+    background-color: #3E2723;
+    /* Dark brown */
+    color: white;
+    padding: 40px 0;
+    font-size: 0.9rem;
+    width: 100%;
+}
+
+.footer-content {
+    width: 100%;
+    padding: 0 60px;
+    /* More padding for full width feel */
+    display: flex;
+    justify-content: space-between;
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        gap: 40px;
+        padding: 0 30px;
+    }
+
+    .footer-col {
+        text-align: center;
+    }
+
+    .social-icons {
+        justify-content: center;
+    }
+}
+
+.footer-col h4 {
+    color: #FFCC80;
+    margin-bottom: 20px;
+    font-size: 0.8rem;
+}
+
+.footer-col ul li {
+    margin-bottom: 10px;
+    color: #D7CCC8;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.footer-col ul li:hover {
+    color: white;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icon {
+    cursor: pointer;
+    color: #2196F3;
+    /* Facebook Blue roughly */
+}
+
+.social-icon:nth-child(2) {
+    color: #E91E63;
+    /* Instagram pink/purple */
+}
