@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useParams } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import CategoryGrid from './components/CategoryGrid';
@@ -8,17 +8,10 @@ import DealsSection from './components/DealsSection';
 import Features from './components/Features';
 import Brands from './components/Brands';
 import Footer from './components/Footer';
+import ProductListPage from './components/ProductListPage';
 
-// Placeholder for Category Page
-const CategoryPage = () => {
-  const { name } = useParams();
-  return (
-    <div style={{ padding: '40px', textAlign: 'center' }}>
-      <h2>Category: {name}</h2>
-      <p>Products for {name} will appear here.</p>
-    </div>
-  );
-};
+
+
 
 // Home Page Component
 const Home = () => {
@@ -41,7 +34,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/category/:name" element={<CategoryPage />} />
+          <Route path="/category/:name" element={<ProductListPage />} />
         </Routes>
         <Footer />
       </div>

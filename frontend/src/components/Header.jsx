@@ -1,7 +1,8 @@
 import React from 'react';
 import { Search, ShoppingCart, User } from 'lucide-react';
 import '../styles/Header.css';
-
+import Logo from '../assets/images/Logo/unnamed.jpg';
+/**/
 const Header = () => {
   return (
     <header className="header">
@@ -11,7 +12,7 @@ const Header = () => {
         <div className="logo-container">
           {/* User can replace this src with their actual logo file later */}
           <img
-            src="https://placehold.co/120x40/4E342E/FFF?text=LOGO"
+            src={Logo}
             alt="Sago Traders Logo"
             className="logo-img"
           />

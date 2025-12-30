@@ -16,12 +16,11 @@
     width: 100%;
     /* Full width */
     padding: 0 40px;
-    /* Add side padding to content */
     margin: 0 auto;
 }
 
 .logo-img {
-    height: 40px;
+    height: 50px;
     object-fit: contain;
     cursor: pointer;
 }
