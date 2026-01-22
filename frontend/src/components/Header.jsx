@@ -3,6 +3,8 @@ import { Search, ShoppingCart, User } from 'lucide-react';
 import '../styles/Header.css';
 import Login from './Login';
 
+import Logo from '../assets/images/Logo/unnamed.jpg';
+/**/
 const Header = () => {
   const [showModal, setShowModal] = useState(false);
 
@@ -14,7 +16,7 @@ const Header = () => {
         <div className="logo-container">
           {/* User can replace this src with their actual logo file later */}
           <img
-            src="https://placehold.co/120x40/4E342E/FFF?text=LOGO"
+            src={Logo}
             alt="Sago Traders Logo"
             className="logo-img"
           />

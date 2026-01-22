@@ -6,7 +6,7 @@ import '../styles/Brands.css';
 // --------------------------------------------------------------------------
 const adminSettings = {
     showSection: true,
-    title: 'Top Brands',
+    title: 'Brands We Sell',
     // Admin can manage this list
     brands: [
         'https://placehold.co/150x80/white/red?text=Havells',
