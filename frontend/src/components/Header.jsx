@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Search, ShoppingCart, User } from 'lucide-react';
 import '../styles/Header.css';
 import Login from './Login';
+import {Link} from 'react-router-dom'
 
 import Logo from '../assets/images/Logo/unnamed.jpg';
 /**/
@@ -15,11 +16,13 @@ const Header = () => {
       <div className="main-header">
         <div className="logo-container">
           {/* User can replace this src with their actual logo file later */}
+          <Link to='/'>
           <img
             src={Logo}
             alt="Sago Traders Logo"
             className="logo-img"
           />
+          </Link>
         </div>
 
         <div className="search-bar">

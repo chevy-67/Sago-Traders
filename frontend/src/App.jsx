@@ -9,8 +9,9 @@ import Features from './components/Features';
 import Brands from './components/Brands';
 import Footer from './components/Footer';
 import ProductListPage from './components/ProductListPage';
-
-
+import PrivateRoute from "./components/PrivateRoute";
+import Dashboard from './components/Dashboard';
+import Login from './components/Login';
 
 
 // Home Page Component
@@ -34,7 +35,16 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/category/:name" element={<ProductListPage />} />
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
         </Routes>
         <Footer />
       </div>
