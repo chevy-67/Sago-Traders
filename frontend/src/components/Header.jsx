@@ -1,29 +1,55 @@
 import React, { useState } from 'react';
-import { Search, ShoppingCart, User } from 'lucide-react';
+import { Search, ShoppingCart } from 'lucide-react';
 import '../styles/Header.css';
 import Login from './Login';
-import {Link} from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
 
 import Logo from '../assets/images/Logo/unnamed.jpg';
-/**/
+
 const Header = () => {
   const [showModal, setShowModal] = useState(false);
+  const [user, setUser] = useState(() => {
+    const userString = localStorage.getItem('user');
+    return userString ? JSON.parse(userString) : null;
+  });
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setUser(null);
+    navigate('/');
+  };
+
+  const handleLoginSuccess = (loggedInUser) => {
+    setUser(loggedInUser);
+    setShowModal(false);
+    if (loggedInUser?.role === 'admin') {
+      navigate('/admin');
+    } else {
+      navigate('/dashboard');
+    }
+  };
 
   return (
     <header className="header">
-      {/* Top Bar (Optional if needed, but sticking to main header for now) */}
-
       <div className="main-header">
         <div className="logo-container">
-          {/* User can replace this src with their actual logo file later */}
           <Link to='/'>
-          <img
-            src={Logo}
-            alt="Sago Traders Logo"
-            className="logo-img"
-          />
+            <img
+              src={Logo}
+              alt="Sago Traders Logo"
+              className="logo-img"
+            />
           </Link>
         </div>
+
+        <nav className="header-nav">
+          <Link to="/" className="nav-link">Home</Link>
+          <Link to="/about" className="nav-link">About</Link>
+          <Link to="/services" className="nav-link">Services</Link>
+          <Link to="/contact" className="nav-link">Contact</Link>
+        </nav>
 
         <div className="search-bar">
           <input type="text" placeholder="Search" />
@@ -37,10 +63,26 @@ const Header = () => {
             <ShoppingCart size={24} />
           </div>
           <div className="auth-buttons">
-            <button className="auth-btn login" onClick={() => setShowModal(true)}>LOG IN</button>
+            {user ? (
+              <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                {user.role === 'admin' && (
+                  <Link to="/admin" style={{ textDecoration: 'none' }}>
+                    <button className="auth-btn" style={{ backgroundColor: '#E85D04', color: 'white' }}>
+                      DASHBOARD
+                    </button>
+                  </Link>
+                )}
+                <button className="auth-btn login" onClick={handleLogout}>
+                  LOGOUT
+                </button>
+              </div>
+            ) : (
+              <button className="auth-btn login" onClick={() => setShowModal(true)}>LOG IN</button>
+            )}
           </div>
         </div>
       </div>
+
       {showModal && (
         <div
           style={{
@@ -80,9 +122,9 @@ const Header = () => {
                 cursor: 'pointer',
               }}
             >
-              x
+              ✕
             </button>
-            <Login />
+            <Login onLoginSuccess={handleLoginSuccess} />
           </div>
         </div>
       )}

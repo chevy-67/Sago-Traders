@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const User = require('../models/User');
 
 const protect = (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
@@ -16,8 +17,3 @@ const protect = (req, res, next) => {
 
 module.exports = protect;
 
-exports.getMe = async (req, res) => {
-  const user = await User.findById(req.user.userId).select("-__v");
-
-  res.json(user);
-};

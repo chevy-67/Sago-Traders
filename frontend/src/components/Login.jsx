@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ onLoginSuccess }) => {
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
   const [step, setStep] = useState(1); // 1 = phone, 2 = otp
@@ -20,7 +20,7 @@ const Login = () => {
   const sendOTP = async (e) => {
     e.preventDefault();
     setError("");
-    
+
     if (!phone.trim()) {
       setError("Please enter a phone number");
       return;
@@ -59,9 +59,19 @@ const Login = () => {
       });
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
-      
-      // Redirect to dashboard
-      navigate("/dashboard");
+
+      if (onLoginSuccess) {
+        // Used inside Header modal — let Header handle the redirect
+        onLoginSuccess(res.data.user);
+      } else {
+        // Standalone /login page — navigate based on role
+        const role = res.data.user?.role;
+        if (role === 'admin') {
+          navigate("/admin");
+        } else {
+          navigate("/dashboard");
+        }
+      }
     } catch (error) {
       setError(error.response?.data?.message || "Invalid OTP");
     } finally {

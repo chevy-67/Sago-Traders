@@ -65,3 +65,9 @@ exports.verifyOTP = async (req, res) => {
     user
   });
 };
+
+exports.getMe = async (req, res) => {
+  const user = await User.findById(req.user.userId).select("-__v");
+
+  res.json(user);
+};
