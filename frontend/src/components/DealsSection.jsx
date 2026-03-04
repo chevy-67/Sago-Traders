@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import ProductCard from './ProductCard';
 import '../styles/DealsSection.css';
 
 // --------------------------------------------------------------------------
@@ -15,14 +16,14 @@ const adminSettings = {
 // BASE DATA (Ideally would also come from backend/admin input)
 // --------------------------------------------------------------------------
 const allDeals = [
-    { id: 1, name: 'Sameer New Ceiling Fan', originalPrice: 2199, price: 1299, off: '41% Off', img: 'https://placehold.co/150x150?text=Fan' },
-    { id: 2, name: 'Preethi Wet Grinder', originalPrice: 4200, price: 2999, off: '40% Off', img: 'https://placehold.co/150x150?text=Grinder' },
-    { id: 3, name: 'Philips Iron Box', originalPrice: 1500, price: 999, off: '33% Off', img: 'https://placehold.co/150x150?text=Iron' },
-    { id: 4, name: 'Butterfly Mixer', originalPrice: 3500, price: 2500, off: '28% Off', img: 'https://placehold.co/150x150?text=Mixer' },
-    { id: 5, name: 'Usha Table Fan', originalPrice: 2800, price: 1800, off: '35% Off', img: 'https://placehold.co/150x150?text=Fan' },
-    { id: 6, name: 'Pigeon Gas Stove', originalPrice: 4000, price: 2200, off: '45% Off', img: 'https://placehold.co/150x150?text=Stove' },
-    { id: 7, name: 'Havells Heater', originalPrice: 3200, price: 2600, off: '18% Off', img: 'https://placehold.co/150x150?text=Heater' },
-    { id: 8, name: 'Kent Water Purifier', originalPrice: 15000, price: 12000, off: '20% Off', img: 'https://placehold.co/150x150?text=Purifier' },
+    { id: 1, name: 'Sameer New Ceiling Fan', originalPrice: 2199, price: 1299, off: '41% Off', image: 'https://placehold.co/150x150?text=Fan' },
+    { id: 2, name: 'Preethi Wet Grinder', originalPrice: 4200, price: 2999, off: '40% Off', image: 'https://placehold.co/150x150?text=Grinder' },
+    { id: 3, name: 'Philips Iron Box', originalPrice: 1500, price: 999, off: '33% Off', image: 'https://placehold.co/150x150?text=Iron' },
+    { id: 4, name: 'Butterfly Mixer', originalPrice: 3500, price: 2500, off: '28% Off', image: 'https://placehold.co/150x150?text=Mixer' },
+    { id: 5, name: 'Usha Table Fan', originalPrice: 2800, price: 1800, off: '35% Off', image: 'https://placehold.co/150x150?text=Fan' },
+    { id: 6, name: 'Pigeon Gas Stove', originalPrice: 4000, price: 2200, off: '45% Off', image: 'https://placehold.co/150x150?text=Stove' },
+    { id: 7, name: 'Havells Heater', originalPrice: 3200, price: 2600, off: '18% Off', image: 'https://placehold.co/150x150?text=Heater' },
+    { id: 8, name: 'Kent Water Purifier', originalPrice: 15000, price: 12000, off: '20% Off', image: 'https://placehold.co/150x150?text=Purifier' },
 ];
 
 const DealsSection = () => {
@@ -31,11 +32,7 @@ const DealsSection = () => {
     const [deals, setDeals] = useState([]);
 
     useEffect(() => {
-        // In a real app, fetch settings and deals from API here
-        // const fetchSettings = async () => { ... }
-
         if (settings.showSection) {
-            // Apply card limit based on admin setting
             const limitedDeals = allDeals.slice(0, settings.cardLimit);
             setDeals(limitedDeals);
         }
@@ -44,7 +41,7 @@ const DealsSection = () => {
     const scroll = (direction) => {
         if (scrollRef.current) {
             const { current } = scrollRef;
-            const scrollAmount = 300; // Scroll by roughly one card width
+            const scrollAmount = 300;
             if (direction === 'left') {
                 current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
             } else {
@@ -67,23 +64,7 @@ const DealsSection = () => {
 
             <div className="deals-grid" ref={scrollRef}>
                 {deals.map((deal) => (
-                    <div className="deal-card" key={deal.id}>
-                        <div className="off-badge">{deal.off} Offer</div>
-                        <img src={deal.img} alt={deal.name} className="product-img" />
-
-                        <div className="product-info">
-                            <h4>{deal.name}</h4>
-                            <div className="pricing">
-                                <span className="current-price">₹{deal.price}</span>
-                                <span className="original-price">₹{deal.originalPrice}</span>
-                                <span className="gst-label">Inclu. GST</span>
-                            </div>
-                            <div className="btn-group">
-                                <button className="book-now">BOOK NOW</button>
-                                <button className="add-cart">ADD TO CART</button>
-                            </div>
-                        </div>
-                    </div>
+                    <ProductCard key={deal.id} product={deal} />
                 ))}
             </div>
         </div>

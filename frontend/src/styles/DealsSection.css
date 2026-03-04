@@ -1,7 +1,7 @@
 .deals-container {
     width: 100%;
-    padding: 40px 40px;
-    background: #F5F5F5;
+    padding: 60px 40px;
+    background: var(--bg-light);
 }
 
 /* Header with Title and Arrows */
@@ -9,149 +9,187 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .deals-header h3 {
     margin: 0;
-    font-size: 1.2rem;
-    color: #212121;
+    font-size: 1.8rem;
+    color: var(--secondary-brown);
+    font-weight: 800;
 }
 
 .scroll-arrows {
     display: flex;
-    gap: 10px;
+    gap: 15px;
 }
 
 .arrow-btn {
-    background: #EEE;
-    border: none;
+    background: var(--white);
+    border: 1px solid #E0E0E0;
     border-radius: 50%;
-    width: 35px;
-    height: 35px;
+    width: 45px;
+    height: 45px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: all 0.3s ease;
+    color: var(--secondary-brown);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .arrow-btn:hover {
-    background: #E0E0E0;
+    background: var(--primary-orange);
+    color: var(--white);
+    border-color: var(--primary-orange);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(232, 93, 4, 0.2);
 }
 
 /* Scrollable Grid */
 .deals-grid {
     display: flex;
-    gap: 20px;
+    gap: 30px;
     overflow-x: auto;
-    padding-bottom: 10px;
-    /* Space for scrollbar if visible */
+    padding-bottom: 20px;
+    padding-top: 10px;
+    /* Space for hover shadow */
     scroll-behavior: smooth;
     scrollbar-width: none;
-    /* Firefox */
     -ms-overflow-style: none;
-    /* IE/Edge */
 }
 
 .deals-grid::-webkit-scrollbar {
     display: none;
-    /* Chrome/Safari */
 }
 
 .deal-card {
-    background: white;
-    border: 1px solid #eee;
-    padding: 15px;
-    border-radius: 8px;
+    background: var(--white);
+    border: 1px solid transparent;
+    padding: 20px;
+    border-radius: 12px;
     position: relative;
-
-    width: 254px;
-    /* ✅ fixed width */
-    height: 361px;
-    /* ✅ fixed height */
-
+    width: 260px;
+    height: 380px;
     text-align: center;
     flex-shrink: 0;
-    /* keep horizontal scroll working */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+}
+
+.deal-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(232, 93, 4, 0.12);
+    border-color: rgba(232, 93, 4, 0.2);
 }
 
 
 .off-badge {
     position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: #D32F2F;
-    color: white;
-    font-size: 0.7rem;
-    padding: 3px 6px;
+    top: 15px;
+    left: 15px;
+    background: linear-gradient(135deg, #D32F2F 0%, #F44336 100%);
+    color: var(--white);
+    font-size: 0.8rem;
+    font-weight: bold;
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3);
+    z-index: 2;
 }
 
 .product-img {
-    width: 201px;
-    height: 148px;
+    width: 100%;
+    height: 150px;
     object-fit: contain;
-    margin: 50px auto 10px auto;
+    margin: 30px auto 15px auto;
+    transition: transform 0.3s ease;
+}
+
+.deal-card:hover .product-img {
+    transform: scale(1.08);
 }
 
 .product-info h4 {
-    font-size: 0.85rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--secondary-brown);
+    margin-bottom: 10px;
+    line-height: 1.4;
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 
 .pricing {
-    margin-bottom: 10px;
-    gap: 10px;
+    margin-bottom: 15px;
+    gap: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    /* Center since text-align is center on card */
 }
 
 .current-price {
-    font-weight: bold;
-    color: #D32F2F;
-    font-size: 1.1rem;
-    margin-right: 10px;
+    font-weight: 800;
+    color: var(--primary-orange);
+    font-size: 1.3rem;
 }
 
 .original-price {
     text-decoration: line-through;
     color: #9E9E9E;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
 }
 
 .btn-group {
     display: flex;
     justify-content: space-between;
-    gap: 20px;
+    gap: 15px;
 }
 
 .btn-group button {
     flex: 1;
-    padding: 5px;
+    padding: 10px 5px;
     border: none;
-    border-radius: 25px;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 0.8rem;
-    font-weight: bold;
+    font-size: 0.85rem;
+    font-weight: 700;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .add-cart {
-    background-color: #702602;
-    color: white;
+    background-color: var(--secondary-brown);
+    color: var(--white);
+    border: 1px solid var(--secondary-brown);
+}
+
+.add-cart:hover {
+    background-color: var(--white);
+    color: var(--secondary-brown);
 }
 
 .book-now {
-    background-color: #DC7835;
-    color: rgb(0, 0, 0);
+    background-color: var(--primary-orange);
+    color: var(--white);
+    border: 1px solid var(--primary-orange);
+    box-shadow: 0 4px 10px rgba(232, 93, 4, 0.2);
+}
+
+.book-now:hover {
+    background-color: var(--white);
+    color: var(--primary-orange);
 }

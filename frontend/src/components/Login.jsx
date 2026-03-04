@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const Login = ({ onLoginSuccess }) => {
+  const { login } = useAuth();
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
   const [step, setStep] = useState(1); // 1 = phone, 2 = otp
@@ -57,8 +59,8 @@ const Login = ({ onLoginSuccess }) => {
         phone,
         otp,
       });
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
+
+      login(res.data.user, res.data.token);
 
       if (onLoginSuccess) {
         // Used inside Header modal — let Header handle the redirect

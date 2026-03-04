@@ -137,6 +137,30 @@
 
 @media (max-width: 768px) {
     .header-nav {
-        display: none; /* Hide standard nav on mobile, ideally should be a hamburger menu */
+        display: none;
+        /* Hide standard nav on mobile, ideally should be a hamburger menu */
     }
+}
+
+.cart-link {
+    position: relative;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: #e74c3c;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 10px;
+    font-weight: bold;
+    min-width: 16px;
+    text-align: center;
+    border: 1px solid #DC7835;
 }

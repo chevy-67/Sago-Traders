@@ -3,8 +3,9 @@ const Product = require('../models/Product');
 // GET all products
 const getProducts = async (req, res) => {
     try {
-        const { search, brand, colour } = req.query;
+        const { search, brand, colour, category } = req.query;
         const filter = {};
+        if (category) filter.category = category;
         if (search) {
             filter.$or = [
                 { brand: { $regex: search, $options: 'i' } },
