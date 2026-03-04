@@ -1,42 +1,47 @@
 .features-strip {
-    background-color: #5D4037;
+    background: linear-gradient(135deg, var(--secondary-brown) 0%, #2A1A17 100%);
     width: 100%;
-    min-height: 200px;
-    /* Changed from fixed height to min-height */
-    color: white;
+    min-height: 160px;
+    color: var(--white);
     padding: 40px 30px;
     display: flex;
     justify-content: space-around;
     align-items: center;
     margin-top: 40px;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .feature-item {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 25px;
+    transition: transform 0.3s ease;
 }
 
-/* 🔥 Bigger & bold icon */
+.feature-item:hover {
+    transform: translateY(-5px);
+}
+
 .feature-icon {
-    color: #FBC02D;
+    color: var(--primary-orange);
     font-size: 48px;
     flex-shrink: 0;
+    filter: drop-shadow(0 0 10px rgba(232, 93, 4, 0.4));
 }
 
-/* 🔥 Bigger & bold heading */
 .feature-item h4 {
     font-size: 1.4rem;
-    font-weight: 700;
-    margin-bottom: 8px;
+    font-weight: 800;
+    margin-bottom: 5px;
+    letter-spacing: 0.5px;
 }
 
-/* 🔥 Bigger description text */
 .feature-item p {
     font-size: 1.05rem;
-    font-weight: 500;
+    font-weight: 400;
     color: #D7CCC8;
     line-height: 1.4;
+    opacity: 0.9;
 }
 
 /* Mobile Responsiveness */
@@ -44,13 +49,13 @@
     .features-strip {
         flex-direction: column;
         height: auto;
-        gap: 30px;
-        padding: 30px 20px;
+        gap: 35px;
+        padding: 40px 20px;
         align-items: flex-start;
-        /* Align to the start or center based on preference, often start looks better with icons */
     }
 
     .feature-item {
         width: 100%;
+        justify-content: center;
     }
 }

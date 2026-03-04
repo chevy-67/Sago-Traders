@@ -1,28 +1,25 @@
 import React, { useState } from 'react';
-import { Search, ShoppingCart } from 'lucide-react';
+import { Search, ShoppingBag, User } from 'lucide-react';
 import '../styles/Header.css';
 import Login from './Login';
 import { Link, useNavigate } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 
 import Logo from '../assets/images/Logo/unnamed.jpg';
 
 const Header = () => {
   const [showModal, setShowModal] = useState(false);
-  const [user, setUser] = useState(() => {
-    const userString = localStorage.getItem('user');
-    return userString ? JSON.parse(userString) : null;
-  });
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const { getCartCount } = useCart();
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    setUser(null);
+    logout();
     navigate('/');
   };
 
   const handleLoginSuccess = (loggedInUser) => {
-    setUser(loggedInUser);
     setShowModal(false);
     if (loggedInUser?.role === 'admin') {
       navigate('/admin');
@@ -47,8 +44,7 @@ const Header = () => {
         <nav className="header-nav">
           <Link to="/" className="nav-link">Home</Link>
           <Link to="/about" className="nav-link">About</Link>
-          <Link to="/services" className="nav-link">Services</Link>
-          <Link to="/contact" className="nav-link">Contact</Link>
+
         </nav>
 
         <div className="search-bar">
@@ -59,9 +55,10 @@ const Header = () => {
         </div>
 
         <div className="header-actions">
-          <div className="action-item">
-            <ShoppingCart size={24} />
-          </div>
+          <Link to="/cart" className="action-item cart-link">
+            <ShoppingBag size={24} />
+            {getCartCount() > 0 && <span className="cart-badge">{getCartCount()}</span>}
+          </Link>
           <div className="auth-buttons">
             {user ? (
               <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
@@ -72,6 +69,20 @@ const Header = () => {
                     </button>
                   </Link>
                 )}
+                <Link to="/profile" style={{ textDecoration: 'none', display: 'flex' }} title="My Profile">
+                  <button className="auth-btn" style={{
+                    backgroundColor: '#fcfcfc',
+                    color: '#DC7835',
+                    border: '1px solid #DC7835',
+                    padding: '8px',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    <User size={20} />
+                  </button>
+                </Link>
                 <button className="auth-btn login" onClick={handleLogout}>
                   LOGOUT
                 </button>

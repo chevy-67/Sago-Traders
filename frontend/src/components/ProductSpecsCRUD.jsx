@@ -19,7 +19,16 @@ const FIELDS = [
     { name: 'packedBy', label: 'Packed By' },
 ];
 
-const emptySpec = () => Object.fromEntries(FIELDS.map(f => [f.name, '']));
+const CATEGORIES = [
+    { value: 'electricals', label: 'Electricals' },
+    { value: 'tools', label: 'Hand Tools' },
+    { value: 'paints', label: 'Paints' },
+    { value: 'lighting', label: 'Lightings & Fans' },
+    { value: 'bathroom', label: 'Bathroom' },
+    { value: 'appliances', label: 'Appliances' },
+];
+
+const emptySpec = () => ({ ...Object.fromEntries(FIELDS.map(f => [f.name, ''])), category: '' });
 
 /* ─── Design tokens ─────────────────────────────────────── */
 const card = {
@@ -242,6 +251,7 @@ const ProductSpecsCRUD = () => {
         e.preventDefault();
         setAddError('');
         if (!spec.brand.trim()) { setAddError('Brand is required.'); return; }
+        if (!spec.category) { setAddError('Please select a category.'); return; }
         setAddLoading(true);
         try {
             await axios.post(API, { ...spec, imageUrl: imagePreview });
@@ -339,6 +349,23 @@ const ProductSpecsCRUD = () => {
                                 </p>
                             )}
 
+                            {/* Category dropdown — full width, first field */}
+                            <div style={{ marginBottom: '14px' }}>
+                                <label style={lbl}>Category <span style={{ color: '#dc2626' }}>*</span></label>
+                                <select
+                                    name="category"
+                                    value={spec.category}
+                                    onChange={e => setSpec(prev => ({ ...prev, category: e.target.value }))}
+                                    style={{ ...inp, color: spec.category ? '#111827' : '#9ca3af' }}
+                                    required
+                                >
+                                    <option value="">— Select a category —</option>
+                                    {CATEGORIES.map(c => (
+                                        <option key={c.value} value={c.value}>{c.label}</option>
+                                    ))}
+                                </select>
+                            </div>
+
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
                                 {FIELDS.map(({ name, label }) => (
                                     <div key={name}>
@@ -427,7 +454,7 @@ const ProductSpecsCRUD = () => {
                         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
                             <thead>
                                 <tr style={{ backgroundColor: '#f9fafb', textAlign: 'left' }}>
-                                    {['Image', 'Brand', 'Model No.', 'Colour', 'Material', 'Offer', 'Actions'].map(h => (
+                                    {['Image', 'Brand', 'Category', 'Model No.', 'Colour', 'Material', 'Offer', 'Actions'].map(h => (
                                         <th key={h} style={{
                                             padding: '12px 14px', borderBottom: '2px solid #e5e7eb',
                                             fontWeight: '700', color: '#374151', whiteSpace: 'nowrap'
@@ -456,6 +483,9 @@ const ProductSpecsCRUD = () => {
                                             }
                                         </td>
                                         <td style={{ padding: '10px 14px', fontWeight: '700', color: '#111827' }}>{p.brand}</td>
+                                        <td style={{ padding: '10px 14px', color: '#6b7280' }}>
+                                            {CATEGORIES.find(c => c.value === p.category)?.label || p.category || '—'}
+                                        </td>
                                         <td style={{ padding: '10px 14px', color: '#6b7280' }}>{p.modelNumber || '—'}</td>
                                         <td style={{ padding: '10px 14px', color: '#6b7280' }}>{p.colour || '—'}</td>
                                         <td style={{ padding: '10px 14px', color: '#6b7280' }}>{p.material || '—'}</td>

@@ -11,12 +11,15 @@ import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from './components/Dashboard';
 import Login from './components/Login';
 import About from './components/About';
-import Services from './components/Services';
-import Contact from './components/Contact';
+import UserProfile from './components/UserProfile';
+
 import PublicLayout from './components/PublicLayout';
 import AdminRoute from './components/AdminRoute';
 import AdminDashboard from './components/AdminDashboard';
 import ProductSpecsCRUD from './components/ProductSpecsCRUD';
+import Cart from './components/Cart';
+import { CartProvider } from './context/CartContext';
+import { AuthProvider } from './context/AuthContext';
 
 
 // Home Page Component
@@ -35,42 +38,54 @@ const Home = () => {
 
 function App() {
   return (
-    <Router>
-      <div className="app">
-        <Routes>
-          {/* Public Routes with Header/Footer */}
-          <Route element={<PublicLayout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/category/:name" element={<ProductListPage />} />
-            <Route
-              path="/dashboard"
-              element={
-                <PrivateRoute>
-                  <Dashboard />
-                </PrivateRoute>
-              }
-            />
-          </Route>
+    <AuthProvider>
+      <CartProvider>
+        <Router>
+          <div className="app">
+            <Routes>
+              {/* Public Routes with Header/Footer */}
+              <Route element={<PublicLayout />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
 
-          {/* Admin Routes - No Header/Footer, separate layout */}
-          <Route
-            path="/admin"
-            element={
-              <AdminRoute>
-                <AdminDashboard />
-              </AdminRoute>
-            }
-          >
-            <Route index element={<h2 style={{ padding: '20px' }}>Welcome to Admin Dashboard</h2>} />
-            <Route path="specs" element={<ProductSpecsCRUD />} />
-          </Route>
-        </Routes>
-      </div>
-    </Router>
+                <Route path="/login" element={<Login />} />
+                <Route path="/category/:name" element={<ProductListPage />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route
+                  path="/dashboard"
+                  element={
+                    <PrivateRoute>
+                      <Dashboard />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/profile"
+                  element={
+                    <PrivateRoute>
+                      <UserProfile />
+                    </PrivateRoute>
+                  }
+                />
+              </Route>
+
+              {/* Admin Routes - No Header/Footer, separate layout */}
+              <Route
+                path="/admin"
+                element={
+                  <AdminRoute>
+                    <AdminDashboard />
+                  </AdminRoute>
+                }
+              >
+                <Route index element={<h2 style={{ padding: '20px' }}>Welcome to Admin Dashboard</h2>} />
+                <Route path="specs" element={<ProductSpecsCRUD />} />
+              </Route>
+            </Routes>
+          </div>
+        </Router>
+      </CartProvider>
+    </AuthProvider>
   );
 }
 

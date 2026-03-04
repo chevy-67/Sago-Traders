@@ -69,5 +69,38 @@ exports.verifyOTP = async (req, res) => {
 exports.getMe = async (req, res) => {
   const user = await User.findById(req.user.userId).select("-__v");
 
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
   res.json(user);
+};
+
+exports.updateProfile = async (req, res) => {
+  try {
+    const { name, email, alternatePhone, gender, dateOfBirth, address } = req.body;
+
+    const user = await User.findById(req.user.userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (name) user.name = name;
+    if (email) user.email = email;
+    if (alternatePhone) user.alternatePhone = alternatePhone;
+    if (gender !== undefined) user.gender = gender;
+    if (dateOfBirth) user.dateOfBirth = dateOfBirth;
+    if (address) {
+      user.address = {
+        ...user.address,
+        ...address
+      };
+    }
+
+    await user.save();
+    res.json({ message: "Profile updated successfully", user });
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    res.status(500).json({ message: "Failed to update profile", error: error.message });
+  }
 };

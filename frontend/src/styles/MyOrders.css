@@ -1,0 +1,200 @@
+/* ── My Orders Page ── */
+.mo-container {
+    max-width: 860px;
+    margin: 40px auto;
+    padding: 0 20px 60px;
+}
+
+.mo-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.mo-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0;
+    border-bottom: 3px solid #e63946;
+    padding-bottom: 6px;
+    display: inline-block;
+}
+
+.mo-back-btn {
+    padding: 8px 18px;
+    background: #f5f5f5;
+    color: #555;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.mo-back-btn:hover {
+    background: #e8e8e8;
+}
+
+/* ── Order cards ── */
+.mo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.mo-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 20px 24px;
+    transition: box-shadow 0.2s;
+    flex-wrap: wrap;
+}
+
+.mo-card:hover {
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.13);
+}
+
+.mo-product-img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: #f5f5f5;
+    padding: 4px;
+    flex-shrink: 0;
+}
+
+.mo-info {
+    flex: 1;
+    min-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.mo-product-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0 0 4px;
+    line-height: 1.4;
+}
+
+.mo-meta {
+    font-size: 13px;
+    color: #666;
+    margin: 0;
+}
+
+.mo-meta strong {
+    color: #1a1a2e;
+}
+
+/* Status badge */
+.mo-status-wrap {
+    display: flex;
+    align-items: center;
+}
+
+.mo-status-badge {
+    display: inline-block;
+    color: #fff;
+    font-weight: 700;
+    font-size: 12px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+/* ── Empty state ── */
+.mo-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 380px;
+    text-align: center;
+    animation: fadeIn 0.4s ease;
+}
+
+.mo-empty-icon {
+    font-size: 64px;
+    margin-bottom: 16px;
+}
+
+.mo-empty h2 {
+    font-size: 22px;
+    color: #1a1a2e;
+    margin: 0 0 8px;
+}
+
+.mo-empty p {
+    color: #777;
+    margin-bottom: 24px;
+}
+
+.mo-shop-btn {
+    padding: 12px 28px;
+    background: linear-gradient(135deg, #e63946, #c1121f);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 14px rgba(230, 57, 70, 0.35);
+}
+
+.mo-shop-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(230, 57, 70, 0.45);
+}
+
+/* Loading / Error */
+.mo-loading,
+.mo-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    font-size: 18px;
+    color: #666;
+    gap: 16px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 540px) {
+    .mo-card {
+        padding: 16px;
+        gap: 14px;
+    }
+
+    .mo-product-img {
+        width: 60px;
+        height: 60px;
+    }
+}

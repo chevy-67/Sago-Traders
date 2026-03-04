@@ -1,42 +1,52 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import ProductCard from './ProductCard';
 import '../styles/ProductListPage.css';
 
-// Import a fallback image since we don't have specific product images yet
-import electricalsImg from '../assets/images/Category/electricals.jpeg';
+const API = 'http://localhost:2004/api/products';
+
+// Map URL slug to a display name
+const CATEGORY_LABELS = {
+    electricals: 'Electricals',
+    tools: 'Hand Tools',
+    paints: 'Paints',
+    lighting: 'Lightings & Fans',
+    bathroom: 'Bathroom',
+    appliances: 'Appliances',
+};
 
 const ProductListPage = () => {
     const { name } = useParams();
-    const categoryName = name ? name.charAt(0).toUpperCase() + name.slice(1) : 'Electricals';
-    const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
-    const [isSortOpen, setIsSortOpen] = React.useState(false);
+    const categoryName = CATEGORY_LABELS[name] || (name ? name.charAt(0).toUpperCase() + name.slice(1) : 'Products');
 
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
-    };
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isSortOpen, setIsSortOpen] = useState(false);
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
 
-    const closeSidebar = () => {
-        setIsSidebarOpen(false);
-    };
+    const toggleSidebar = () => setIsSidebarOpen(prev => !prev);
+    const closeSidebar = () => setIsSidebarOpen(false);
+    const toggleSort = () => setIsSortOpen(prev => !prev);
+    const closeSort = () => setIsSortOpen(false);
 
-    const toggleSort = () => {
-        setIsSortOpen(!isSortOpen);
-    };
-
-    const closeSort = () => {
-        setIsSortOpen(false);
-    };
-
-    // Mock Data based on the provided image
-    const products = Array(6).fill(null).map((_, index) => ({
-        id: index + 1,
-        name: 'Havells Lifeline 1 sq mm Red 90 m PVC Insulated Wire',
-        price: '5.05',
-        originalPrice: '7.05',
-        image: electricalsImg, // Using category image as placeholder
-        off: '40%',
-    }));
+    useEffect(() => {
+        const fetchProducts = async () => {
+            setLoading(true);
+            setError('');
+            try {
+                const res = await axios.get(API, { params: { category: name } });
+                setProducts(res.data);
+            } catch (err) {
+                setError('Failed to load products. Please try again later.');
+                setProducts([]);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchProducts();
+    }, [name]);
 
     return (
         <div className="product-list-page">
@@ -114,7 +124,7 @@ const ProductListPage = () => {
             </aside>
 
             <main className="main-content">
-                <div className="breadcrumb">Home/{categoryName}</div>
+                <div className="breadcrumb">Home / {categoryName}</div>
                 <h2 className="page-title">Buy High Quality Products at the Best Prices at SAGO</h2>
 
                 <div className="sort-container desktop-only">
@@ -127,20 +137,48 @@ const ProductListPage = () => {
                     </select>
                 </div>
 
-                <div className="product-grid">
-                    {products.map(product => (
-                        <ProductCard key={product.id} product={product} />
-                    ))}
-                </div>
+                {loading && (
+                    <div style={{ textAlign: 'center', padding: '60px', color: '#6b7280', fontSize: '16px' }}>
+                        Loading products…
+                    </div>
+                )}
 
-                <div className="pagination">
-                    <span className="page-info">Page 1 of 6</span>
-                    <button className="pagination-btn">&lt; Previous</button>
-                    <button className="pagination-btn active">1</button>
-                    <button className="pagination-btn">2</button>
-                    <button className="pagination-btn">...</button>
-                    <button className="pagination-btn">Next &gt;</button>
-                </div>
+                {!loading && error && (
+                    <div style={{ textAlign: 'center', padding: '60px', color: '#dc2626', fontSize: '15px' }}>
+                        {error}
+                    </div>
+                )}
+
+                {!loading && !error && products.length === 0 && (
+                    <div style={{ textAlign: 'center', padding: '60px', color: '#9ca3af', fontSize: '15px' }}>
+                        <div style={{ fontSize: '48px', marginBottom: '12px' }}>📦</div>
+                        No products found in <strong>{categoryName}</strong> yet.
+                        <br />
+                        <span style={{ fontSize: '13px' }}>Check back later or explore other categories.</span>
+                    </div>
+                )}
+
+                {!loading && products.length > 0 && (
+                    <>
+                        <div className="product-grid">
+                            {products.map(product => (
+                                <ProductCard key={product._id} product={{
+                                    id: product._id,
+                                    name: `${product.brand}${product.modelNumber ? ' ' + product.modelNumber : ''}`,
+                                    price: null,
+                                    originalPrice: null,
+                                    image: product.imageUrl || null,
+                                    off: product.offer?.discountPercent > 0 ? `${product.offer.discountPercent}%` : null,
+                                }} />
+                            ))}
+                        </div>
+
+                        <div className="pagination">
+                            <span className="page-info">Page 1 of 1</span>
+                            <button className="pagination-btn active">1</button>
+                        </div>
+                    </>
+                )}
             </main>
         </div>
     );
