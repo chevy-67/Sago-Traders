@@ -26,11 +26,11 @@ const ProductCard = ({ product }) => {
 
     return (
         <div className="deal-card">
-            {(product.off || product.discount) && (
-                <div className="off-badge">{product.off || product.discount + '%'} Offer</div>
+            {product.offer?.discountPercent > 0 && (
+                <div className="off-badge">{product.offer.discountPercent}% Offer</div>
             )}
-            {product.image
-                ? <img src={product.image} alt={product.name} className="product-img" />
+            {product.imageUrl
+                ? <img src={product.imageUrl} alt={product.name} className="product-img" />
                 : <div className="product-img" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#f3f4f6', fontSize: '48px' }}>📦</div>
             }
 
@@ -43,7 +43,7 @@ const ProductCard = ({ product }) => {
                     {product.originalPrice != null && (
                         <span className="original-price">₹{product.originalPrice}</span>
                     )}
-                    {product.price != null && <span className="gst-label">Inclu. GST</span>}
+                    {product.price != null && <span className="gst-label">Incl. GST</span>}
                 </div>
                 <div className="btn-group">
                     <button className="book-now" onClick={() => handleAction('book')}>BOOK NOW</button>

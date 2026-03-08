@@ -164,10 +164,10 @@ const ProductListPage = () => {
                             {products.map(product => (
                                 <ProductCard key={product._id} product={{
                                     id: product._id,
-                                    name: `${product.brand}${product.modelNumber ? ' ' + product.modelNumber : ''}`,
+                                    name: `${product.name}`,
                                     price: null,
                                     originalPrice: null,
-                                    image: product.imageUrl || null,
+                                    imageUrl: product.imageUrl || null,
                                     off: product.offer?.discountPercent > 0 ? `${product.offer.discountPercent}%` : null,
                                 }} />
                             ))}

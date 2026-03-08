@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const CATEGORY_SLUGS = ['electricals', 'tools', 'paints', 'lighting', 'bathroom', 'appliances'];
 
 const productSchema = new mongoose.Schema({
+    name:{type:String,required:true},
+    price:{type:String,required:true},
     brand: { type: String, required: true },
     category: { type: String, enum: CATEGORY_SLUGS, required: true },
     isin: { type: String },

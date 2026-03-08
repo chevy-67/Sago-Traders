@@ -7,6 +7,7 @@ import DealsSection from './components/DealsSection';
 import Features from './components/Features';
 import Brands from './components/Brands';
 import ProductListPage from './components/ProductListPage';
+import SearchResults from './components/SearchResults';
 import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from './components/Dashboard';
 import Login from './components/Login';
@@ -50,6 +51,7 @@ function App() {
 
                 <Route path="/login" element={<Login />} />
                 <Route path="/category/:name" element={<ProductListPage />} />
+                <Route path="/search/:query" element={<SearchResults />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route
                   path="/dashboard"
