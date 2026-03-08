@@ -12,6 +12,8 @@ const getProducts = async (req, res) => {
                 { modelNumber: { $regex: search, $options: 'i' } },
                 { collectionName: { $regex: search, $options: 'i' } },
                 { material: { $regex: search, $options: 'i' } },
+                { colour: { $regex: search, $options: 'i' } },
+                { size: { $regex: search, $options: 'i' } },
             ];
         }
         if (brand) filter.brand = { $regex: brand, $options: 'i' };
@@ -39,8 +41,8 @@ const updateProduct = async (req, res) => {
     try {
         const product = await Product.findByIdAndUpdate(
             req.params.id,
-            { $set: req.body },
-            { new: true, runValidators: true }
+            req.body,
+            { returnDocument: "after", runValidators: true }
         );
         if (!product) return res.status(404).json({ message: 'Product not found' });
         res.json(product);
