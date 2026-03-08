@@ -28,7 +28,7 @@ const CATEGORIES = [
     { value: 'appliances', label: 'Appliances' },
 ];
 
-const emptySpec = () => ({ ...Object.fromEntries(FIELDS.map(f => [f.name, ''])), category: '' });
+const emptySpec = () => ({ name: '', price: '', ...Object.fromEntries(FIELDS.map(f => [f.name, ''])), category: '' });
 
 /* ─── Design tokens ─────────────────────────────────────── */
 const card = {
@@ -147,8 +147,14 @@ const ProductPreviewCard = ({ spec, imagePreview }) => {
                 )}
 
                 <h3 style={{ fontSize: '16px', fontWeight: '700', color: '#111827', margin: '0 0 4px' }}>
-                    {spec.modelNumber || <span style={{ color: '#d1d5db' }}>Model Number</span>}
+                    {spec.name || <span style={{ color: '#d1d5db' }}>Product Name</span>}
                 </h3>
+
+                {spec.price && (
+                    <p style={{ fontSize: '18px', fontWeight: '700', color: '#E85D04', marginBottom: '8px' }}>
+                        ₹ {spec.price}
+                    </p>
+                )}
 
                 {spec.colour && (
                     <p style={{ fontSize: '13px', color: '#6b7280', marginBottom: '4px' }}>
@@ -250,6 +256,8 @@ const ProductSpecsCRUD = () => {
     const handleAddSubmit = async (e) => {
         e.preventDefault();
         setAddError('');
+        if (!spec.name.trim()) { setAddError('Product name is required.'); return; }
+        if (!spec.price) { setAddError('Price is required.'); return; }
         if (!spec.brand.trim()) { setAddError('Brand is required.'); return; }
         if (!spec.category) { setAddError('Please select a category.'); return; }
         setAddLoading(true);
@@ -349,7 +357,33 @@ const ProductSpecsCRUD = () => {
                                 </p>
                             )}
 
-                            {/* Category dropdown — full width, first field */}
+                            {/* Product name and price — required fields */}
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', marginBottom: '14px' }}>
+                                <div>
+                                    <label style={lbl}>Product Name <span style={{ color: '#dc2626' }}>*</span></label>
+                                    <input
+                                        type="text"
+                                        value={spec.name}
+                                        onChange={e => setSpec(prev => ({ ...prev, name: e.target.value }))}
+                                        placeholder="Enter product name"
+                                        style={inp}
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label style={lbl}>Price <span style={{ color: '#dc2626' }}>*</span></label>
+                                    <input
+                                        type="text"
+                                        value={spec.price}
+                                        onChange={e => setSpec(prev => ({ ...prev, price: e.target.value }))}
+                                        placeholder="Enter price"
+                                        style={inp}
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Category dropdown — full width */}
                             <div style={{ marginBottom: '14px' }}>
                                 <label style={lbl}>Category <span style={{ color: '#dc2626' }}>*</span></label>
                                 <select
@@ -454,7 +488,7 @@ const ProductSpecsCRUD = () => {
                         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
                             <thead>
                                 <tr style={{ backgroundColor: '#f9fafb', textAlign: 'left' }}>
-                                    {['Image', 'Brand', 'Category', 'Model No.', 'Colour', 'Material', 'Offer', 'Actions'].map(h => (
+                                    {['Image', 'Name', 'Price', 'Brand', 'Category', 'Model No.', 'Colour', 'Material', 'Offer', 'Actions'].map(h => (
                                         <th key={h} style={{
                                             padding: '12px 14px', borderBottom: '2px solid #e5e7eb',
                                             fontWeight: '700', color: '#374151', whiteSpace: 'nowrap'
@@ -482,6 +516,8 @@ const ProductSpecsCRUD = () => {
                                                 }}>📦</div>
                                             }
                                         </td>
+                                        <td style={{ padding: '10px 14px', fontWeight: '700', color: '#111827' }}>{p.name || '—'}</td>
+                                        <td style={{ padding: '10px 14px', fontWeight: '700', color: '#E85D04' }}>₹ {p.price || '—'}</td>
                                         <td style={{ padding: '10px 14px', fontWeight: '700', color: '#111827' }}>{p.brand}</td>
                                         <td style={{ padding: '10px 14px', color: '#6b7280' }}>
                                             {CATEGORIES.find(c => c.value === p.category)?.label || p.category || '—'}
@@ -533,6 +569,16 @@ const ProductSpecsCRUD = () => {
                         display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px',
                         maxHeight: '58vh', overflowY: 'auto', paddingRight: '6px'
                     }}>
+                        <div>
+                            <label style={lbl}>Product Name</label>
+                            <input type="text" name="name" value={editData.name || ''}
+                                onChange={handleEditChange} style={inp} />
+                        </div>
+                        <div>
+                            <label style={lbl}>Price</label>
+                            <input type="text" name="price" value={editData.price || ''}
+                                onChange={handleEditChange} style={inp} />
+                        </div>
                         {FIELDS.map(({ name, label }) => (
                             <div key={name}>
                                 <label style={lbl}>{label}</label>

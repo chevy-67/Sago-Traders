@@ -10,6 +10,7 @@ import Logo from '../assets/images/Logo/unnamed.jpg';
 
 const Header = () => {
   const [showModal, setShowModal] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const { getCartCount } = useCart();
@@ -25,6 +26,14 @@ const Header = () => {
       navigate('/admin');
     } else {
       navigate('/dashboard');
+    }
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search/${encodeURIComponent(searchQuery)}`);
+      //setSearchQuery('');
     }
   };
 
@@ -48,8 +57,14 @@ const Header = () => {
         </nav>
 
         <div className="search-bar">
-          <input type="text" placeholder="Search" />
-          <button className="search-btn">
+          <input 
+            type="text" 
+            placeholder="Search products..." 
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleSearch(e)}
+          />
+          <button className="search-btn" onClick={handleSearch}>
             <Search size={20} />
           </button>
         </div>
