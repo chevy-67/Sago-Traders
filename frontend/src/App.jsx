@@ -23,6 +23,7 @@ import AdminDashboard from './components/AdminDashboard';
 import ProductSpecsCRUD from './components/ProductSpecsCRUD';
 import HeroBannerManager from './components/HeroBannerManager';
 import AdminOrders from './components/AdminOrders';
+import DemandAnalytics from './components/DemandAnalytics';
 import Cart from './components/Cart';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
@@ -101,6 +102,7 @@ function App() {
                 <Route path="specs" element={<ProductSpecsCRUD />} />
                 <Route path="hero" element={<HeroBannerManager />} />
                 <Route path="orders" element={<AdminOrders />} />
+                <Route path="demand-analytics" element={<DemandAnalytics />} />
               </Route>
             </Routes>
           </div>
