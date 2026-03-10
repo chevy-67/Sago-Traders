@@ -18,7 +18,8 @@
 /* ─── Hero Banner ─── */
 .hero-banner {
     width: 100%;
-    min-height: 540px;
+    /* Scales from ~200px on mobile to 540px on desktop — matches IBO's proportions */
+    height: clamp(200px, 35vw, 540px);
     background: linear-gradient(135deg,
             #C44D03 0%,
             #E85D04 40%,
@@ -320,43 +321,73 @@
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.70);
 }
 
-/* ─── Mobile ─── */
+/* ─── Tablet ─── */
 @media (max-width: 768px) {
-    .hero-banner {
-        min-height: 480px;
-    }
-
     .banner-content {
         flex-direction: column;
         text-align: center;
-        padding: 48px 24px;
-        gap: 32px;
+        padding: 24px 16px;
+        gap: 16px;
     }
 
     .banner-left {
         text-align: center;
     }
 
+    .banner-left h1 {
+        font-size: clamp(1.5rem, 5vw, 3rem);
+    }
+
+    .banner-left h2 {
+        font-size: 0.75rem;
+    }
+
     .banner-right {
         flex-wrap: wrap;
         justify-content: center;
+        gap: 10px;
     }
 
     .hero-cta-group {
         justify-content: center;
+        margin-top: 12px;
+    }
+
+    .hero-btn-primary,
+    .hero-btn-secondary {
+        padding: 8px 18px;
+        font-size: 0.78rem;
     }
 
     .price-tag {
-        padding: 14px 20px;
+        padding: 8px 14px;
     }
 
     .price {
-        font-size: 2.25rem;
+        font-size: 1.6rem;
+    }
+
+    .save-tag {
+        font-size: 0.68rem;
+        padding: 2px 8px;
+    }
+
+    .delivery-info {
+        padding: 10px 14px;
+        font-size: 0.75rem;
     }
 
     .carousel-btn {
-        width: 40px;
-        height: 40px;
+        width: 32px;
+        height: 32px;
+    }
+}
+
+/* ─── Mobile ─── */
+@media (max-width: 480px) {
+    .banner-right {
+        display: none;
+        /* hide price cards on very small screens — too cramped */
     }
 }
 
@@ -369,5 +400,83 @@
     .hero-btn-secondary {
         padding: 12px 24px;
         font-size: 0.875rem;
+    }
+}
+
+/* ─── Live Media Slide (admin-uploaded image / video) ─── */
+.hero-media-slide {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /* fills .hero-banner which uses clamp() */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.hero-media-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+/* Dark gradient overlay for text legibility */
+.hero-media-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+            rgba(0, 0, 0, 0.55) 0%,
+            rgba(0, 0, 0, 0.25) 60%,
+            rgba(0, 0, 0, 0.10) 100%);
+    z-index: 1;
+}
+
+/* Text & CTA on top of media */
+.hero-media-text {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 40px 24px;
+    max-width: 780px;
+    animation: heroFadeIn 0.7s ease forwards;
+}
+
+.hero-media-h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2rem, 6vw, 4.5rem);
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+    margin-bottom: 12px;
+    line-height: 1.1;
+}
+
+.hero-media-sub {
+    font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+    color: rgba(255, 255, 255, 0.90);
+    font-weight: 500;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.30);
+    margin-bottom: 4px;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 768px) {
+    .hero-media-h1 {
+        font-size: clamp(1.2rem, 4vw, 2rem);
+    }
+
+    .hero-media-sub {
+        font-size: 0.85rem;
+    }
+
+    .hero-media-text {
+        padding: 20px 16px;
     }
 }

@@ -13,11 +13,13 @@ import Dashboard from './components/Dashboard';
 import Login from './components/Login';
 import About from './components/About';
 import UserProfile from './components/UserProfile';
+import ProductDetail from './components/ProductDetail';
 
 import PublicLayout from './components/PublicLayout';
 import AdminRoute from './components/AdminRoute';
 import AdminDashboard from './components/AdminDashboard';
 import ProductSpecsCRUD from './components/ProductSpecsCRUD';
+import HeroBannerManager from './components/HeroBannerManager';
 import Cart from './components/Cart';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
@@ -50,7 +52,10 @@ function App() {
                 <Route path="/about" element={<About />} />
 
                 <Route path="/login" element={<Login />} />
+                <Route path="/products" element={<ProductListPage />} />
+                <Route path="/category/all" element={<ProductListPage />} />
                 <Route path="/category/:name" element={<ProductListPage />} />
+                <Route path="/product/:id" element={<ProductDetail />} />
                 <Route path="/search/:query" element={<SearchResults />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route
@@ -82,6 +87,7 @@ function App() {
               >
                 <Route index element={<h2 style={{ padding: '20px' }}>Welcome to Admin Dashboard</h2>} />
                 <Route path="specs" element={<ProductSpecsCRUD />} />
+                <Route path="hero" element={<HeroBannerManager />} />
               </Route>
             </Routes>
           </div>

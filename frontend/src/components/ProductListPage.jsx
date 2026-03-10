@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import ProductCard from './ProductCard';
 import '../styles/ProductListPage.css';
@@ -162,14 +162,20 @@ const ProductListPage = () => {
                     <>
                         <div className="product-grid">
                             {products.map(product => (
-                                <ProductCard key={product._id} product={{
-                                    id: product._id,
-                                    name: `${product.name}`,
-                                    price: null,
-                                    originalPrice: null,
-                                    imageUrl: product.imageUrl || null,
-                                    off: product.offer?.discountPercent > 0 ? `${product.offer.discountPercent}%` : null,
-                                }} />
+                                <Link
+                                    key={product._id}
+                                    to={`/product/${product._id}`}
+                                    style={{ textDecoration: 'none', color: 'inherit' }}
+                                >
+                                    <ProductCard product={{
+                                        id: product._id,
+                                        name: product.name,
+                                        price: product.price || null,
+                                        originalPrice: null,
+                                        image: product.imageUrl || null,
+                                        off: product.offer?.discountPercent > 0 ? `${product.offer.discountPercent}%` : null,
+                                    }} />
+                                </Link>
                             ))}
                         </div>
 

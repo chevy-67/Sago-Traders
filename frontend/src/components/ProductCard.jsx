@@ -87,22 +87,12 @@ const ProductCard = ({ product, variant = 'deal' }) => {
     /* ── Full card with buttons (used in product list page) ── */
     return (
         <div className="deal-card">
-<<<<<<< Updated upstream
-            {product.offer?.discountPercent > 0 && (
-                <div className="off-badge">{product.offer.discountPercent}% Offer</div>
-            )}
-            {product.imageUrl
-                ? <img src={product.imageUrl} alt={product.name} className="product-img" />
-                : <div className="product-img" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#f3f4f6', fontSize: '48px' }}>📦</div>
-            }
-=======
             {/* Offer Badge */}
             {(product.off || product.discount) && (
                 <div className="off-badge">
                     {product.off || product.discount + '%'} Off
                 </div>
             )}
->>>>>>> Stashed changes
 
             {/* Product Image */}
             {product.image ? (
@@ -137,13 +127,9 @@ const ProductCard = ({ product, variant = 'deal' }) => {
                     {product.originalPrice != null && (
                         <span className="original-price">₹{product.originalPrice}</span>
                     )}
-<<<<<<< Updated upstream
-                    {product.price != null && <span className="gst-label">Incl. GST</span>}
-=======
                     {product.price != null && (
                         <span className="gst-label">Incl. GST</span>
                     )}
->>>>>>> Stashed changes
                 </div>
 
                 <div className="btn-group">

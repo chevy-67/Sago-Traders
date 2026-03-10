@@ -1,0 +1,367 @@
+/* ═══════════════════════════════════════════════
+   HERO BANNER MANAGER — Admin Panel Styles
+   ═══════════════════════════════════════════════ */
+
+.hbm-wrap {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 8px 0 40px;
+}
+
+.hbm-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #1a1a2e;
+    margin-bottom: 4px;
+}
+
+.hbm-sub {
+    color: #666;
+    margin-bottom: 28px;
+    font-size: 0.9rem;
+}
+
+/* ─── Form ─── */
+.hbm-form {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    margin-bottom: 36px;
+    border: 1px solid #f0f0f0;
+}
+
+.hbm-form-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.hbm-alert {
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.hbm-alert.error {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+.hbm-alert.success {
+    background: #f0fdf4;
+    color: #16a34a;
+    border: 1px solid #bbf7d0;
+}
+
+/* ─── Upload area ─── */
+.hbm-upload-area {
+    border: 2px dashed #d1d5db;
+    border-radius: 12px;
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    margin-bottom: 20px;
+    overflow: hidden;
+    background: #fafafa;
+}
+
+.hbm-upload-area:hover {
+    border-color: #E85D04;
+    background: #fff8f5;
+}
+
+.hbm-upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.hbm-upload-icon {
+    font-size: 2.5rem;
+}
+
+.hbm-upload-hint {
+    font-size: 0.78rem;
+    color: #aaa;
+}
+
+.hbm-preview {
+    width: 100%;
+    max-height: 260px;
+    object-fit: cover;
+    display: block;
+}
+
+/* ─── Form grid ─── */
+.hbm-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 640px) {
+    .hbm-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.hbm-field label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #444;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.hbm-field input[type="text"],
+.hbm-field input[type="number"] {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #222;
+    background: #fafafa;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+
+.hbm-field input:focus {
+    outline: none;
+    border-color: #E85D04;
+    box-shadow: 0 0 0 3px rgba(232, 93, 4, 0.12);
+    background: #fff;
+}
+
+.hbm-check {
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 4px;
+}
+
+.hbm-check label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.88rem;
+    text-transform: none;
+    letter-spacing: 0;
+    cursor: pointer;
+    color: #444;
+    font-weight: 600;
+}
+
+.hbm-check input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #E85D04;
+    cursor: pointer;
+}
+
+/* ─── Form actions ─── */
+.hbm-form-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.hbm-btn {
+    padding: 11px 28px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.hbm-btn.primary {
+    background: #E85D04;
+    color: white;
+}
+
+.hbm-btn.primary:hover:not(:disabled) {
+    background: #C44D03;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(232, 93, 4, 0.3);
+}
+
+.hbm-btn.primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.hbm-btn.secondary {
+    background: #f3f4f6;
+    color: #555;
+}
+
+.hbm-btn.secondary:hover {
+    background: #e5e7eb;
+}
+
+/* ─── Slide list ─── */
+.hbm-list-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 16px;
+}
+
+.hbm-loading,
+.hbm-empty {
+    text-align: center;
+    padding: 40px;
+    color: #888;
+    font-size: 0.95rem;
+    background: #fafafa;
+    border-radius: 12px;
+    border: 1px dashed #e5e7eb;
+}
+
+.hbm-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.hbm-card {
+    background: #fff;
+    border-radius: 14px;
+    border: 1.5px solid #e5e7eb;
+    padding: 16px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    transition: box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.hbm-card:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.hbm-card.inactive {
+    opacity: 0.55;
+    background: #f9f9f9;
+}
+
+.hbm-card-thumb {
+    position: relative;
+    flex-shrink: 0;
+    width: 110px;
+    height: 72px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #f3f4f6;
+}
+
+.hbm-thumb-media {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.hbm-type-badge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: rgba(0, 0, 0, 0.55);
+    border-radius: 4px;
+    padding: 1px 4px;
+    font-size: 0.75rem;
+}
+
+.hbm-card-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.hbm-card-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #222;
+    margin: 0 0 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.hbm-card-sub {
+    font-size: 0.82rem;
+    color: #666;
+    margin: 0 0 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.hbm-card-link {
+    font-size: 0.78rem;
+    color: #E85D04;
+    margin: 0 0 2px;
+}
+
+.hbm-card-order {
+    font-size: 0.78rem;
+    color: #999;
+    margin: 0;
+}
+
+.hbm-card-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.hbm-btn-sm {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    min-width: 72px;
+}
+
+.hbm-btn-sm.edit {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.hbm-btn-sm.delete {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.hbm-btn-sm.activate {
+    background: #f0fdf4;
+    color: #16a34a;
+}
+
+.hbm-btn-sm.deactivate {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+.hbm-btn-sm:hover {
+    filter: brightness(0.93);
+    transform: translateY(-1px);
+}

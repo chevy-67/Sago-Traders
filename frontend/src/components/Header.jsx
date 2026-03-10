@@ -50,26 +50,21 @@ const Header = () => {
         {/* Nav Links */}
         <nav className="header-nav">
           <Link to="/" className="nav-link">Home</Link>
+          <Link to="/category/all" className="nav-link">Product</Link>
           <Link to="/about" className="nav-link">About</Link>
         </nav>
 
         {/* Search Bar */}
         <div className="search-bar">
-<<<<<<< Updated upstream
-          <input 
-            type="text" 
-            placeholder="Search products..." 
+          <input
+            type="text"
+            placeholder="Search products..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSearch(e)}
           />
           <button className="search-btn" onClick={handleSearch}>
             <Search size={20} />
-=======
-          <input type="text" placeholder="Search products…" />
-          <button className="search-btn" aria-label="Search">
-            <Search size={18} />
->>>>>>> Stashed changes
           </button>
         </div>
 
