@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import '../styles/CategoryGrid.css';
 import electricalsImg from '../assets/images/Category/electricals.jpeg';
 import handToolsImg from '../assets/images/Category/hand_tools.jpeg';
@@ -20,7 +21,11 @@ const categories = [
 const CategoryGrid = () => {
     return (
         <section className="category-section">
-            <h3>Shop By Category - Best Picks</h3>
+            <div className="category-section-header">
+                <span className="category-label">Our Collections</span>
+                <h3>Shop By Category</h3>
+                <div className="category-divider" />
+            </div>
             <div className="category-grid">
                 {categories.map((cat, index) => (
                     <Link to={cat.path} key={index} className="category-card">
@@ -29,12 +34,17 @@ const CategoryGrid = () => {
                                 src={cat.img}
                                 alt={cat.name}
                                 onError={(e) => {
-                                    e.target.src = 'https://placehold.co/300x200?text=Image+Not+Found';
-                                    e.target.onerror = null; // Prevent handling loop
+                                    e.target.src = 'https://placehold.co/300x200?text=' + cat.name;
+                                    e.target.onerror = null;
                                 }}
                             />
                         </div>
-                        <p>{cat.name}</p>
+                        <div className="category-card-footer">
+                            <p>{cat.name}</p>
+                            <div className="category-arrow">
+                                <ArrowRight size={14} />
+                            </div>
+                        </div>
                     </Link>
                 ))}
             </div>

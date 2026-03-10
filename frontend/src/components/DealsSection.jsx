@@ -55,10 +55,13 @@ const DealsSection = () => {
     return (
         <div className="deals-container">
             <div className="deals-header">
-                <h3>{settings.sectionTitle}</h3>
+                <div className="deals-header-text">
+                    <span className="deals-label">Hot Picks</span>
+                    <h3>{settings.sectionTitle}</h3>
+                </div>
                 <div className="scroll-arrows">
-                    <button onClick={() => scroll('left')} className="arrow-btn"><ChevronLeft size={20} /></button>
-                    <button onClick={() => scroll('right')} className="arrow-btn"><ChevronRight size={20} /></button>
+                    <button onClick={() => scroll('left')} className="arrow-btn" aria-label="Scroll left"><ChevronLeft size={20} /></button>
+                    <button onClick={() => scroll('right')} className="arrow-btn" aria-label="Scroll right"><ChevronRight size={20} /></button>
                 </div>
             </div>
 
