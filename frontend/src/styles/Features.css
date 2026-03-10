@@ -1,61 +1,138 @@
+/* ═══════════════════════════════════════════════════════
+   SAGO TRADERS — FEATURES STRIP v2.0
+   ═══════════════════════════════════════════════════════ */
+
 .features-strip {
-    background: linear-gradient(135deg, var(--secondary-brown) 0%, #2A1A17 100%);
+    background: linear-gradient(135deg, #2A1A17 0%, var(--secondary-brown, #3E2723) 50%, #4E342E 100%);
     width: 100%;
-    min-height: 160px;
-    color: var(--white);
-    padding: 40px 30px;
+    color: white;
+    padding: 48px clamp(16px, 3vw, 40px);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative background element */
+.features-strip::before {
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232, 93, 4, 0.12) 0%, transparent 70%);
+    top: -200px;
+    right: -100px;
+    pointer-events: none;
+}
+
+.features-inner {
+    width: 100%;
+    margin: 0;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-top: 40px;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+    gap: 24px;
+    position: relative;
+    z-index: 1;
+    flex-wrap: wrap;
 }
 
+/* ─── Feature Item ─── */
 .feature-item {
     display: flex;
     align-items: center;
-    gap: 25px;
-    transition: transform 0.3s ease;
+    gap: 20px;
+    flex: 1;
+    min-width: 200px;
+    max-width: 260px;
+    padding: 20px 16px;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.feature-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0);
+    transition: background 0.3s ease;
 }
 
 .feature-item:hover {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
 }
 
+.feature-item:hover::before {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* ─── Feature Icon ─── */
 .feature-icon {
-    color: var(--primary-orange);
-    font-size: 48px;
     flex-shrink: 0;
-    filter: drop-shadow(0 0 10px rgba(232, 93, 4, 0.4));
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    background: rgba(232, 93, 4, 0.18);
+    font-size: 26px;
+    color: var(--primary-orange, #E85D04);
+    filter: drop-shadow(0 0 8px rgba(232, 93, 4, 0.35));
+    transition: all 0.3s ease;
+}
+
+.feature-item:hover .feature-icon {
+    background: rgba(232, 93, 4, 0.28);
+    transform: scale(1.08);
 }
 
 .feature-item h4 {
-    font-size: 1.4rem;
+    font-size: 1.05rem;
     font-weight: 800;
-    margin-bottom: 5px;
-    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+    letter-spacing: 0.02em;
+    color: white;
+    position: relative;
+    z-index: 1;
 }
 
 .feature-item p {
-    font-size: 1.05rem;
+    font-size: 0.875rem;
     font-weight: 400;
-    color: #D7CCC8;
+    color: rgba(215, 204, 200, 0.85);
     line-height: 1.4;
-    opacity: 0.9;
+    position: relative;
+    z-index: 1;
 }
 
-/* Mobile Responsiveness */
+/* ─── Separator ─── */
+.feature-sep {
+    width: 1px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.12);
+    flex-shrink: 0;
+}
+
+/* ─── Mobile ─── */
 @media (max-width: 768px) {
     .features-strip {
+        padding: 48px 24px;
+    }
+
+    .features-inner {
         flex-direction: column;
-        height: auto;
-        gap: 35px;
-        padding: 40px 20px;
-        align-items: flex-start;
+        align-items: stretch;
+        gap: 8px;
     }
 
     .feature-item {
-        width: 100%;
-        justify-content: center;
+        max-width: 100%;
+        padding: 16px 12px;
+    }
+
+    .feature-sep {
+        display: none;
     }
 }

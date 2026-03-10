@@ -1,48 +1,44 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../styles/Brands.css';
 
-// --------------------------------------------------------------------------
-// MOCK ADMIN SETTINGS
-// --------------------------------------------------------------------------
 const adminSettings = {
     showSection: true,
-    title: 'Brands We Sell',
-    // Admin can manage this list
+    title: 'Brands We Trust',
     brands: [
-        'https://placehold.co/150x80/white/red?text=Havells',
-        'https://placehold.co/150x80/white/blue?text=Philips',
-        'https://placehold.co/150x80/white/red?text=Hindware',
-        'https://placehold.co/150x80/white/orange?text=AsianPaints',
-        'https://placehold.co/150x80/white/green?text=BirlaOpus',
-        'https://placehold.co/150x80/white/blue?text=Philips',
+        { name: 'Havells', url: 'https://placehold.co/150x70/ffffff/DC7835?text=Havells&font=inter' },
+        { name: 'Philips', url: 'https://placehold.co/150x70/ffffff/003a70?text=Philips&font=inter' },
+        { name: 'Hindware', url: 'https://placehold.co/150x70/ffffff/b22222?text=Hindware&font=inter' },
+        { name: 'Asian Paints', url: 'https://placehold.co/150x70/ffffff/e85d04?text=AsianPaints&font=inter' },
+        { name: 'Birla Opus', url: 'https://placehold.co/150x70/ffffff/228b22?text=BirlaOpus&font=inter' },
+        { name: 'Schneider', url: 'https://placehold.co/150x70/ffffff/3b5998?text=Schneider&font=inter' },
     ]
 };
 
 const Brands = () => {
-    const [settings, setSettings] = useState(adminSettings);
+    const [settings] = useState(adminSettings);
 
     if (!settings.showSection) return null;
 
     return (
         <div className="brands-section">
-            <h3>{settings.title}</h3>
+            <div className="brands-section-header">
+                <span className="brands-label">Our Partners</span>
+                <h3>{settings.title}</h3>
+                <div className="brands-divider" />
+            </div>
 
             <div className="brands-marquee">
-                {/* 
-                   We duplicate the list to create a seamless infinite scroll effect.
-                   The CSS will animate this track.
-                */}
                 <div className="brands-track">
-                    {/* Original List */}
+                    {/* Original list */}
                     {settings.brands.map((b, i) => (
-                        <div className="brand-box" key={`orig-${i}`}>
-                            <img src={b} alt="Brand" />
+                        <div className="brand-box" key={`orig-${i}`} title={b.name}>
+                            <img src={b.url} alt={b.name} />
                         </div>
                     ))}
-                    {/* Duplicate List for Loop */}
+                    {/* Duplicate for seamless loop */}
                     {settings.brands.map((b, i) => (
-                        <div className="brand-box" key={`dup-${i}`}>
-                            <img src={b} alt="Brand" />
+                        <div className="brand-box" key={`dup-${i}`} title={b.name}>
+                            <img src={b.url} alt={b.name} />
                         </div>
                     ))}
                 </div>

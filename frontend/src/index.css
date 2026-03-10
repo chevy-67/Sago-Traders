@@ -1,29 +1,467 @@
+/* ═══════════════════════════════════════════════════════
+   SAGO TRADERS — GLOBAL DESIGN SYSTEM v2.0
+   Premium E-Commerce Design System
+   ═══════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap');
+
+/* ─── COLOR TOKENS ─── */
 :root {
-  --primary-orange: #E85D04; /* Vibrant orange from the "Sago" branding */
-  --secondary-brown: #3E2723; /* Dark brown for footer/accents */
-  --text-dark: #212121;
-  --text-light: #757575;
-  --bg-light: #F5F5F5;
-  --white: #FFFFFF;
+  /* Brand Colors */
+  --orange-50: #fff7ed;
+  --orange-100: #ffedd5;
+  --orange-200: #fed7aa;
+  --orange-300: #fdba74;
+  --orange-400: #fb923c;
+  --orange-500: #f97316;
+  --orange-600: #ea580c;
+  --orange-700: #c2410c;
+  --primary-orange: #E85D04;
+  --primary-orange-dark: #C44D03;
+  --primary-orange-light: #FF7A2E;
+
+  /* Brown Palette */
+  --brown-50: #fdf8f6;
+  --brown-100: #f2e8e5;
+  --brown-200: #eaddd7;
+  --brown-300: #e0cec7;
+  --brown-600: #5D4037;
+  --brown-700: #4E342E;
+  --brown-800: #3E2723;
+  --secondary-brown: #3E2723;
+
+  /* Neutral Palette */
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+
+  /* Semantic Colors */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --info: #3b82f6;
+
+  /* Backgrounds */
+  --bg-body: #f8f7f5;
+  --bg-light: #f8f7f5;
+  --bg-white: #ffffff;
+  --bg-card: #ffffff;
+  --white: #ffffff;
+
+  /* Text */
+  --text-primary: #1a1a2e;
+  --text-secondary: #4b5563;
+  --text-muted: #9ca3af;
+  --text-dark: #111827;
+  --text-light: #6b7280;
+
+  /* Typography */
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Playfair Display', Georgia, serif;
+
+  /* Font Sizes */
+  --text-xs: 0.75rem;
+  /* 12px */
+  --text-sm: 0.875rem;
+  /* 14px */
+  --text-base: 1rem;
+  /* 16px */
+  --text-lg: 1.125rem;
+  /* 18px */
+  --text-xl: 1.25rem;
+  /* 20px */
+  --text-2xl: 1.5rem;
+  /* 24px */
+  --text-3xl: 1.875rem;
+  /* 30px */
+  --text-4xl: 2.25rem;
+  /* 36px */
+  --text-5xl: 3rem;
+  /* 48px */
+  --text-6xl: 3.75rem;
+  /* 60px */
+
+  /* Spacing Scale (4px base) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-full: 9999px;
+
+  /* Shadows — Modern Elevation System */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.10), 0 4px 8px rgba(0, 0, 0, 0.06);
+  --shadow-xl: 0 16px 40px rgba(0, 0, 0, 0.12), 0 8px 16px rgba(0, 0, 0, 0.06);
+  --shadow-2xl: 0 24px 64px rgba(0, 0, 0, 0.15), 0 12px 24px rgba(0, 0, 0, 0.08);
+
+  /* Orange Glow Shadows */
+  --shadow-orange-sm: 0 4px 14px rgba(232, 93, 4, 0.20);
+  --shadow-orange-md: 0 8px 24px rgba(232, 93, 4, 0.25);
+  --shadow-orange-lg: 0 16px 40px rgba(232, 93, 4, 0.30);
+
+  /* Transitions */
+  --transition-fast: all 0.15s ease;
+  --transition-base: all 0.25s ease;
+  --transition-slow: all 0.35s ease;
+  --transition-spring: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Layout */
+  --container-max: 1280px;
+  --container-pad: clamp(16px, 4vw, 60px);
+
+  /* Z-Index Scale */
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
 }
 
-* {
+/* ─── RESET & BASE ─── */
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Standard readable font */
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background-color: var(--bg-light);
-  color: var(--text-dark);
+  font-family: var(--font-body);
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
   text-decoration: none;
   color: inherit;
+  transition: var(--transition-fast);
 }
 
-ul {
+ul,
+ol {
   list-style: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  cursor: pointer;
+  font-family: var(--font-body);
+  border: none;
+  background: none;
+}
+
+input,
+select,
+textarea {
+  font-family: var(--font-body);
+}
+
+/* ─── GLOBAL UTILITY CLASSES ─── */
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+}
+
+/* Section Headers */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--primary-orange);
+  margin-bottom: var(--space-3);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.section-subtitle {
+  font-size: var(--text-base);
+  color: var(--text-secondary);
+  margin-top: var(--space-3);
+  max-width: 560px;
+}
+
+/* ─── BUTTON SYSTEM ─── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-full);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  transition: var(--transition-base);
+  white-space: nowrap;
+  cursor: pointer;
+  border: 2px solid transparent;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0);
+  transition: background 0.2s ease;
+}
+
+.btn:hover::after {
+  background: rgba(255, 255, 255, 0.10);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-orange) 0%, var(--primary-orange-light) 100%);
+  color: white;
+  box-shadow: var(--shadow-orange-sm);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-orange-md);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-orange-sm);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--primary-orange);
+  border-color: var(--primary-orange);
+}
+
+.btn-secondary:hover {
+  background: var(--primary-orange);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-orange-sm);
+}
+
+.btn-dark {
+  background: var(--secondary-brown);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-dark:hover {
+  background: var(--brown-600);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-ghost {
+  background: var(--gray-100);
+  color: var(--text-secondary);
+}
+
+.btn-ghost:hover {
+  background: var(--gray-200);
+  color: var(--text-primary);
+}
+
+.btn-sm {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-xs);
+}
+
+.btn-lg {
+  padding: var(--space-4) var(--space-10);
+  font-size: var(--text-base);
+}
+
+/* ─── CARD BASE ─── */
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: var(--transition-base);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-4px);
+}
+
+/* ─── FOCUS STATES ─── */
+:focus-visible {
+  outline: 2px solid var(--primary-orange);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* ─── SECTION SPACING ─── */
+.section {
+  padding: var(--space-20) 0;
+}
+
+.section-md {
+  padding: var(--space-16) 0;
+}
+
+/* ─── DIVIDER ─── */
+.divider {
+  width: 48px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-orange), var(--primary-orange-light));
+  border-radius: var(--radius-full);
+  margin: var(--space-4) 0;
+}
+
+/* ─── LOADING SPINNER ─── */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--gray-200);
+  border-top-color: var(--primary-orange);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+/* ─── FADE IN ANIMATION ─── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gray-300);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-400);
+}
+
+/* ─── BADGE ─── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.badge-orange {
+  background: var(--orange-100);
+  color: var(--primary-orange-dark);
+}
+
+.badge-success {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.badge-danger {
+  background: #fee2e2;
+  color: #991b1b;
 }

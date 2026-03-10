@@ -1,39 +1,83 @@
+/* ═══════════════════════════════════════════════════════
+   SAGO TRADERS — BRANDS SECTION v2.0
+   ═══════════════════════════════════════════════════════ */
+
 .brands-section {
     width: 100%;
-    padding: 60px 40px;
-    background: var(--white);
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 60px clamp(16px, 3vw, 40px);
+    background: var(--bg-light, #f8f7f5);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Top edge fade */
+.brands-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(232, 93, 4, 0.18), transparent);
+}
+
+.brands-section-header {
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.brands-label {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--primary-orange, #E85D04);
+    margin-bottom: 8px;
 }
 
 .brands-section h3 {
-    margin-bottom: 30px;
-    color: var(--secondary-brown);
-    font-size: 1.8rem;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
     font-weight: 800;
-    text-align: center;
+    color: var(--secondary-brown, #3E2723);
+    margin: 0;
+    line-height: 1.2;
 }
 
+.brands-divider {
+    width: 48px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-orange, #E85D04), #FF7A2E);
+    border-radius: 99px;
+    margin: 14px auto 0 auto;
+}
+
+/* ─── Marquee Container ─── */
 .brands-marquee {
     overflow: hidden;
     white-space: nowrap;
     position: relative;
     width: 100%;
-    padding: 15px 0;
+    padding: 12px 0;
+    /* Fade edges */
+    mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
 }
 
 .brands-track {
     display: flex;
-    gap: 40px;
+    gap: 28px;
     width: max-content;
-    animation: scroll 30s linear infinite;
+    animation: scroll-brands 32s linear infinite;
 }
 
-/* Pause animation on hover */
+/* Pause on hover */
 .brands-marquee:hover .brands-track {
     animation-play-state: paused;
 }
 
-@keyframes scroll {
+@keyframes scroll-brands {
     0% {
         transform: translateX(0);
     }
@@ -43,38 +87,65 @@
     }
 }
 
+/* ─── Brand Box ─── */
 .brand-box {
-    background: var(--white);
-    border: 1px solid transparent;
-    width: 220px;
-    height: 120px;
-    padding: 20px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
+    background: white;
+    border: 1.5px solid transparent;
+    width: 180px;
+    height: 100px;
+    padding: 16px 20px;
     flex-shrink: 0;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
     cursor: pointer;
 }
 
 .brand-box:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(232, 93, 4, 0.1);
-    border-color: rgba(232, 93, 4, 0.2);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(232, 93, 4, 0.12);
+    border-color: rgba(232, 93, 4, 0.20);
+    background: white;
 }
 
 .brand-box img {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
-    filter: grayscale(100%);
-    opacity: 0.6;
-    transition: all 0.3s ease;
+    filter: grayscale(100%) opacity(0.55);
+    transition: filter 0.35s ease, transform 0.35s ease;
 }
 
 .brand-box:hover img {
-    filter: grayscale(0%);
-    opacity: 1;
+    filter: grayscale(0%) opacity(1);
+    transform: scale(1.08);
+}
+
+/* ─── Brand Name fallback ─── */
+.brand-name {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--gray-400, #9ca3af);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+.brand-box:hover .brand-name {
+    color: var(--primary-orange, #E85D04);
+}
+
+/* ─── Mobile ─── */
+@media (max-width: 768px) {
+    .brands-section {
+        padding: 60px 16px;
+    }
+
+    .brand-box {
+        width: 140px;
+        height: 80px;
+    }
 }

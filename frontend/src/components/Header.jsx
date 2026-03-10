@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, ShoppingBag, User } from 'lucide-react';
+import { Search, ShoppingBag, User, X, LayoutDashboard } from 'lucide-react';
 import '../styles/Header.css';
 import Login from './Login';
 import { Link, useNavigate } from 'react-router-dom';
@@ -40,23 +40,22 @@ const Header = () => {
   return (
     <header className="header">
       <div className="main-header">
+        {/* Logo */}
         <div className="logo-container">
           <Link to='/'>
-            <img
-              src={Logo}
-              alt="Sago Traders Logo"
-              className="logo-img"
-            />
+            <img src={Logo} alt="Sago Traders Logo" className="logo-img" />
           </Link>
         </div>
 
+        {/* Nav Links */}
         <nav className="header-nav">
           <Link to="/" className="nav-link">Home</Link>
           <Link to="/about" className="nav-link">About</Link>
-
         </nav>
 
+        {/* Search Bar */}
         <div className="search-bar">
+<<<<<<< Updated upstream
           <input 
             type="text" 
             placeholder="Search products..." 
@@ -66,89 +65,62 @@ const Header = () => {
           />
           <button className="search-btn" onClick={handleSearch}>
             <Search size={20} />
+=======
+          <input type="text" placeholder="Search products…" />
+          <button className="search-btn" aria-label="Search">
+            <Search size={18} />
+>>>>>>> Stashed changes
           </button>
         </div>
 
+        {/* Actions */}
         <div className="header-actions">
-          <Link to="/cart" className="action-item cart-link">
-            <ShoppingBag size={24} />
-            {getCartCount() > 0 && <span className="cart-badge">{getCartCount()}</span>}
+          {/* Cart */}
+          <Link to="/cart" className="cart-link" aria-label="Shopping Cart">
+            <ShoppingBag size={22} />
+            {getCartCount() > 0 && (
+              <span className="cart-badge">{getCartCount()}</span>
+            )}
           </Link>
+
+          {/* Auth */}
           <div className="auth-buttons">
             {user ? (
-              <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+              <>
                 {user.role === 'admin' && (
                   <Link to="/admin" style={{ textDecoration: 'none' }}>
-                    <button className="auth-btn" style={{ backgroundColor: '#E85D04', color: 'white' }}>
+                    <button className="auth-btn login" title="Admin Dashboard">
+                      <LayoutDashboard size={14} />
                       DASHBOARD
                     </button>
                   </Link>
                 )}
-                <Link to="/profile" style={{ textDecoration: 'none', display: 'flex' }} title="My Profile">
-                  <button className="auth-btn" style={{
-                    backgroundColor: '#fcfcfc',
-                    color: '#DC7835',
-                    border: '1px solid #DC7835',
-                    padding: '8px',
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}>
-                    <User size={20} />
-                  </button>
+                <Link to="/profile" className="profile-btn" title="My Profile">
+                  <User size={18} />
                 </Link>
                 <button className="auth-btn login" onClick={handleLogout}>
                   LOGOUT
                 </button>
-              </div>
+              </>
             ) : (
-              <button className="auth-btn login" onClick={() => setShowModal(true)}>LOG IN</button>
+              <button className="auth-btn login" onClick={() => setShowModal(true)}>
+                LOG IN
+              </button>
             )}
           </div>
         </div>
       </div>
 
+      {/* Login Modal */}
       {showModal && (
-        <div
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            zIndex: 1000,
-          }}
-          onClick={() => setShowModal(false)}
-        >
-          <div
-            style={{
-              backgroundColor: 'white',
-              padding: '20px',
-              borderRadius: '8px',
-              maxWidth: '500px',
-              width: '90%',
-              position: 'relative',
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
+        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+          <div className="modal-card" onClick={(e) => e.stopPropagation()}>
             <button
+              className="modal-close"
               onClick={() => setShowModal(false)}
-              style={{
-                position: 'absolute',
-                top: '10px',
-                right: '10px',
-                background: 'none',
-                border: 'none',
-                fontSize: '20px',
-                cursor: 'pointer',
-              }}
+              aria-label="Close"
             >
-              ✕
+              <X size={18} />
             </button>
             <Login onLoginSuccess={handleLoginSuccess} />
           </div>
