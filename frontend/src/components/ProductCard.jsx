@@ -46,8 +46,8 @@ const ProductCard = ({ product, variant = 'deal' }) => {
 
                 {/* Product image */}
                 <div className="ibo-img-wrap">
-                    {product.image ? (
-                        <img src={product.image} alt={product.name} className="ibo-img" />
+                    {product.imageUrl ? (
+                        <img src={product.imageUrl} alt={product.name} className="ibo-img" />
                     ) : (
                         <div className="ibo-img-placeholder">📦</div>
                     )}
@@ -95,9 +95,9 @@ const ProductCard = ({ product, variant = 'deal' }) => {
             )}
 
             {/* Product Image */}
-            {product.image ? (
+            {product.imageUrl ? (
                 <img
-                    src={product.image}
+                    src={product.imageUrl}
                     alt={product.name}
                     className="product-img"
                 />
