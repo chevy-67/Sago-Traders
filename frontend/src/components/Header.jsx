@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Search, ShoppingBag, User, X, LayoutDashboard } from 'lucide-react';
+import { Search, ShoppingBag, User, LayoutDashboard } from 'lucide-react';
 import '../styles/Header.css';
-import Login from './Login';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
@@ -9,7 +8,6 @@ import { useAuth } from '../context/AuthContext';
 import Logo from '../assets/images/Logo/unnamed.jpg';
 
 const Header = () => {
-  const [showModal, setShowModal] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const { user, logout } = useAuth();
   const navigate = useNavigate();
@@ -20,20 +18,10 @@ const Header = () => {
     navigate('/');
   };
 
-  const handleLoginSuccess = (loggedInUser) => {
-    setShowModal(false);
-    if (loggedInUser?.role === 'admin') {
-      navigate('/admin');
-    } else {
-      navigate('/dashboard');
-    }
-  };
-
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       navigate(`/search/${encodeURIComponent(searchQuery)}`);
-      //setSearchQuery('');
     }
   };
 
@@ -98,29 +86,13 @@ const Header = () => {
                 </button>
               </>
             ) : (
-              <button className="auth-btn login" onClick={() => setShowModal(true)}>
+              <button className="auth-btn login" onClick={() => navigate('/login')}>
                 LOG IN
               </button>
             )}
           </div>
         </div>
       </div>
-
-      {/* Login Modal */}
-      {showModal && (
-        <div className="modal-overlay" onClick={() => setShowModal(false)}>
-          <div className="modal-card" onClick={(e) => e.stopPropagation()}>
-            <button
-              className="modal-close"
-              onClick={() => setShowModal(false)}
-              aria-label="Close"
-            >
-              <X size={18} />
-            </button>
-            <Login onLoginSuccess={handleLoginSuccess} />
-          </div>
-        </div>
-      )}
     </header>
   );
 };

@@ -58,6 +58,9 @@ const AdminDashboard = () => {
                     <NavLink to="/admin/hero" style={linkStyle}>
                         Hero Banners
                     </NavLink>
+                    <NavLink to="/admin/orders" style={linkStyle}>
+                        Orders Management
+                    </NavLink>
                     {/* Add more links here as needed */}
                 </nav>
 

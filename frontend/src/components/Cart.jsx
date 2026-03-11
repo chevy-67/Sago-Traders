@@ -61,7 +61,7 @@ const Cart = () => {
                         <span>Total</span>
                         <span>₹{getCartTotal()}</span>
                     </div>
-                    <button className="checkout-button">Proceed to Checkout</button>
+                    <button className="checkout-button" onClick={() => navigate('/checkout')}>Proceed to Checkout</button>
                     <button className="clear-cart" onClick={clearCart}>Clear Cart</button>
                 </div>
             </div>
