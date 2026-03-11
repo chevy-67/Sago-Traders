@@ -19,14 +19,32 @@ const orderSchema = new mongoose.Schema({
         default: 1,
     },
     totalAmount: {
-        type: Number,
+        type: String,
         required: true,
     },
     status: {
         type: String,
-        enum: ['pending', 'confirmed', 'cancelled'],
+        enum: ['pending', 'confirmed', 'dispatched', 'delivered', 'cancelled'],
         default: 'pending',
     },
+    deliveryDetails: {
+        name: { type: String },
+        phone: { type: String },
+        alternatePhone: { type: String },
+        address: { type: String },
+        city: { type: String },
+        state: { type: String },
+        pincode: { type: String },
+        notes: { type: String },
+    },
+    items: [
+        {
+            name: { type: String },
+            price: { type: String },
+            image: { type: String },
+            quantity: { type: Number },
+        }
+    ],
 }, { timestamps: true });
 
 module.exports = mongoose.model('Order', orderSchema);

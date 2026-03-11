@@ -242,7 +242,7 @@
     align-items: center;
 }
 
-.about-two-col--reverse {}
+
 
 .about-two-col__img-wrap {
     position: relative;
@@ -300,7 +300,7 @@
     color: var(--about-gold);
 }
 
-.about-two-col__text {}
+
 
 .about-two-col__list {
     margin: 24px 0 0;

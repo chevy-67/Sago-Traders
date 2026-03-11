@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams,Link } from 'react-router-dom';
 import axios from 'axios';
 import ProductCard from './ProductCard';
 import '../styles/ProductListPage.css';
@@ -89,7 +89,7 @@ const SearchResults = () => {
             <main className="products-container">
                 <div className="products-header">
                     <h3>Search Results for "{query}"</h3>
-                    <p className="product-count">{products.length} products found</p>
+                    {!loading && <p className="product-count">{products.length} products found</p>}
                 </div>
 
                 {loading ? (
@@ -103,7 +103,9 @@ const SearchResults = () => {
                 ) : (
                     <div className="products-grid">
                         {products.map((product) => (
-                            <ProductCard key={product._id} product={product} />
+                            <Link key={product._id} to={`/product/${product._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                <ProductCard key={product._id} product={product} />
+                            </Link>
                         ))}
                     </div>
                 )}

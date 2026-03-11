@@ -39,7 +39,7 @@ const Cart = () => {
                                 </div>
                             </div>
                             <div className="item-actions">
-                                <p className="item-subtotal">₹{item.price * item.quantity}</p>
+                                <p className="item-subtotal">₹{(parseFloat(item.price.replaceAll(',','')) * item.quantity).toLocaleString('en-IN')}</p>
                                 <button className="remove-item" onClick={() => removeFromCart(item.id)}>
                                     Remove
                                 </button>
@@ -51,7 +51,7 @@ const Cart = () => {
                     <h2>Order Summary</h2>
                     <div className="summary-row">
                         <span>Subtotal</span>
-                        <span>₹{getCartTotal()}</span>
+                        <span>₹{getCartTotal().toLocaleString('en-IN')}</span>
                     </div>
                     <div className="summary-row">
                         <span>Shipping</span>
@@ -59,9 +59,9 @@ const Cart = () => {
                     </div>
                     <div className="summary-total">
                         <span>Total</span>
-                        <span>₹{getCartTotal()}</span>
+                        <span>₹{getCartTotal().toLocaleString('en-IN')}</span>
                     </div>
-                    <button className="checkout-button">Proceed to Checkout</button>
+                    <button className="checkout-button" onClick={() => navigate('/checkout')}>Proceed to Checkout</button>
                     <button className="clear-cart" onClick={clearCart}>Clear Cart</button>
                 </div>
             </div>
