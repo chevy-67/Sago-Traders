@@ -16,12 +16,12 @@ exports.placeOrder = async (req, res) => {
 
         if (items && items.length > 0) {
             // Multi-item cart checkout
-            totalAmount = items.reduce((sum, i) => sum + (parseFloat(i.price) || 0) * (i.quantity || 1), 0);
+            totalAmount = items.reduce((sum, i) => sum + (parseFloat((i.price).replaceAll(',','')) || 0) * (i.quantity || 1), 0);
             // Store first item as primary product for the schema (keeps backward compat)
             orderProduct = { name: items[0].name, price: String(items[0].price), image: items[0].image };
             orderQuantity = items.reduce((sum, i) => sum + (i.quantity || 1), 0);
         } else {
-            const priceNum = parseFloat(product.price) || 0;
+            const priceNum = parseFloat((product.price).replaceAll(',','')) || 0;
             totalAmount = priceNum * quantity;
         }
 
@@ -29,7 +29,7 @@ exports.placeOrder = async (req, res) => {
             userId: req.user.userId,
             product: orderProduct,
             quantity: orderQuantity,
-            totalAmount,
+            totalAmount: totalAmount.toLocaleString('en-IN'),
             status: 'pending',
             // Store full delivery details
             deliveryDetails: { name, phone, alternatePhone, address, city, state, pincode, notes },

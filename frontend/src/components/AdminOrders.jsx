@@ -179,7 +179,7 @@ const AdminOrders = () => {
                                         </td>
                                         <td className="ao-qty">{order.quantity}</td>
                                         <td className="ao-amount">
-                                            ₹{Number(order.totalAmount).toLocaleString('en-IN')}
+                                            ₹{(order.totalAmount).toLocaleString('en-IN')}
                                         </td>
                                         <td className="ao-date">
                                             {new Date(order.createdAt).toLocaleDateString('en-IN', {
