@@ -308,7 +308,7 @@ const Checkout = () => {
                                             <p className="ck-item-qty">Qty: {item.quantity}</p>
                                         </div>
                                         <div className="ck-item-price">
-                                            ₹{(item.price * item.quantity).toLocaleString('en-IN')}
+                                            ₹{((parseFloat(item.price.replaceAll(',',''))) * item.quantity).toLocaleString('en-IN')}
                                         </div>
                                     </div>
                                 ))
