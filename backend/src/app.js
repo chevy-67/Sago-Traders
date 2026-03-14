@@ -7,7 +7,13 @@ const cors = require('cors')
 
 const app = express()
 app.use(express.json({ limit: '10mb' }))
-app.use(cors())
+
+// Configure CORS to explicitly allow requests from the frontend
+app.use(cors({
+  origin: ['http://localhost:5173', 'http://127.0.0.1:5173'], // Allow Vite's default dev server ports
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}))
 
 app.use('/api/auth/', authRoutes)
 app.use('/api/products', productRoutes)

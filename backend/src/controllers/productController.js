@@ -1,3 +1,4 @@
+
 const Product = require("../models/Product");
 
 // GET all products
@@ -73,3 +74,4 @@ const deleteProduct = async (req, res) => {
 };
 
 module.exports = { getProducts, getProductById, createProduct, updateProduct, deleteProduct };
+

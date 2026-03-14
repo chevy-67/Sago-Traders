@@ -45,8 +45,8 @@ const VALUES = [
 
 const TEAM = [
     {
-        initials: 'SR',
-        name: 'S. Rajendran',
+        initials: 'Er',
+        name: 'T.Gokulnath',
         role: 'Founder & Managing Director',
     },
     {
