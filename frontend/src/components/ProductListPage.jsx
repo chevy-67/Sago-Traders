@@ -172,7 +172,7 @@ const ProductListPage = () => {
                                         name: product.name,
                                         price: product.price || null,
                                         originalPrice: null,
-                                        image: product.imageUrl || null,
+                                        imageUrl: product.imageUrl || null,
                                         off: product.offer?.discountPercent > 0 ? `${product.offer.discountPercent}%` : null,
                                     }} />
                                 </Link>
