@@ -8,10 +8,17 @@ const cors = require('cors')
 const app = express()
 app.use(express.json({ limit: '10mb' }))
 
-// Configure CORS to explicitly allow requests from the frontend
+// Configure CORS to allow requests from any localhost Vite dev server port (5173, 5174, etc.)
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://127.0.0.1:5173'], // Allow Vite's default dev server ports
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  origin: (origin, callback) => {
+    // Allow requests with no origin (e.g. curl/Postman) or any localhost origin
+    if (!origin || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   credentials: true
 }))
 
