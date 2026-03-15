@@ -39,12 +39,16 @@
 
 .footer-col ul li {
     margin-bottom: 10px;
-    color: #D7CCC8;
-    cursor: pointer;
     font-size: 0.8rem;
 }
 
-.footer-col ul li:hover {
+.footer-col ul li a {
+    color: #D7CCC8;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-col ul li a:hover {
     color: white;
 }
 
@@ -53,13 +57,21 @@
     gap: 15px;
 }
 
-.social-icon {
-    cursor: pointer;
-    color: #2196F3;
-    /* Facebook Blue roughly */
+.social-icons a {
+    text-decoration: none;
+    display: inline-flex;
+    transition: transform 0.2s ease;
 }
 
-.social-icon:nth-child(2) {
-    color: #E91E63;
-    /* Instagram pink/purple */
+.social-icons a:hover {
+    transform: translateY(-3px);
+}
+
+.social-icon {
+    cursor: pointer;
+    color: #2196F3; /* Facebook Blue roughly */
+}
+
+.social-icons a:nth-child(2) .social-icon {
+    color: #E91E63; /* Instagram pink/purple */
 }

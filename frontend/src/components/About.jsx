@@ -50,15 +50,11 @@ const TEAM = [
         role: 'Founder & Managing Director',
     },
     {
-        initials: 'PM',
-        name: 'P. Muthuswamy',
-        role: 'Head of Procurement',
+        initials: 'Er',
+        name: 'G.Sakthimohan',
+        role: 'Founder & Managing Director',
     },
-    {
-        initials: 'AK',
-        name: 'A. Kavitha',
-        role: 'Customer Relations Manager',
-    },
+
 ];
 
 const STORY_POINTS = [
@@ -246,12 +242,12 @@ const About = () => {
                         <div className="about-contact-card">
                             <span className="about-contact-card__icon">📞</span>
                             <span className="about-contact-card__label">Phone</span>
-                            <span className="about-contact-card__value">+91 98765 43210</span>
+                            <span className="about-contact-card__value">+91 8807710937</span>
                         </div>
                         <div className="about-contact-card">
                             <span className="about-contact-card__icon">✉️</span>
                             <span className="about-contact-card__label">Email</span>
-                            <span className="about-contact-card__value">contact@sagotraders.com</span>
+                            <span className="about-contact-card__value">sagokandt@gmail.com</span>
                         </div>
                         <div className="about-contact-card">
                             <span className="about-contact-card__icon">📍</span>

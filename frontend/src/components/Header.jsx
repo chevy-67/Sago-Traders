@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Search, ShoppingCart, User, LayoutDashboard, LogOut, ChevronDown, Phone, MapPin, Package } from 'lucide-react';
+import { Search, ShoppingCart, User, LayoutDashboard, LogOut, ChevronDown, Phone, MapPin, Package, Info, Menu, X } from 'lucide-react';
 import '../styles/Header.css';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
@@ -19,6 +19,7 @@ const Header = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isCatOpen, setIsCatOpen] = useState(false);
   const [isUserOpen, setIsUserOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -46,39 +47,28 @@ const Header = () => {
     e.preventDefault();
     if (searchQuery.trim()) {
       navigate(`/search/${encodeURIComponent(searchQuery.trim())}`);
+      setIsMenuOpen(false);
     }
   };
 
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const closeMenu = () => setIsMenuOpen(false);
+
   return (
     <header className="header">
-      {/* ── Top Bar ── */}
-      <div className="header-topbar">
-        <div className="topbar-inner">
-          <div className="topbar-left">
-            <span className="topbar-item">
-              <Phone size={12} />
-              +91 98765 43210
-            </span>
-            <span className="topbar-divider" />
-            <span className="topbar-item">
-              <MapPin size={12} />
-              Delivering across India
-            </span>
-          </div>
-          <div className="topbar-right">
-            <Link to="/about" className="topbar-link">About Us</Link>
-            <span className="topbar-divider" />
-            <Link to="/category/all" className="topbar-link">All Products</Link>
-          </div>
-        </div>
-      </div>
+
 
       {/* ── Main Header ── */}
       <div className="header-main">
         <div className="header-inner">
+          
+          {/* Mobile Menu Toggle */}
+          <button className="mobile-menu-toggle" onClick={toggleMenu} aria-label="Toggle Menu">
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
 
           {/* Logo */}
-          <Link to="/" className="header-logo">
+          <Link to="/" className="header-logo" onClick={closeMenu}>
             <img src={Logo} alt="Sago Traders" className="logo-img" />
             <div className="logo-text">
               <span className="logo-brand">SAGO</span>
@@ -86,7 +76,7 @@ const Header = () => {
             </div>
           </Link>
 
-          {/* Search Bar */}
+          {/* Search Bar - Hidden on mobile drawer, shown in header-main */}
           <form className="header-search" onSubmit={handleSearch}>
             <div className="search-category-btn" ref={catRef}>
               <button
@@ -117,21 +107,21 @@ const Header = () => {
             <input
               className="search-input-main"
               type="text"
-              placeholder="Search products, brands, categories…"
+              placeholder="Search..."
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleSearch(e)}
             />
             <button type="submit" className="search-submit-btn" aria-label="Search">
-              <Search size={20} />
+              <Search size={18} />
             </button>
           </form>
 
           {/* Right Actions */}
           <div className="header-actions">
 
-            {/* User */}
-            <div className="action-item user-menu" ref={userRef}>
+            {/* User Dropdown (Desktop) */}
+            <div className="action-item user-menu desktop-only" ref={userRef}>
               <button
                 className="action-btn"
                 onClick={() => setIsUserOpen(p => !p)}
@@ -182,14 +172,14 @@ const Header = () => {
               )}
             </div>
 
-            {/* Orders */}
-            <Link to="/cart" className="action-btn action-item" aria-label="Orders">
+            {/* About Us (Desktop) */}
+            <Link to="/about" className="action-btn action-item desktop-only" aria-label="About Us">
               <div className="action-icon-wrap">
-                <Package size={20} />
+                <Info size={20} />
               </div>
               <div className="action-label">
-                <span className="action-sub">Track</span>
-                <span className="action-main">Orders</span>
+                <span className="action-sub">More</span>
+                <span className="action-main">About Us</span>
               </div>
             </Link>
 
@@ -210,8 +200,60 @@ const Header = () => {
         </div>
       </div>
 
-      {/* ── Nav Bar ── */}
-      <nav className="header-navbar">
+      {/* ── Mobile Menu Cabinet ──  */}
+      <div className={`mobile-menu-cabinet ${isMenuOpen ? 'open' : ''}`}>
+        <div className=" cabinet-inner">
+          <div className="cabinet-header">
+            <h3>Menu</h3>
+            <button onClick={closeMenu}><X size={24} /></button>
+          </div>
+          
+          <div className="cabinet-user-section">
+            {user ? (
+               <Link to="/profile" className="cabinet-link profile-link" onClick={closeMenu}>
+                 <div className="dropdown-avatar">{user.name?.charAt(0).toUpperCase()}</div>
+                 <div>
+                   <div className="dropdown-name">{user.name}</div>
+                   <div className="dropdown-email">{user.email}</div>
+                 </div>
+               </Link>
+            ) : (
+               <Link to="/login" className="cabinet-link login-btn-cm" onClick={closeMenu}>
+                 <User size={20} /> Login / Register
+               </Link>
+            )}
+          </div>
+
+          <nav className="cabinet-nav">
+            <Link to="/" className="cabinet-link" onClick={closeMenu}>Home</Link>
+            <Link to="/about" className="cabinet-link" onClick={closeMenu}>About Us</Link>
+            <div className="cabinet-divider" />
+            <h4 className="cabinet-section-title">Categories</h4>
+             {CATEGORIES.map(c => (
+              <Link 
+                key={c.slug} 
+                to={`/category/${c.slug}`} 
+                className="cabinet-link" 
+                onClick={closeMenu}
+              >
+                {c.label}
+              </Link>
+            ))}
+          </nav>
+          
+          {user && (
+            <div className="cabinet-footer">
+               <button className="cabinet-logout-btn" onClick={handleLogout}>
+                 <LogOut size={18} /> Logout
+               </button>
+            </div>
+          )}
+        </div>
+        <div className="cabinet-overlay" onClick={closeMenu} />
+      </div>
+
+      {/* ── Nav Bar (Desktop) ── */}
+      <nav className="header-navbar desktop-only">
         <div className="navbar-inner">
           <Link to="/" className={`navbar-link ${location.pathname === '/' ? 'active' : ''}`}>Home</Link>
           {CATEGORIES.map(c => (
@@ -223,7 +265,7 @@ const Header = () => {
               {c.label}
             </Link>
           ))}
-          <Link to="/about" className={`navbar-link ${location.pathname === '/about' ? 'active' : ''}`}>About Us</Link>
+
         </div>
       </nav>
     </header>
