@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight, ShoppingBag, ArrowRight } from 'lucide-react
 import { Link } from 'react-router-dom';
 import '../styles/Hero.css';
 
-const API = 'http://localhost:2004/api/banners';
+const API = `${import.meta.env.VITE_PROD_URL}/api/banners`;
 
 /* ─── Static fallback slides (shown when no banners uploaded) ─── */
 const STATIC_SLIDES = [

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
-const API = 'http://localhost:2004/api/products';
+const API = `${import.meta.env.VITE_PROD_URL}/api/products`;
 
 const FIELDS = [
     { name: 'brand', label: 'Brand' },

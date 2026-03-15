@@ -6,7 +6,7 @@ import { useCart } from '../context/CartContext';
 import { User, Phone, MapPin, FileText, Package } from 'lucide-react';
 import '../styles/Checkout.css';
 
-const API_BASE = 'http://localhost:2004/api';
+const API_BASE = `${import.meta.env.VITE_PROD_URL}/api`;
 
 const Checkout = () => {
     const navigate = useNavigate();

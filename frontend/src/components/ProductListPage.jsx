@@ -4,7 +4,7 @@ import axios from 'axios';
 import ProductCard from './ProductCard';
 import '../styles/ProductListPage.css';
 
-const API = 'http://localhost:2004/api/products';
+const API = `${import.meta.env.VITE_PROD_URL}/api/products`;
 
 // Map URL slug to a display name
 const CATEGORY_LABELS = {

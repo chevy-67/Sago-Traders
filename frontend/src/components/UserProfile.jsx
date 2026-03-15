@@ -29,7 +29,7 @@ const UserProfile = () => {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const res = await fetch('http://localhost:2004/api/auth/profile', {
+                const res = await fetch(`${import.meta.env.VITE_PROD_URL}/api/auth/profile`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (res.ok) {
@@ -82,7 +82,7 @@ const UserProfile = () => {
         setMessage({ text: '', type: '' });
 
         try {
-            const res = await fetch('http://localhost:2004/api/auth/profile', {
+            const res = await fetch(`${import.meta.env.VITE_PROD_URL}/api/auth/profile`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

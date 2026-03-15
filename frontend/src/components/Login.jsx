@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-
-
 const Login = ({ onLoginSuccess }) => {
   const { login } = useAuth();
   const [phone, setPhone] = useState("");
@@ -13,7 +11,7 @@ const Login = ({ onLoginSuccess }) => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const API_BASE = "http://localhost:2004/api/auth";
+  const API_BASE = `${import.meta.env.VITE_PROD_URL}/api/auth`;
 
   const validatePhone = (phoneNum) => {
     const phoneRegex = /^[0-9]{10}$/;

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import '../styles/AdminOrders.css';
 
-const API_BASE = 'http://localhost:2004/api/orders';
+const API_BASE = `${import.meta.env.VITE_PROD_URL}/api/orders`;
 
 const STATUS_OPTIONS = ['pending', 'confirmed', 'dispatched', 'delivered', 'cancelled'];
 
