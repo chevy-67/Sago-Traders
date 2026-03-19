@@ -73,5 +73,42 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-module.exports = { getProducts, getProductById, createProduct, updateProduct, deleteProduct };
+// GET deals — offered products first, random fallback
+const getDeals = async (req, res) => {
+  const LIMIT = 6;
+  try {
+    const now = new Date();
+
+    // Step 1: Get all products that have a discount set
+    const withOffer = await Product.find({
+      'offer.discountPercent': { $gt: 0 },
+    }).sort({ 'offer.discountPercent': -1 }).lean();
+
+    // Step 2: Filter out expired offers in JS (avoids complex $or)
+    const offered = withOffer.filter((p) => {
+      if (!p.offer.offerExpiry) return true; // no expiry = always valid
+      return new Date(p.offer.offerExpiry) > now;
+    }).slice(0, LIMIT);
+
+    if (offered.length >= LIMIT) {
+      return res.json(offered);
+    }
+
+    // Step 3: Pad with random products (excluding already-offered ones)
+    const offeredIds = offered.map((p) => p._id);
+    const needed = LIMIT - offered.length;
+
+    const randoms = await Product.aggregate([
+      { $match: { _id: { $nin: offeredIds } } },
+      { $sample: { size: needed } },
+    ]);
+
+    res.json([...offered, ...randoms]);
+  } catch (err) {
+    console.error('getDeals error:', err);
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};
+
+module.exports = { getProducts, getProductById, createProduct, updateProduct, deleteProduct, getDeals };
 

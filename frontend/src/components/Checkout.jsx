@@ -293,8 +293,8 @@ const Checkout = () => {
                             {cartItems.length === 0 ? (
                                 <p className="ck-empty-msg">Your cart is empty.</p>
                             ) : (
-                                cartItems.map((item) => (
-                                    <div key={item._id} className="ck-item">
+                                cartItems.map((item, index) => (
+                                    <div key={item._id || item.id || index} className="ck-item">
                                         <div className="ck-item-img-wrap">
                                             <img
                                                 src={item.image}

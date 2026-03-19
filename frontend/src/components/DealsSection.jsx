@@ -1,73 +1,141 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import ProductCard from './ProductCard';
 import '../styles/DealsSection.css';
 
-// --------------------------------------------------------------------------
-// MOCK ADMIN SETTINGS (To be replaced by API/DB data later)
-// --------------------------------------------------------------------------
-const adminSettings = {
-    showSection: true,     // Admin decides whether to show this section
-    sectionTitle: 'Explore Our Best Deals', // Admin can edit title
-    cardLimit: 6,         // Admin decides how many cards to display
-};
-
-// --------------------------------------------------------------------------
-// BASE DATA (Ideally would also come from backend/admin input)
-// --------------------------------------------------------------------------
-const allDeals = [
-    { id: 1, name: 'Sameer New Ceiling Fan', originalPrice: 2199, price: 1299, off: '41% Off', image: 'https://placehold.co/150x150?text=Fan' },
-    { id: 2, name: 'Preethi Wet Grinder', originalPrice: 4200, price: 2999, off: '40% Off', image: 'https://placehold.co/150x150?text=Grinder' },
-    { id: 3, name: 'Philips Iron Box', originalPrice: 1500, price: 999, off: '33% Off', image: 'https://placehold.co/150x150?text=Iron' },
-    { id: 4, name: 'Butterfly Mixer', originalPrice: 3500, price: 2500, off: '28% Off', image: 'https://placehold.co/150x150?text=Mixer' },
-    { id: 5, name: 'Usha Table Fan', originalPrice: 2800, price: 1800, off: '35% Off', image: 'https://placehold.co/150x150?text=Fan' },
-    { id: 6, name: 'Pigeon Gas Stove', originalPrice: 4000, price: 2200, off: '45% Off', image: 'https://placehold.co/150x150?text=Stove' },
-    { id: 7, name: 'Havells Heater', originalPrice: 3200, price: 2600, off: '18% Off', image: 'https://placehold.co/150x150?text=Heater' },
-    { id: 8, name: 'Kent Water Purifier', originalPrice: 15000, price: 12000, off: '20% Off', image: 'https://placehold.co/150x150?text=Purifier' },
-];
+const API_BASE = 'http://localhost:2004/api/products';
 
 const DealsSection = () => {
     const scrollRef = useRef(null);
-    const [settings, setSettings] = useState(adminSettings);
+    const navigate = useNavigate();
     const [deals, setDeals] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        if (settings.showSection) {
-            const limitedDeals = allDeals.slice(0, settings.cardLimit);
-            setDeals(limitedDeals);
-        }
-    }, [settings]);
+        const fetchDeals = async () => {
+            try {
+                setLoading(true);
+                const res = await fetch(`${API_BASE}/deals`);
+                if (!res.ok) throw new Error('Failed to fetch deals');
+                const data = await res.json();
+                setDeals(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchDeals();
+    }, []);
 
     const scroll = (direction) => {
         if (scrollRef.current) {
-            const { current } = scrollRef;
             const scrollAmount = 300;
-            if (direction === 'left') {
-                current.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-            } else {
-                current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-            }
+            scrollRef.current.scrollBy({
+                left: direction === 'left' ? -scrollAmount : scrollAmount,
+                behavior: 'smooth',
+            });
         }
     };
 
-    if (!settings.showSection) return null;
+    // Normalise a DB product for ProductCard
+    const normaliseProduct = (p) => ({
+        ...p,
+        id: p._id,
+        // If admin set a discountPercent, compute originalPrice from it
+        originalPrice:
+            p.offer?.discountPercent > 0 && p.price
+                ? Math.round(
+                      Number(p.price) /
+                          (1 - p.offer.discountPercent / 100)
+                  )
+                : undefined,
+        // Pass discount badge info the card understands
+        discount: p.offer?.discountPercent > 0 ? p.offer.discountPercent : undefined,
+        off: p.offer?.offerLabel && p.offer?.discountPercent > 0
+            ? `${p.offer.discountPercent}% Off`
+            : undefined,
+    });
+
+    /* ── Skeleton loader ── */
+    if (loading) {
+        return (
+            <div className="deals-container">
+                <div className="deals-header">
+                    <div className="deals-header-text">
+                        <span className="deals-label">Hot Picks</span>
+                        <h3>Explore Our Best Deals</h3>
+                    </div>
+                </div>
+                <div className="deals-grid">
+                    {Array.from({ length: 6 }).map((_, i) => (
+                        <div key={i} className="deal-card ibo-card" style={{
+                            background: 'linear-gradient(90deg,#f3f4f6 25%,#e5e7eb 50%,#f3f4f6 75%)',
+                            backgroundSize: '200% 100%',
+                            animation: 'shimmer 1.5s infinite',
+                            minHeight: '260px',
+                        }} />
+                    ))}
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="deals-container">
+                <div className="deals-header">
+                    <div className="deals-header-text">
+                        <span className="deals-label">Hot Picks</span>
+                        <h3>Explore Our Best Deals</h3>
+                    </div>
+                </div>
+                <p style={{ color: '#9ca3af', textAlign: 'center', padding: '40px 0', fontSize: '0.9rem' }}>
+                    Could not load deals right now. Please try again shortly.
+                </p>
+            </div>
+        );
+    }
+
+    if (deals.length === 0 && !loading) return null;
+
 
     return (
         <div className="deals-container">
             <div className="deals-header">
                 <div className="deals-header-text">
                     <span className="deals-label">Hot Picks</span>
-                    <h3>{settings.sectionTitle}</h3>
+                    <h3>Explore Our Best Deals</h3>
                 </div>
-                <div className="scroll-arrows">
-                    <button onClick={() => scroll('left')} className="arrow-btn" aria-label="Scroll left"><ChevronLeft size={20} /></button>
-                    <button onClick={() => scroll('right')} className="arrow-btn" aria-label="Scroll right"><ChevronRight size={20} /></button>
+                <div className="deals-header-right">
+                    <button
+                        className="view-all-btn"
+                        onClick={() => navigate('/products')}
+                    >
+                        View All
+                    </button>
+                    <div className="scroll-arrows">
+                        <button onClick={() => scroll('left')} className="arrow-btn" aria-label="Scroll left">
+                            <ChevronLeft size={20} />
+                        </button>
+                        <button onClick={() => scroll('right')} className="arrow-btn" aria-label="Scroll right">
+                            <ChevronRight size={20} />
+                        </button>
+                    </div>
                 </div>
             </div>
 
             <div className="deals-grid" ref={scrollRef}>
                 {deals.map((deal) => (
-                    <ProductCard key={deal.id} product={deal} />
+                    <div
+                        key={deal._id}
+                        onClick={() => navigate(`/product/${deal._id}`)}
+                        style={{ cursor: 'pointer' }}
+                    >
+                        <ProductCard product={normaliseProduct(deal)} variant="deal" />
+                    </div>
                 ))}
             </div>
         </div>
