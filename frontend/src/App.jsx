@@ -20,6 +20,7 @@ import OrderConfirmation from './components/OrderConfirmation';
 import PublicLayout from './components/PublicLayout';
 import AdminRoute from './components/AdminRoute';
 import AdminDashboard from './components/AdminDashboard';
+import AdminLogin from './components/AdminLogin';
 import ProductSpecsCRUD from './components/ProductSpecsCRUD';
 import HeroBannerManager from './components/HeroBannerManager';
 import AdminOrders from './components/AdminOrders';
@@ -56,6 +57,8 @@ function App() {
                 <Route path="/about" element={<About />} />
 
                 <Route path="/login" element={<Login />} />
+                <Route path="/admin/login" element={<AdminLogin />} />
+
                 <Route path="/order/confirmation" element={<OrderConfirmation />} />
                 <Route path="/products" element={<ProductListPage />} />
                 <Route path="/category/all" element={<ProductListPage />} />

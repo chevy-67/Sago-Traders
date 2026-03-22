@@ -11,7 +11,7 @@ const Login = ({ onLoginSuccess }) => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const API_BASE = `${import.meta.env.VITE_PROD_URL}/api/auth`;
+  const API_BASE = `${import.meta.env.VITE_API_URL}/api/auth`;
 
   const validatePhone = (phoneNum) => {
     const phoneRegex = /^[0-9]{10}$/;
@@ -210,8 +210,28 @@ const Login = ({ onLoginSuccess }) => {
           </form>
         </div>
       )}
+
+      <div style={{ marginTop: "30px", textAlign: "center", borderTop: "1px solid #eee", paddingTop: "20px" }}>
+
+        <p style={{ fontSize: "14px", color: "#666" }}>Are you an admin?</p>
+        <button
+          onClick={() => navigate("/admin/login")}
+          style={{
+            background: "none",
+            border: "none",
+            color: "#007bff",
+            cursor: "pointer",
+            fontSize: "14px",
+            fontWeight: "bold",
+            textDecoration: "underline"
+          }}
+        >
+          Login here
+        </button>
+      </div>
     </div>
   );
 };
+
 
 export default Login;

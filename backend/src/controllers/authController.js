@@ -104,3 +104,46 @@ exports.updateProfile = async (req, res) => {
     res.status(500).json({ message: "Failed to update profile", error: error.message });
   }
 };
+
+exports.adminLogin = async (req, res) => {
+  const { phone, password } = req.body;
+
+  try {
+    const user = await User.findOne({ phone });
+
+    if (!user) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    if (user.role !== 'admin') {
+      return res.status(403).json({ message: "Access denied. Not an admin." });
+    }
+
+    const isMatch = await user.matchPassword(password);
+
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    const token = jwt.sign(
+      { userId: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    res.json({
+      message: "Admin login successful",
+      token,
+      user: {
+        _id: user._id,
+        phone: user.phone,
+        role: user.role,
+        name: user.name
+      }
+    });
+  } catch (error) {
+    console.error("Admin login error:", error);
+    res.status(500).json({ message: "Server error during admin login" });
+  }
+};
+
