@@ -106,9 +106,10 @@ const MediaSlide = ({ banner }) => (
 );
 
 const Hero = () => {
-    const [slides, setSlides] = useState(STATIC_SLIDES);
+    const [slides, setSlides] = useState([]);
     const [currentSlide, setCurrentSlide] = useState(0);
     const [isLive, setIsLive] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         fetch(API)
@@ -117,11 +118,15 @@ const Hero = () => {
                 if (Array.isArray(data) && data.length > 0) {
                     setSlides(data);
                     setIsLive(true);
+                } else {
+                    setSlides(STATIC_SLIDES);
                 }
-                // else keep static fallback
             })
             .catch(() => {
-                // network error – keep static fallback silently
+                setSlides(STATIC_SLIDES);
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
     }, []);
 
@@ -141,6 +146,14 @@ const Hero = () => {
         const timer = setInterval(nextSlide, 5000);
         return () => clearInterval(timer);
     }, [nextSlide]);
+
+    if (isLoading) {
+        return (
+            <div className="hero-section" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '400px', backgroundColor: '#f8f9fa' }}>
+                <h2 style={{ color: '#666' }}>Loading...</h2>
+            </div>
+        );
+    }
 
     const current = slides[currentSlide];
 
