@@ -49,6 +49,9 @@ const AdminDashboard = () => {
             <div style={sidebarStyle}>
                 <h2 style={{ marginBottom: '40px', color: '#E85D04', textAlign: 'center' }}>Sago Admin</h2>
                 <nav>
+                    <NavLink to="/" end style={linkStyle}>
+                        Go to Home
+                    </NavLink>
                     <NavLink to="/admin" end style={linkStyle}>
                         Dashboard Overview
                     </NavLink>

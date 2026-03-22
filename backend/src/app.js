@@ -12,17 +12,7 @@ app.use(express.json({ limit: "10mb" }));
 // Configure CORS to allow requests from any localhost Vite dev server port (5173, 5174, etc.)
 app.use(
   cors({
-    origin: (origin, callback) => {
-      // Allow requests with no origin (e.g. curl/Postman) or any localhost origin
-      if (
-        !origin ||
-        /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)
-      ) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: "https://sagotraders.onrender.com",
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,

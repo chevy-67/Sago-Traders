@@ -11,7 +11,7 @@ const AdminLogin = () => {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    const API_BASE = `${import.meta.env.VITE_API_URL}/api/auth`;
+    const API_BASE = `${import.meta.env.VITE_PROD_URL}/api/auth`;
 
     const handleLogin = async (e) => {
         e.preventDefault();
