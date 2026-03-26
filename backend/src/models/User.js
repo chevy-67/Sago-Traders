@@ -4,8 +4,8 @@ const bcrypt = require('bcryptjs')
 const userSchema = mongoose.Schema({
     phone: {
         type: String,
-        required: true,
-        unique: true
+        unique: true,
+        sparse: true   // allows multiple docs without a phone (Google users)
     },
     password: {
         type: String,
@@ -23,6 +23,14 @@ const userSchema = mongoose.Schema({
         type: String,
         trim: true,
         lowercase: true
+    },
+    googleId: {
+        type: String,
+        unique: true,
+        sparse: true   // only set for Google OAuth users
+    },
+    profilePicture: {
+        type: String
     },
     alternatePhone: {
         type: String,
@@ -52,9 +60,9 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
 };
 
 // Encrypt password before saving
-userSchema.pre('save', async function (next) {
+userSchema.pre('save', async function () {
     if (!this.isModified('password')) {
-        return next();
+        return;
     }
 
     const salt = await bcrypt.genSalt(10);
