@@ -138,8 +138,9 @@ const ProductListPage = () => {
                 </div>
 
                 {loading && (
-                    <div style={{ textAlign: 'center', padding: '60px', color: '#6b7280', fontSize: '16px' }}>
-                        Loading products…
+                    <div className="pd-loader">
+                        <div className="pd-spinner" />
+                        <p>Loading product…</p>
                     </div>
                 )}
 

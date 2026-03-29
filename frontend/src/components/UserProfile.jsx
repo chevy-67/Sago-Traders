@@ -9,6 +9,7 @@ const UserProfile = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
+        phone: '',
         alternatePhone: '',
         gender: '',
         dateOfBirth: '',
@@ -37,6 +38,7 @@ const UserProfile = () => {
                     setFormData({
                         name: data.name || '',
                         email: data.email || '',
+                        phone: data.phone || '',
                         alternatePhone: data.alternatePhone || '',
                         gender: data.gender || '',
                         dateOfBirth: data.dateOfBirth ? data.dateOfBirth.split('T')[0] : '',
@@ -186,12 +188,12 @@ const UserProfile = () => {
                             </h2>
                             <div className="form-grid">
                                 <div className="form-group">
-                                    <label>Primary Phone (Used for Login)</label>
+                                    <label>Primary Phone</label>
                                     <input
                                         type="text"
-                                        value={user?.phone || 'Loading...'}
-                                        disabled
-                                        className="input-disabled"
+                                        name="phone"
+                                        value={formData?.phone || ''}
+                                        onChange={handleChange}
                                     />
                                 </div>
                                 <div className="form-group">

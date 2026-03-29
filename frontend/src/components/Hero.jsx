@@ -63,13 +63,13 @@ const STATIC_SLIDES = [
 ];
 
 /* ─── Live media slide rendered from API data ─── */
-const MediaSlide = ({ banner }) => (
-    <div className="hero-media-slide">
+const MediaSlide = ({ banner, isActive }) => (
+    <div className={`hero-media-slide ${isActive ? 'active' : ''}`}>
         {/* Background media */}
         {banner.mediaType === 'video' ? (
             <video
                 key={banner._id}
-                className="hero-media-bg"
+                className={`hero-media-bg ${isActive ? 'zoom-effect' : ''}`}
                 src={banner.mediaUrl}
                 autoPlay
                 muted
@@ -79,7 +79,7 @@ const MediaSlide = ({ banner }) => (
         ) : (
             <img
                 key={banner._id}
-                className="hero-media-bg"
+                className={`hero-media-bg ${isActive ? 'zoom-effect' : ''}`}
                 src={banner.mediaUrl}
                 alt={banner.title || 'Banner'}
             />
@@ -165,10 +165,25 @@ const Hero = () => {
                 </button>
 
                 <div className="hero-banner">
-                    {isLive
-                        ? <MediaSlide banner={current} />
-                        : current.content
-                    }
+                    <div
+                        className="hero-slider-track"
+                        style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+                    >
+                        {slides.map((slide, index) => (
+                            <div
+                                className={`hero-slide ${currentSlide === index ? 'active' : ''}`}
+                                key={slide._id || index}
+                            >
+                                {isLive ? (
+                                    <MediaSlide banner={slide} isActive={currentSlide === index} />
+                                ) : (
+                                    <div className={`static-wrapper ${currentSlide === index ? 'active' : ''}`}>
+                                        {slide.content}
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
                 </div>
 
                 <button className="carousel-btn next" onClick={nextSlide} aria-label="Next">
