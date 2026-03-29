@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const protect = require('../middlewares/authMiddleware');
 const User = require('../models/User');
-const { placeOrder, getUserOrders, getAllOrders, updateOrderStatus } = require('../controllers/orderController');
+const { placeOrder, getUserOrders, getAllOrders, updateOrderStatus, createRazorpayOrder, verifyRazorpayPayment } = require('../controllers/orderController');
 
 // Admin-only guard — looks up role from DB, not JWT, so it works with old tokens too
 const adminOnly = async (req, res, next) => {
@@ -20,6 +20,8 @@ const adminOnly = async (req, res, next) => {
 // Customer routes
 router.post('/', protect, placeOrder);
 router.get('/', protect, getUserOrders);
+router.post('/razorpay-create', protect, createRazorpayOrder);
+router.post('/razorpay-verify', protect, verifyRazorpayPayment);
 
 // Admin routes
 router.get('/admin/all', protect, adminOnly, getAllOrders);

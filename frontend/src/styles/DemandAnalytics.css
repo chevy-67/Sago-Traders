@@ -1,0 +1,486 @@
+.demand-analytics-container {
+    padding: 30px 20px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+}
+
+.analytics-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.analytics-header h1 {
+    font-size: 2.5rem;
+    color: #1a237e;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.analytics-header p {
+    font-size: 1.1rem;
+    color: #666;
+    margin: 0;
+}
+
+/* Alert Messages */
+.alert {
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: 500;
+    animation: slideDown 0.3s ease-out;
+}
+
+.alert-error {
+    background-color: #ffebee;
+    color: #c62828;
+    border-left: 4px solid #c62828;
+}
+
+.alert-success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border-left: 4px solid #2e7d32;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Summary Cards */
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.summary-card {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a237e;
+    margin-bottom: 10px;
+}
+
+.card-label {
+    font-size: 1rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.card-subtitle {
+    font-size: 0.85rem;
+    color: #999;
+    margin-top: 5px;
+}
+
+/* Analytics Grid */
+.analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.analytics-grid .card {
+    min-height: 400px;
+}
+
+/* Demand Distribution */
+.demand-distribution {
+    margin-top: 20px;
+}
+
+.distribution-item {
+    margin-bottom: 25px;
+}
+
+.distribution-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.level-badge {
+    padding: 6px 12px;
+    border-radius: 6px;
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.count {
+    font-weight: 700;
+    color: #1a237e;
+    font-size: 1.2rem;
+}
+
+.progress-bar {
+    height: 24px;
+    background-color: #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 12px;
+    transition: width 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+}
+
+/* Category List */
+.category-list {
+    margin-top: 20px;
+}
+
+.category-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.category-item:last-child {
+    border-bottom: none;
+}
+
+.category-name {
+    font-weight: 600;
+    color: #1a237e;
+}
+
+.category-count {
+    background-color: #f5f5f5;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Critical Items */
+.critical-items {
+    margin-top: 20px;
+}
+
+.critical-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #fff9e6;
+    border-left: 4px solid #fbc02d;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.item-info h4 {
+    margin: 0 0 8px 0;
+    color: #1a237e;
+    font-size: 1.1rem;
+}
+
+.item-details {
+    margin: 0;
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.demand-badge {
+    padding: 8px 16px;
+    border-radius: 20px;
+    color: white;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+/* Filters Section */
+.filters-section {
+    margin-bottom: 40px;
+}
+
+.filters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+    align-items: flex-end;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-group label {
+    font-weight: 600;
+    color: #1a237e;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+.filter-group select {
+    padding: 10px 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: border-color 0.3s ease;
+    background-color: white;
+    cursor: pointer;
+}
+
+.filter-group select:focus {
+    outline: none;
+    border-color: #1a237e;
+}
+
+/* Buttons */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.btn-primary {
+    background-color: #1a237e;
+    color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background-color: #0d1854;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(26, 35, 126, 0.3);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Predictions Table */
+.predictions-table {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table thead {
+    background-color: #f5f5f5;
+}
+
+table th {
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    color: #1a237e;
+    border-bottom: 2px solid #e0e0e0;
+    font-size: 0.95rem;
+}
+
+table td {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.product-name {
+    font-weight: 600;
+    color: #1a237e;
+}
+
+.demand-value {
+    font-weight: 600;
+    color: #d32f2f;
+}
+
+.trend-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.trend-increasing {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.trend-decreasing {
+    background-color: #ffe0b2;
+    color: #e65100;
+}
+
+.trend-stable {
+    background-color: #f3e5f5;
+    color: #6a1b9a;
+}
+
+/* Row Highlighting by Demand Level */
+.demand-very-high {
+    background-color: #ffebee;
+}
+
+.demand-high {
+    background-color: #fff3e0;
+}
+
+.demand-medium {
+    background-color: #fffde7;
+}
+
+.demand-low {
+    background-color: #f1f8e9;
+}
+
+/* Loader */
+.loader {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.loader::after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+    border: 3px solid #ddd;
+    border-radius: 50%;
+    border-top-color: #1a237e;
+    animation: spin 0.6s linear infinite;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+}
+
+.empty-state p {
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .demand-analytics-container {
+        padding: 20px 10px;
+    }
+
+    .analytics-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .summary-cards {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .analytics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filters {
+        grid-template-columns: 1fr;
+    }
+
+    .critical-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .predictions-table {
+        font-size: 0.85rem;
+    }
+
+    table th,
+    table td {
+        padding: 10px 8px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .analytics-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .card-value {
+        font-size: 2rem;
+    }
+
+    .predictions-table {
+        font-size: 0.75rem;
+    }
+
+    table th,
+    table td {
+        padding: 8px 5px;
+    }
+
+    .level-badge {
+        font-size: 0.75rem;
+        padding: 4px 8px;
+    }
+}

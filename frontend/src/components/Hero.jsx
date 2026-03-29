@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight, ShoppingBag, ArrowRight } from 'lucide-react
 import { Link } from 'react-router-dom';
 import '../styles/Hero.css';
 
-const API = 'http://localhost:2004/api/banners';
+const API = `${import.meta.env.VITE_PROD_URL}/api/banners`;
 
 /* ─── Static fallback slides (shown when no banners uploaded) ─── */
 const STATIC_SLIDES = [
@@ -63,13 +63,13 @@ const STATIC_SLIDES = [
 ];
 
 /* ─── Live media slide rendered from API data ─── */
-const MediaSlide = ({ banner }) => (
-    <div className="hero-media-slide">
+const MediaSlide = ({ banner, isActive }) => (
+    <div className={`hero-media-slide ${isActive ? 'active' : ''}`}>
         {/* Background media */}
         {banner.mediaType === 'video' ? (
             <video
                 key={banner._id}
-                className="hero-media-bg"
+                className={`hero-media-bg ${isActive ? 'zoom-effect' : ''}`}
                 src={banner.mediaUrl}
                 autoPlay
                 muted
@@ -79,7 +79,7 @@ const MediaSlide = ({ banner }) => (
         ) : (
             <img
                 key={banner._id}
-                className="hero-media-bg"
+                className={`hero-media-bg ${isActive ? 'zoom-effect' : ''}`}
                 src={banner.mediaUrl}
                 alt={banner.title || 'Banner'}
             />
@@ -106,9 +106,10 @@ const MediaSlide = ({ banner }) => (
 );
 
 const Hero = () => {
-    const [slides, setSlides] = useState(STATIC_SLIDES);
+    const [slides, setSlides] = useState([]);
     const [currentSlide, setCurrentSlide] = useState(0);
     const [isLive, setIsLive] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         fetch(API)
@@ -117,11 +118,15 @@ const Hero = () => {
                 if (Array.isArray(data) && data.length > 0) {
                     setSlides(data);
                     setIsLive(true);
+                } else {
+                    setSlides(STATIC_SLIDES);
                 }
-                // else keep static fallback
             })
             .catch(() => {
-                // network error – keep static fallback silently
+                setSlides(STATIC_SLIDES);
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
     }, []);
 
@@ -142,6 +147,14 @@ const Hero = () => {
         return () => clearInterval(timer);
     }, [nextSlide]);
 
+    if (isLoading) {
+        return (
+            <div className="hero-section" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '400px', backgroundColor: '#f8f9fa' }}>
+                <h2 style={{ color: '#666' }}>Loading...</h2>
+            </div>
+        );
+    }
+
     const current = slides[currentSlide];
 
     return (
@@ -152,10 +165,25 @@ const Hero = () => {
                 </button>
 
                 <div className="hero-banner">
-                    {isLive
-                        ? <MediaSlide banner={current} />
-                        : current.content
-                    }
+                    <div
+                        className="hero-slider-track"
+                        style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+                    >
+                        {slides.map((slide, index) => (
+                            <div
+                                className={`hero-slide ${currentSlide === index ? 'active' : ''}`}
+                                key={slide._id || index}
+                            >
+                                {isLive ? (
+                                    <MediaSlide banner={slide} isActive={currentSlide === index} />
+                                ) : (
+                                    <div className={`static-wrapper ${currentSlide === index ? 'active' : ''}`}>
+                                        {slide.content}
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
                 </div>
 
                 <button className="carousel-btn next" onClick={nextSlide} aria-label="Next">

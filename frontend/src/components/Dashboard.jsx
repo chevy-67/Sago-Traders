@@ -16,7 +16,7 @@ const Dashboard = () => {
         const token = localStorage.getItem("token");
         if (!token) { navigate("/login"); return; }
 
-        const res = await axios.get("http://localhost:2004/api/auth/me", {
+        const res = await axios.get(`${import.meta.env.VITE_PROD_URL}/api/auth/me`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setUser(res.data);

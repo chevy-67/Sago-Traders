@@ -115,12 +115,11 @@
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
-    filter: grayscale(100%) opacity(0.55);
+    filter: grayscale(0%) opacity(1);
     transition: filter 0.35s ease, transform 0.35s ease;
 }
 
 .brand-box:hover img {
-    filter: grayscale(0%) opacity(1);
     transform: scale(1.08);
 }
 

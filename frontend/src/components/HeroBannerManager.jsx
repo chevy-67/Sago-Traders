@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../styles/HeroBannerManager.css';
 
-const API = 'http://localhost:2004/api/banners';
+const API = `${import.meta.env.VITE_PROD_URL}/api/banners`;
 
 const getToken = () => localStorage.getItem('token');
 

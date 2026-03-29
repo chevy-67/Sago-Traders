@@ -20,9 +20,11 @@ import OrderConfirmation from './components/OrderConfirmation';
 import PublicLayout from './components/PublicLayout';
 import AdminRoute from './components/AdminRoute';
 import AdminDashboard from './components/AdminDashboard';
+import AdminLogin from './components/AdminLogin';
 import ProductSpecsCRUD from './components/ProductSpecsCRUD';
 import HeroBannerManager from './components/HeroBannerManager';
 import AdminOrders from './components/AdminOrders';
+import DemandAnalytics from './components/DemandAnalytics';
 import Cart from './components/Cart';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
@@ -55,6 +57,8 @@ function App() {
                 <Route path="/about" element={<About />} />
 
                 <Route path="/login" element={<Login />} />
+                <Route path="/admin/login" element={<AdminLogin />} />
+
                 <Route path="/order/confirmation" element={<OrderConfirmation />} />
                 <Route path="/products" element={<ProductListPage />} />
                 <Route path="/category/all" element={<ProductListPage />} />
@@ -101,6 +105,7 @@ function App() {
                 <Route path="specs" element={<ProductSpecsCRUD />} />
                 <Route path="hero" element={<HeroBannerManager />} />
                 <Route path="orders" element={<AdminOrders />} />
+                <Route path="demand-analytics" element={<DemandAnalytics />} />
               </Route>
             </Routes>
           </div>

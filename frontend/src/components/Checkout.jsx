@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -6,7 +6,7 @@ import { useCart } from '../context/CartContext';
 import { User, Phone, MapPin, FileText, Package } from 'lucide-react';
 import '../styles/Checkout.css';
 
-const API_BASE = 'http://localhost:2004/api';
+const API_BASE = `${import.meta.env.VITE_PROD_URL}/api`;
 
 const Checkout = () => {
     const navigate = useNavigate();
@@ -56,6 +56,16 @@ const Checkout = () => {
         return err;
     };
 
+    const loadRazorpayScript = () => {
+        return new Promise((resolve) => {
+            const script = document.createElement('script');
+            script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+            script.onload = () => resolve(true);
+            script.onerror = () => resolve(false);
+            document.body.appendChild(script);
+        });
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setApiError('');
@@ -63,7 +73,6 @@ const Checkout = () => {
         const validationErrors = validate();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
-            // Scroll to first error
             document.querySelector('.has-error')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
             return;
         }
@@ -75,35 +84,96 @@ const Checkout = () => {
 
         try {
             setLoading(true);
-            const res = await axios.post(
-                `${API_BASE}/orders`,
-                {
-                    items: cartItems.map((item) => ({
-                        product: item._id,
-                        name: item.name,
-                        price: item.price,
-                        quantity: item.quantity,
-                        image: item.image,
-                    })),
-                    name: formData.name.trim(),
-                    phone: formData.phone.trim(),
-                    alternatePhone: formData.alternatePhone.trim() || undefined,
-                    address: formData.address.trim(),
-                    city: formData.city.trim(),
-                    state: formData.state.trim(),
-                    pincode: formData.pincode.trim(),
-                    notes: formData.notes.trim() || undefined,
-                },
+
+            const scriptLoaded = await loadRazorpayScript();
+            if (!scriptLoaded) {
+                setApiError('Failed to load Razorpay payment gateway. Please check your internet connection.');
+                setLoading(false);
+                return;
+            }
+
+            const totalAmountToPay = cartItems.reduce((sum, item) => sum + (parseFloat(String(item.price).replaceAll(',','')) * item.quantity), 0);
+
+            // 1. Create Order on Backend
+            const orderCreateRes = await axios.post(
+                `${API_BASE}/orders/razorpay-create`,
+                { amount: totalAmountToPay },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
 
-            clearCart();
-            navigate('/order/confirmation', {
-                state: { orderId: res.data?.order?._id || res.data?._id || 'N/A' },
+            const { id: order_id, amount: rzp_amount, currency } = orderCreateRes.data;
+
+            // 2. Initialize Razorpay Modal
+            const options = {
+                key: import.meta.env.VITE_RAZORPAY_KEY_ID || 'rzp_test_placeholder', // Fallback for dev mode
+                amount: rzp_amount,
+                currency: currency,
+                name: 'Sago Traders',
+                description: 'Order Payment',
+                order_id: order_id,
+                theme: { color: '#0d9488' }, // matches teal theme roughly
+                handler: async function (response) {
+                    try {
+                        setLoading(true);
+                        // 3. Verify Payment and Place Order payload
+                        const verifyRes = await axios.post(
+                            `${API_BASE}/orders/razorpay-verify`,
+                            {
+                                razorpay_order_id: response.razorpay_order_id,
+                                razorpay_payment_id: response.razorpay_payment_id,
+                                razorpay_signature: response.razorpay_signature,
+                                orderData: {
+                                    items: cartItems.map((item) => ({
+                                        product: item._id,
+                                        name: item.name,
+                                        price: item.price,
+                                        quantity: item.quantity,
+                                        image: item.image,
+                                    })),
+                                    name: formData.name.trim(),
+                                    phone: formData.phone.trim(),
+                                    alternatePhone: formData.alternatePhone.trim() || undefined,
+                                    address: formData.address.trim(),
+                                    city: formData.city.trim(),
+                                    state: formData.state.trim(),
+                                    pincode: formData.pincode.trim(),
+                                    notes: formData.notes.trim() || undefined,
+                                }
+                            },
+                            { headers: { Authorization: `Bearer ${token}` } }
+                        );
+
+                        clearCart();
+                        navigate('/order/confirmation', {
+                            state: { orderId: verifyRes.data?.order?._id || 'N/A' },
+                        });
+                    } catch (err) {
+                        setApiError(err.response?.data?.message || 'Payment verification failed.');
+                    } finally {
+                        setLoading(false);
+                    }
+                },
+                prefill: {
+                    name: formData.name,
+                    contact: formData.phone,
+                },
+                modal: {
+                    ondismiss: function () {
+                        setLoading(false);
+                    }
+                }
+            };
+
+            const rzp = new window.Razorpay(options);
+            rzp.on('payment.failed', function (response) {
+                setApiError('Payment failed: ' + response.error.description);
+                setLoading(false);
             });
+            rzp.open();
+
         } catch (err) {
-            setApiError(err.response?.data?.message || 'Failed to place order. Please try again.');
-        } finally {
+            console.error('Checkout error:', err);
+            setApiError(err.response?.data?.message || 'Failed to initiate checkout. Please try again.');
             setLoading(false);
         }
     };

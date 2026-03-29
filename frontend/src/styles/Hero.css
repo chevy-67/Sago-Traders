@@ -26,9 +26,6 @@
             #FF7A2E 75%,
             #FFa058 100%);
     color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: relative;
     overflow: hidden;
 }
@@ -58,19 +55,42 @@
     pointer-events: none;
 }
 
+.static-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /* ─── Banner Content ─── */
 .banner-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    height: 100%;
     padding: 60px clamp(24px, 5vw, 80px);
     max-width: 1280px;
     margin: 0 auto;
     position: relative;
     z-index: 1;
     gap: 40px;
-    animation: heroFadeIn 0.7s ease forwards;
+}
+
+.banner-content,
+.hero-media-text {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.hero-slide.active .banner-content,
+.hero-slide.active .hero-media-text {
+    opacity: 1;
+    transform: translateY(0);
+    animation: heroFadeIn 0.8s cubic-bezier(0.2, 1, 0.2, 1) forwards;
+    animation-delay: 0.2s;
 }
 
 @keyframes heroFadeIn {
@@ -271,7 +291,7 @@
     width: 52px;
     height: 52px;
     cursor: pointer;
-    z-index: 10;
+    z-index: 100;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -302,7 +322,7 @@
     transform: translateX(-50%);
     display: flex;
     gap: 8px;
-    z-index: 10;
+    z-index: 100;
 }
 
 .dot {
@@ -423,16 +443,17 @@
     object-fit: cover;
     object-position: center;
     display: block;
+    transition: transform 1s ease-out; /* fallback transition for when zoom-effect is removed */
 }
 
-/* Dark gradient overlay for text legibility */
+/* Dark gradient overlay for text legibility (Removed per request) */
 .hero-media-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg,
+    /* background: linear-gradient(135deg,
             rgba(0, 0, 0, 0.55) 0%,
             rgba(0, 0, 0, 0.25) 60%,
-            rgba(0, 0, 0, 0.10) 100%);
+            rgba(0, 0, 0, 0.10) 100%); */
     z-index: 1;
 }
 
@@ -443,7 +464,8 @@
     text-align: center;
     padding: 40px 24px;
     max-width: 780px;
-    animation: heroFadeIn 0.7s ease forwards;
+    opacity: 0;
+    transform: translateY(20px);
 }
 
 .hero-media-h1 {
@@ -479,4 +501,18 @@
     .hero-media-text {
         padding: 20px 16px;
     }
+}
+.hero-slider-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-slide {
+    min-width: 100%;
+    height: 100%;
+    flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
 }

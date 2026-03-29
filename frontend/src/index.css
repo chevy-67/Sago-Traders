@@ -16,19 +16,19 @@
   --orange-500: #f97316;
   --orange-600: #ea580c;
   --orange-700: #c2410c;
-  --primary-orange: #E85D04;
-  --primary-orange-dark: #C44D03;
-  --primary-orange-light: #FF7A2E;
+  --primary-orange: #C0392B;
+  --primary-orange-dark: #922B21;
+  --primary-orange-light: #E74C3C;
 
   /* Brown Palette */
   --brown-50: #fdf8f6;
   --brown-100: #f2e8e5;
   --brown-200: #eaddd7;
   --brown-300: #e0cec7;
-  --brown-600: #5D4037;
-  --brown-700: #4E342E;
-  --brown-800: #3E2723;
-  --secondary-brown: #3E2723;
+  --brown-600: #2C3E50;
+  --brown-700: #1C2833;
+  --brown-800: #17202A;
+  --secondary-brown: #1C2833;
 
   /* Neutral Palette */
   --gray-50: #f9fafb;
@@ -49,8 +49,10 @@
   --info: #3b82f6;
 
   /* Backgrounds */
-  --bg-body: #f8f7f5;
-  --bg-light: #f8f7f5;
+  --bg-body: #FDFEFE;
+  --bg-light: #FDFEFE;
+  --offer-green: #1E8449;
+  --offer-green-light: #27AE60;
   --bg-white: #ffffff;
   --bg-card: #ffffff;
   --white: #ffffff;
@@ -155,6 +157,8 @@ html {
   scroll-behavior: smooth;
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -164,6 +168,18 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* App root wrapper — never constrain width */
+#root,
+.app {
+  width: 100% !important;
+  max-width: 100vw !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-width: 0;
 }
 
 a {
