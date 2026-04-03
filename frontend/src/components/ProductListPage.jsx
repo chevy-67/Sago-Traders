@@ -4,7 +4,7 @@ import axios from 'axios';
 import ProductCard from './ProductCard';
 import '../styles/ProductListPage.css';
 
-const API = 'http://localhost:2004/api/products';
+const API = `${import.meta.env.VITE_PROD_URL}/api/products`;
 
 // Map URL slug to a display name
 const CATEGORY_LABELS = {
@@ -138,8 +138,9 @@ const ProductListPage = () => {
                 </div>
 
                 {loading && (
-                    <div style={{ textAlign: 'center', padding: '60px', color: '#6b7280', fontSize: '16px' }}>
-                        Loading products…
+                    <div className="pd-loader">
+                        <div className="pd-spinner" />
+                        <p>Loading product…</p>
                     </div>
                 )}
 

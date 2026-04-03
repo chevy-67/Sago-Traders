@@ -5,7 +5,7 @@ import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import '../styles/ProductDetail.css';
 
-const API = 'http://localhost:2004/api/products';
+const API = `${import.meta.env.VITE_PROD_URL}/api/products`;
 
 const CATEGORY_LABELS = {
     electricals: 'Electricals',

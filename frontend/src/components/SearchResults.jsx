@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams,Link } from 'react-router-dom';
 import axios from 'axios';
 import ProductCard from './ProductCard';
 import '../styles/ProductListPage.css';
 
-const API = 'http://localhost:2004/api/products';
+const API = `${import.meta.env.VITE_PROD_URL}/api/products`;
 
 const SearchResults = () => {
     const { query } = useParams();
