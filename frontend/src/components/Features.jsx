@@ -28,6 +28,7 @@ const features = [
 const Features = () => {
     return (
         <div className="features-strip">
+            <h2 className="features-heading">Why Shop with us?</h2>
             <div className="features-inner">
                 {features.map((f, i) => (
                     <React.Fragment key={i}>

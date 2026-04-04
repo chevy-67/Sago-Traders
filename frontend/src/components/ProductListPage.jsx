@@ -37,7 +37,7 @@ const ProductListPage = () => {
             setError('');
             try {
                 const res = await axios.get(API, { params: { category: name } });
-                setProducts(res.data);
+                setProducts(Array.isArray(res.data) ? res.data : []);
             } catch {
                 setError('Failed to load products. Please try again later.');
                 setProducts([]);
