@@ -67,7 +67,9 @@ const AdminDashboard = () => {
                     <NavLink to="/admin/demand-analytics" style={linkStyle}>
                         Demand Analytics
                     </NavLink>
-                    {/* Add more links here as needed */}
+                    <NavLink to="/admin/spin-wheel" style={linkStyle}>
+                        Spin Wheel Offers
+                    </NavLink>
                 </nav>
 
                 <div style={{ marginTop: 'auto', paddingTop: '20px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
