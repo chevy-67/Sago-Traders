@@ -4,6 +4,7 @@ const productRoutes = require("./routes/productRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const heroBannerRoutes = require("./routes/heroBannerRoutes");
 const demandPredictionRoutes = require("./routes/demandPredictionRoutes");
+const spinWheelRoutes = require("./routes/spinWheelRoutes");
 const cors = require("cors");
 
 const app = express();
@@ -25,5 +26,6 @@ app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/banners", heroBannerRoutes);
 app.use("/api/ml", demandPredictionRoutes);
+app.use("/api/spin-wheel", spinWheelRoutes);
 
 module.exports = app;
