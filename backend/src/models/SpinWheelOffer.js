@@ -8,6 +8,15 @@ const segmentSchema = new mongoose.Schema({
     type: String,
     enum: ['percent', 'flat', 'free_shipping', 'none','free_product'],
     default: 'none'
+  },
+  discountId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Discount',
+    default: null 
+  },
+  maxWins: {
+    type: Number,
+    default: 0
   }
 }, { _id: false });
 
@@ -17,6 +26,8 @@ const spinRecordSchema = new mongoose.Schema({
   wonLabel:        { type: String },
   wonValue:        { type: String },
   wonType:         { type: String },
+  discountId:      { type: mongoose.Schema.Types.ObjectId, ref: 'Discount', default: null },
+  couponCode:      { type: String, default: null },
   spunAt:          { type: Date, default: Date.now }
 }, { _id: false });
 

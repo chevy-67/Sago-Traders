@@ -71,6 +71,9 @@ export default function AdminSpinWheelManager() {
   const [message, setMessage]     = useState('');
   const [msgType, setMsgType]     = useState('success');
   const [expandedOffers, setExpandedOffers] = useState({});
+  const [activeTab, setActiveTab] = useState('config');
+  const [coupons, setCoupons]     = useState([]);
+  const [searchCoupon, setSearchCoupon] = useState('');
   const canvasRef = useRef(null);
 
   const toggleOffer = (label) => {
@@ -79,19 +82,45 @@ export default function AdminSpinWheelManager() {
 
   /* ── Fetch config ──────────────────────────────────────────────── */
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    fetch(`${API}/api/spin-wheel/admin`, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(r => r.json())
-      .then(d => {
-        setSegments(d.segments || []);
-        setIsActive(d.isActive !== false);
-        setSpinRecords(d.spinRecords || []);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
+    fetchData();
   }, []);
+
+  const fetchData = async () => {
+    const token = localStorage.getItem('token');
+    try {
+      const [configRes, couponsRes] = await Promise.all([
+        fetch(`${API}/api/spin-wheel/admin`, { headers: { Authorization: `Bearer ${token}` } }),
+        fetch(`${API}/api/spin-wheel/admin/coupons`, { headers: { Authorization: `Bearer ${token}` } })
+      ]);
+      const d = await configRes.json();
+      const coups = await couponsRes.json();
+
+      setSegments(d.segments || []);
+      setIsActive(d.isActive !== false);
+      setSpinRecords(d.spinRecords || []);
+      setCoupons(Array.isArray(coups) ? coups : []);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteCoupon = async (id) => {
+    if (!window.confirm('Delete and revoke this coupon?')) return;
+    const token = localStorage.getItem('token');
+    try {
+      const res = await fetch(`${API}/api/spin-wheel/admin/coupons/${id}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (res.ok) {
+        setCoupons(prev => prev.filter(c => c._id !== id));
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   /* ── Redraw preview whenever segments change ────────────────────── */
   useEffect(() => {
@@ -107,7 +136,8 @@ export default function AdminSpinWheelManager() {
         label: 'New Offer',
         color: DEFAULT_COLORS[prev.length % DEFAULT_COLORS.length],
         value: '0',
-        type: 'none'
+        type: 'none',
+        maxWins: 0
       }
     ]);
   }
@@ -155,7 +185,7 @@ export default function AdminSpinWheelManager() {
     sectionTitle:{ fontSize: 16, fontWeight: 700, color: '#333', marginBottom: 16, marginTop: 0 },
     row:         {
       display: 'grid',
-      gridTemplateColumns: '1fr 100px 80px 110px 36px',
+      gridTemplateColumns: '1fr 100px 80px 110px 80px 36px',
       gap: 8, alignItems: 'center', marginBottom: 10
     },
     input:       {
@@ -198,6 +228,13 @@ export default function AdminSpinWheelManager() {
     recTable: { width: '100%', borderCollapse: 'collapse', fontSize: 13 },
     recTh:    { textAlign: 'left', padding: '8px 10px', background: '#f5f5f5', color: '#555', fontWeight: 700, borderBottom: '2px solid #eee' },
     recTd:    { padding: '8px 10px', borderBottom: '1px solid #f0f0f0', color: '#333', verticalAlign: 'middle' },
+    tabRow:   { display: 'flex', gap: 16, marginBottom: 24, paddingBottom: 10, borderBottom: '2px solid #eee' },
+    tabBtn: (active) => ({
+      background: 'none', border: 'none', padding: '10px 18px', cursor: 'pointer',
+      fontSize: 15, fontWeight: 700, color: active ? '#E85D04' : '#666',
+      borderBottom: active ? '3px solid #E85D04' : '3px solid transparent',
+      transition: 'all 0.2s', marginBottom: '-12px'
+    }),
   };
 
   /* ── Group spin records by segment label ── */
@@ -223,6 +260,13 @@ export default function AdminSpinWheelManager() {
         <span style={s.badge}>{segments.length} / 8 segments</span>
       </div>
 
+      <div style={s.tabRow}>
+        <button style={s.tabBtn(activeTab === 'config')} onClick={() => setActiveTab('config')}>Wheel Configuration</button>
+        <button style={s.tabBtn(activeTab === 'winners')} onClick={() => setActiveTab('winners')}>Spin Winners</button>
+        <button style={s.tabBtn(activeTab === 'coupons')} onClick={() => setActiveTab('coupons')}>Coupon Management</button>
+      </div>
+
+      {activeTab === 'config' && (
       <div style={s.grid}>
         {/* ── Left: Segment editor ── */}
         <div style={s.card}>
@@ -245,6 +289,7 @@ export default function AdminSpinWheelManager() {
             <span style={s.colHeader}>Value</span>
             <span style={s.colHeader}>Color</span>
             <span style={s.colHeader}>Type</span>
+            <span style={s.colHeader}>Max Wins</span>
             <span />
           </div>
 
@@ -281,6 +326,15 @@ export default function AdminSpinWheelManager() {
                   <option key={t.value} value={t.value}>{t.label}</option>
                 ))}
               </select>
+              <input
+                style={s.input}
+                value={seg.maxWins !== undefined ? seg.maxWins : 0}
+                onChange={e => updateSegment(i, 'maxWins', Number(e.target.value))}
+                placeholder="Unl."
+                type="number"
+                min={0} 
+                title="Max wins (0 for unlimited)"
+              />
               <button style={s.delBtn} onClick={() => removeSegment(i)} title="Remove">×</button>
             </div>
           ))}
@@ -312,14 +366,16 @@ export default function AdminSpinWheelManager() {
           </div>
         </div>
       </div>
+      )}
 
       {/* ── Spin Records Grouped by Segment ── */}
-      {spinRecords.length > 0 && (
-        <div style={{ marginTop: 28 }}>
+      {activeTab === 'winners' && (
+        <div>
           <h2 style={{ ...s.sectionTitle, marginBottom: 20 }}>Spin Records by Segment ({spinRecords.length} users)</h2>
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {Object.entries(recordsByOffer).map(([label, records], idx) => {
+            {spinRecords.length > 0 ? (
+              Object.entries(recordsByOffer).map(([label, records], idx) => {
               const matchingSeg = segments.find(s => s.label === label);
               const color = matchingSeg ? matchingSeg.color : '#888';
               const isExpanded = !!expandedOffers[label];
@@ -349,6 +405,7 @@ export default function AdminSpinWheelManager() {
                           <tr>
                             <th style={{...s.recTh, padding: '8px 10px', position: 'sticky', top: 0, zIndex: 1}}>User</th>
                             <th style={{...s.recTh, padding: '8px 10px', position: 'sticky', top: 0, zIndex: 1}}>Date</th>
+                            <th style={{...s.recTh, padding: '8px 10px', position: 'sticky', top: 0, zIndex: 1}}>Coupon Code</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -360,6 +417,9 @@ export default function AdminSpinWheelManager() {
                               <td style={{...s.recTd, padding: '8px 10px', color: '#666'}}>
                                 {rec.spunAt ? new Date(rec.spunAt).toLocaleDateString() : '—'}
                               </td>
+                              <td style={{...s.recTd, padding: '8px 10px', color: '#333', fontWeight: 600}}>
+                                {rec.couponCode || '—'}
+                              </td>
                             </tr>
                           ))}
                         </tbody>
@@ -368,10 +428,89 @@ export default function AdminSpinWheelManager() {
                   )}
                 </div>
               );
-            })}
+              })
+            ) : (
+              <p style={{ color: '#666', fontSize: 14 }}>No Winners Yet</p>
+            )}
           </div>
         </div>
       )}
+
+      {/* ── Coupons Management ── */}
+      {activeTab === 'coupons' && (() => {
+        const filteredCoupons = coupons.filter(c => {
+          if (!searchCoupon) return true;
+          const searchLower = searchCoupon.toLowerCase();
+          const matchCode = c.code.toLowerCase().includes(searchLower);
+          const matchName = c.user?.name?.toLowerCase().includes(searchLower);
+          const matchEmail = c.user?.email?.toLowerCase().includes(searchLower);
+          return matchCode || matchName || matchEmail;
+        });
+
+        return (
+          <div style={s.card}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+              <h2 style={{ ...s.sectionTitle, marginBottom: 0 }}>Coupons ({coupons.length})</h2>
+              <input
+                style={{ ...s.input, width: '250px' }}
+                placeholder="Search code, name or email..."
+                value={searchCoupon}
+                onChange={e => setSearchCoupon(e.target.value)}
+              />
+            </div>
+            
+            {coupons.length === 0 ? (
+              <p style={{ color: '#666', fontSize: 14 }}>No coupons have been generated yet.</p>
+            ) : filteredCoupons.length === 0 ? (
+              <p style={{ color: '#666', fontSize: 14 }}>No coupons match your search.</p>
+            ) : (
+              <div style={{ border: '1px solid #eee', borderRadius: '8px', overflowX: 'auto' }}>
+                <table style={{...s.recTable, fontSize: 13}}>
+                  <thead>
+                    <tr>
+                      <th style={{...s.recTh, padding: '12px 10px'}}>Coupon Code</th>
+                      <th style={{...s.recTh, padding: '12px 10px'}}>Won User</th>
+                      <th style={{...s.recTh, padding: '12px 10px'}}>Validity</th>
+                      <th style={{...s.recTh, padding: '12px 10px'}}>Reward</th>
+                      <th style={{...s.recTh, padding: '12px 10px'}}>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredCoupons.map((c) => {
+                      const isExpired = !c.isActive || (c.validUntil && new Date(c.validUntil) < new Date());
+                      return (
+                        <tr key={c._id}>
+                          <td style={{...s.recTd, padding: '12px 10px', fontWeight: 800, color: '#E85D04'}}>
+                            {c.code}
+                          </td>
+                          <td style={{...s.recTd, padding: '12px 10px'}}>
+                            {c.user?.name || c.user?.email || 'Unknown'}
+                          </td>
+                          <td style={{...s.recTd, padding: '12px 10px', color: isExpired ? '#c62828' : '#2E7D32'}}>
+                            {c.validUntil ? new Date(c.validUntil).toLocaleDateString() : '—'} 
+                            {isExpired && ' (Expired)'}
+                          </td>
+                          <td style={{...s.recTd, padding: '12px 10px'}}>
+                            {c.discountType !== 'none' ? `${c.discountValue} ${c.discountType === 'percent' ? '%' : 'flat'}` : '—'}
+                          </td>
+                          <td style={{...s.recTd, padding: '12px 10px'}}>
+                            <button 
+                              onClick={() => deleteCoupon(c._id)}
+                              style={{ background: '#fce4e4', border: '1px solid #ffcdd2', padding: '6px 12px', borderRadius: '6px', color: '#c62828', cursor: 'pointer', fontSize: 12, fontWeight: 600 }}
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        );
+      })()}
     </div>
   );
 }

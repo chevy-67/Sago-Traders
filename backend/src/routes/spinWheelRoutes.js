@@ -6,6 +6,8 @@ const {
   adminGetConfig,
   adminUpdateConfig,
   getUserSpinStatus,
+  adminGetCoupons,
+  adminDeleteCoupon,
 } = require('../controllers/spinWheelController');
 const protect = require('../middlewares/authMiddleware');
 
@@ -19,5 +21,7 @@ router.post('/spin', protect, spinWheel);             // actually spin
 // Admin only
 router.get('/admin', protect, adminGetConfig);
 router.put('/admin', protect, adminUpdateConfig);
+router.get('/admin/coupons', protect, adminGetCoupons);
+router.delete('/admin/coupons/:id', protect, adminDeleteCoupon);
 
 module.exports = router;

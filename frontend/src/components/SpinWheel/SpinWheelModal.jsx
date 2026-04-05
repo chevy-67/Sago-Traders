@@ -196,10 +196,11 @@ export default function SpinWheelModal() {
       // Target rotation: land on wonIndex segment (pointer is at top = -π/2)
       // Segment i center is at: i * arc + arc/2
       // We want that to be at -π/2 after full spins
-      const segCenter  = wonIndex * arc + arc / 2;
+      const randomOffset = (Math.random() - 0.5) * (arc * 0.8);
+      const segCenter  = wonIndex * arc + arc / 2 + randomOffset;
       const target     = -Math.PI / 2 - segCenter;
       // Normalize and add several full rotations for drama
-      const extraSpins = (Math.PI * 2) * (5 + Math.random() * 3);
+      const extraSpins = (Math.PI * 2) * Math.floor(5 + Math.random() * 3);
       const finalAngle = (target % (2 * Math.PI)) + extraSpins;
 
       // Animate
@@ -280,6 +281,12 @@ export default function SpinWheelModal() {
                 <strong>{prevResult?.label || 'Your reward'}</strong>
                 You've already used your spin.<br />
                 {prevResult && resultSubtext(prevResult.type, prevResult.value)}
+                {prevResult?.couponCode && (
+                  <div style={{ marginTop: '12px', padding: '8px', border: '1px dashed rgba(255,255,255,0.3)', borderRadius: '6px' }}>
+                    <span style={{ fontSize: '12px', color: '#aaa', display: 'block' }}>Your Coupon Code:</span>
+                    <strong style={{ fontSize: '18px', color: '#fff', letterSpacing: '1px' }}>{prevResult.couponCode}</strong>
+                  </div>
+                )}
               </div>
             ) : (
               <>
@@ -307,6 +314,13 @@ export default function SpinWheelModal() {
             <h3 className="sw-result-title">Congratulations!</h3>
             <p className="sw-result-label">{result.label}</p>
             <p className="sw-result-sub">{resultSubtext(result.type, result.value)}</p>
+            {result?.couponCode && (
+              <div style={{ background: 'rgba(255,255,255,0.1)', padding: '10px', borderRadius: '8px', margin: '14px 0 24px', border: '1px dashed #E85D04' }}>
+                <span style={{ fontSize: '13px', color: '#ccc', display: 'block', marginBottom: '4px' }}>Your Coupon Code:</span>
+                <strong style={{ fontSize: '24px', color: '#fff', letterSpacing: '2px' }}>{result.couponCode}</strong>
+                <span style={{ fontSize: '11px', color: '#F48C06', display: 'block', marginTop: '4px' }}>Valid for 14 days! Check your profile.</span>
+              </div>
+            )}
             <button className="sw-result-close" onClick={() => { setShowResult(false); handleClose(); }}>
               Awesome, Thanks!
             </button>

@@ -35,137 +35,137 @@ const MEGA_MENU = {
     },
     {
       heading: 'Conduits & Accessories',
-      items: ['Conduit Fittings','Conduit Pipe','Conduit Solvent Cement','Ceiling Fan Box','Concealed box'],
+      items: ['Conduit Fittings', 'Conduit Pipe', 'Conduit Solvent Cement', 'Ceiling Fan Box', 'Concealed box'],
     },
     {
       heading: 'Electrical Tools & Accessories',
-      items: ['Accessories','Door Bell','Multi PLug Adaptor','Spike Guard'],
+      items: ['Accessories', 'Door Bell', 'Multi PLug Adaptor', 'Spike Guard'],
     },
     {
       heading: 'Water Heaters & Geysers',
-      items: ['Instant Geyser','Storage Geyser','Spare Parts']
+      items: ['Instant Geyser', 'Storage Geyser', 'Spare Parts']
     },
   ],
   tools: [
     {
       heading: 'Fittings',
-      items: ['Water Pipe Fitting','SWR Fitting','Agriculture Fitting'],
-    }, 
+      items: ['Water Pipe Fitting', 'SWR Fitting', 'Agriculture Fitting'],
+    },
     {
       heading: 'Tanks',
       items: ['Overhead Tanks', 'Tank Accessory'],
     },
   ],
   paints: [
-  {
-    heading: 'Interior Paints',
-    items: ['Interior Distemper-Color', 'Interior Emulsion - Color', 'Interior Emulsion - Base'],
-  },
-  {
-    heading: 'Exterior Paints',
-    items: ['Exterior Emulsion - Color', 'Exterior Emulsion - Base'],
-  },
-  {
-    heading: 'Metal Paints',
-    items: ['Enamel-Color', 'Enamel-Base'],
-  },
-  {
-    heading: 'Sealants',
-    items: ['Interior Sealant'],
-  },
-  {
-    heading: 'Undercoats',
-    items: ['Putty', 'White Cement', 'Filler', 'Wall Primer', 'Metal Primer', 'Wood Primer'],
-  },
-  {
-    heading: 'Paint Thinners',
-    items: ['Paint Thinner'],
-  },
-  {
-    heading: 'Waterproofing',
-    items: ['General Purpose Waterproofing', 'Wall Waterproofing', 'Roof Waterproofing', 'Floor Waterproofing'],
-  },
-  {
-    heading: 'Wood Coatings',
-    items: ['Varnish', 'Melamine Coating', 'Polyurethane (PU) Coating'],
-  },
-  {
-    heading: 'Other Paints',
-    items: ['Spray Paint'],
-  },
-  {
-    heading: 'Colorants',
-    items: ['Universal Stainer'],
-  },
-  {
-    heading: 'Applicators',
-    items: ['Roller', 'Brush'],
-  },
-  {
-    heading: 'Paint Tools',
-    items: ['Knife', 'Extension Pole', 'Other Tools'],
-  },
-  {
-    heading: 'Tapes',
-    items: ['Masking Tape'],
-  },
-],
+    {
+      heading: 'Interior Paints',
+      items: ['Interior Distemper-Color', 'Interior Emulsion - Color', 'Interior Emulsion - Base'],
+    },
+    {
+      heading: 'Exterior Paints',
+      items: ['Exterior Emulsion - Color', 'Exterior Emulsion - Base'],
+    },
+    {
+      heading: 'Metal Paints',
+      items: ['Enamel-Color', 'Enamel-Base'],
+    },
+    {
+      heading: 'Sealants',
+      items: ['Interior Sealant'],
+    },
+    {
+      heading: 'Undercoats',
+      items: ['Putty', 'White Cement', 'Filler', 'Wall Primer', 'Metal Primer', 'Wood Primer'],
+    },
+    {
+      heading: 'Paint Thinners',
+      items: ['Paint Thinner'],
+    },
+    {
+      heading: 'Waterproofing',
+      items: ['General Purpose Waterproofing', 'Wall Waterproofing', 'Roof Waterproofing', 'Floor Waterproofing'],
+    },
+    {
+      heading: 'Wood Coatings',
+      items: ['Varnish', 'Melamine Coating', 'Polyurethane (PU) Coating'],
+    },
+    {
+      heading: 'Other Paints',
+      items: ['Spray Paint'],
+    },
+    {
+      heading: 'Colorants',
+      items: ['Universal Stainer'],
+    },
+    {
+      heading: 'Applicators',
+      items: ['Roller', 'Brush'],
+    },
+    {
+      heading: 'Paint Tools',
+      items: ['Knife', 'Extension Pole', 'Other Tools'],
+    },
+    {
+      heading: 'Tapes',
+      items: ['Masking Tape'],
+    },
+  ],
   lighting: [
-  {
-    heading: 'Light Bulbs',
-    items: ['LED Bulb', 'LED Batten', 'LED Night Bulb'],
-  },
-  {
-    heading: 'Ceiling Lights',
-    items: ['LED Panel Light', 'LED Downlighter', 'LED Spotlight', 'LED COB Light'],
-  },
-  {
-    heading: 'Fan',
-    items: ['Pedestal Fan', 'Table Fan', 'Wall Fan', 'Exhaust Fan', 'Ceiling Fan'],
-  },
-  {
-    heading: 'Outdoor Lighting',
-    items: ['LED Flood Light', 'LED Street Light', 'Wall Light'],
-  },
-  {
-    heading: 'Decorative Lights',
-    items: ['LED Strip Light', 'LED Rope Light', 'Pendant Light', 'Wall Light', 'LED Scale Light'],
-  },
-  {
-    heading: 'Lighting Accessories',
-    items: ['LED Strip Light Driver'],
-  },
-],
+    {
+      heading: 'Light Bulbs',
+      items: ['LED Bulb', 'LED Batten', 'LED Night Bulb'],
+    },
+    {
+      heading: 'Ceiling Lights',
+      items: ['LED Panel Light', 'LED Downlighter', 'LED Spotlight', 'LED COB Light'],
+    },
+    {
+      heading: 'Fan',
+      items: ['Pedestal Fan', 'Table Fan', 'Wall Fan', 'Exhaust Fan', 'Ceiling Fan'],
+    },
+    {
+      heading: 'Outdoor Lighting',
+      items: ['LED Flood Light', 'LED Street Light', 'Wall Light'],
+    },
+    {
+      heading: 'Decorative Lights',
+      items: ['LED Strip Light', 'LED Rope Light', 'Pendant Light', 'Wall Light', 'LED Scale Light'],
+    },
+    {
+      heading: 'Lighting Accessories',
+      items: ['LED Strip Light Driver'],
+    },
+  ],
   bathroom: [
-  {
-    heading: 'Bath Faucets',
-    items: ['Wall Mixer', 'Diverter', 'Bath Spout', 'Bib Tap', 'Shower Head', 'Shower Arm', 'Hand Held Shower', 'Angle Valve'],
-  },
-  {
-    heading: 'Tiles Tools & Accessories',
-    items: ['Tile Adhesive', 'Tile Grout', 'Tile Tools', 'Tile Clean & Care'],
-  },
-  {
-    heading: 'Toilets',
-    items: ['One Piece Toilet', 'Two Piece Toilet', 'Toilet Seat cover', 'Indian Toilet (IWC)', 'Flush tank', 'Flush Plate', 'Health Faucet', 'Urinal Push Cock'],
-  },
-  {
-    heading: 'Wash Basins',
-    items: ['Wall hung Basin', 'Table Top Basin', 'Pedestal Basin', 'Pedestal'],
-  },
-  {
-    heading: 'Bath Accessories',
-    items: ['Storage Shelf', 'Towel Rail', 'Soap Holder', 'Soap Dispenser', 'Towel Ring', 'Toilet Paper Holder', 'Tumbler Holder', 'Bottle Trap', 'Waste Coupling', 'Floor Drain', 'Towel Rack', 'Wall Bracket', 'Hose Pipe', 'Robe Hook', 'Grab Bar'],
-  },
-  {
-    heading: 'Bath Mirrors',
-    items: ['Bath Mirror'],
-  },
-],
+    {
+      heading: 'Bath Faucets',
+      items: ['Wall Mixer', 'Diverter', 'Bath Spout', 'Bib Tap', 'Shower Head', 'Shower Arm', 'Hand Held Shower', 'Angle Valve'],
+    },
+    {
+      heading: 'Tiles Tools & Accessories',
+      items: ['Tile Adhesive', 'Tile Grout', 'Tile Tools', 'Tile Clean & Care'],
+    },
+    {
+      heading: 'Toilets',
+      items: ['One Piece Toilet', 'Two Piece Toilet', 'Toilet Seat cover', 'Indian Toilet (IWC)', 'Flush tank', 'Flush Plate', 'Health Faucet', 'Urinal Push Cock'],
+    },
+    {
+      heading: 'Wash Basins',
+      items: ['Wall hung Basin', 'Table Top Basin', 'Pedestal Basin', 'Pedestal'],
+    },
+    {
+      heading: 'Bath Accessories',
+      items: ['Storage Shelf', 'Towel Rail', 'Soap Holder', 'Soap Dispenser', 'Towel Ring', 'Toilet Paper Holder', 'Tumbler Holder', 'Bottle Trap', 'Waste Coupling', 'Floor Drain', 'Towel Rack', 'Wall Bracket', 'Hose Pipe', 'Robe Hook', 'Grab Bar'],
+    },
+    {
+      heading: 'Bath Mirrors',
+      items: ['Bath Mirror'],
+    },
+  ],
   appliances: [
     {
       heading: 'Small Domestic Appliances',
-      items: ['Mixer Grinder','Wet Grinder','Electric Kettle','Iron Box'],
+      items: ['Mixer Grinder', 'Wet Grinder', 'Electric Kettle', 'Iron Box'],
     },
     {
       heading: 'Hobs & Chimney',

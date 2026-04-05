@@ -1,4 +1,6 @@
 const SpinWheelOffer = require('../models/SpinWheelOffer');
+const Coupon = require('../models/Coupon');
+const generateCoupon = require('../utils/generateCoupon');
 
 // Default segments seeded when none exist
 const DEFAULT_SEGMENTS = [
@@ -48,6 +50,7 @@ const spinWheel = async (req, res) => {
           label: existing.wonLabel,
           value: existing.wonValue,
           type:  existing.wonType,
+          couponCode: existing.couponCode,
         },
       });
     }
@@ -56,9 +59,49 @@ const spinWheel = async (req, res) => {
       return res.status(400).json({ message: 'Spin wheel is currently inactive.' });
     }
 
-    // Pick a random segment
-    const wonIndex = Math.floor(Math.random() * config.segments.length);
+    // Count past wins for each segment
+    const winCounts = {};
+    config.spinRecords.forEach(r => {
+      winCounts[r.wonSegmentIndex] = (winCounts[r.wonSegmentIndex] || 0) + 1;
+    });
+
+    // Check availability
+    const availableSegmentIndices = [];
+    config.segments.forEach((seg, idx) => {
+      const wons = winCounts[idx] || 0;
+      if (seg.maxWins && seg.maxWins > 0 && wons >= seg.maxWins) {
+        // Limit reached, skip this segment
+      } else {
+        availableSegmentIndices.push(idx);
+      }
+    });
+
+    if (availableSegmentIndices.length === 0) {
+      return res.status(400).json({ message: 'No offers currently available!' });
+    }
+
+    // Pick a random segment from the available ones
+    const randomPick = Math.floor(Math.random() * availableSegmentIndices.length);
+    const wonIndex = availableSegmentIndices[randomPick];
     const won = config.segments[wonIndex];
+    let couponCode = null;
+
+    if (won.type !== 'none') {
+      couponCode = generateCoupon(8);
+      const validUntil = new Date();
+      validUntil.setDate(validUntil.getDate() + 14);
+
+      await Coupon.create({
+        user: userId,
+        code: couponCode,
+        discountId: won.discountId || null,
+        discountType: won.type,
+        discountValue: Number(won.value) || 0,
+        validUntil,
+        isSpinWheelPrize: true,
+        isActive: true
+      });
+    }
 
     config.spinRecords.push({
       userId,
@@ -66,6 +109,8 @@ const spinWheel = async (req, res) => {
       wonLabel: won.label,
       wonValue: won.value,
       wonType:  won.type,
+      discountId: won.discountId || null,
+      couponCode
     });
     await config.save();
 
@@ -76,6 +121,7 @@ const spinWheel = async (req, res) => {
         label: won.label,
         value: won.value,
         type:  won.type,
+        couponCode
       },
     });
   } catch (err) {
@@ -128,6 +174,7 @@ const getUserSpinStatus = async (req, res) => {
           label: record.wonLabel,
           value: record.wonValue,
           type:  record.wonType,
+          couponCode: record.couponCode,
         },
       });
     }
@@ -137,4 +184,23 @@ const getUserSpinStatus = async (req, res) => {
   }
 };
 
-module.exports = { getSegments, spinWheel, adminGetConfig, adminUpdateConfig, getUserSpinStatus };
+const adminGetCoupons = async (req, res) => {
+  try {
+    const coupons = await Coupon.find({ isSpinWheelPrize: true }).populate('user', 'name email').sort({ createdAt: -1 });
+    res.json(coupons);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const adminDeleteCoupon = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Coupon.findByIdAndDelete(id);
+    res.json({ message: 'Coupon deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+module.exports = { getSegments, spinWheel, adminGetConfig, adminUpdateConfig, getUserSpinStatus, adminGetCoupons, adminDeleteCoupon };

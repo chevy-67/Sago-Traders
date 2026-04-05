@@ -6,7 +6,7 @@
 .sw-trigger-btn {
   position: fixed;
   bottom: 32px;
-  right: 32px;
+  right: 100px;
   z-index: 900;
   background: linear-gradient(135deg, #E85D04 0%, #F48C06 100%);
   color: #fff;

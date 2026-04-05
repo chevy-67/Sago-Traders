@@ -25,6 +25,7 @@ const UserProfile = () => {
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [message, setMessage] = useState({ text: '', type: '' });
+    const [coupons, setCoupons] = useState([]);
 
     // Fetch full profile on mount
     useEffect(() => {
@@ -50,6 +51,7 @@ const UserProfile = () => {
                             pincode: data.address?.pincode || ''
                         }
                     });
+                    setCoupons(data.coupons || []);
                     // Sync Context user state if backend is newer
                     if (JSON.stringify(data) !== JSON.stringify(user)) {
                         login(data, token);
@@ -282,6 +284,51 @@ const UserProfile = () => {
                         </div>
 
                     </form>
+
+                    {coupons.length > 0 && (
+                        <div className="profile-coupons-section" style={{ marginTop: '2rem' }}>
+                            <h2 className="form-section__title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                🎁 My Coupons
+                            </h2>
+                            <div className="coupons-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '1rem', marginTop: '1rem' }}>
+                                {coupons.map(coupon => {
+                                    const isExpired = !coupon.isActive || (coupon.validUntil && new Date(coupon.validUntil) < new Date());
+                                    return (
+                                        <div key={coupon._id} style={{
+                                            background: isExpired ? 'rgba(255,255,255,0.05)' : 'linear-gradient(135deg, #1e1e3a, #2d2d5e)',
+                                            border: `1px solid ${isExpired ? '#555' : '#E85D04'}`,
+                                            borderRadius: '12px',
+                                            padding: '16px',
+                                            position: 'relative',
+                                            opacity: isExpired ? 0.6 : 1
+                                        }}>
+                                            <div style={{ fontSize: '20px', fontWeight: '800', color: isExpired ? '#aaa' : '#fff', letterSpacing: '2px', marginBottom: '8px' }}>
+                                                {coupon.code}
+                                            </div>
+                                            {coupon.discountType && coupon.discountType !== 'none' && (
+                                                <div style={{ fontSize: '14px', fontWeight: '600', color: isExpired ? '#888' : '#fff', marginBottom: '8px' }}>
+                                                    {coupon.discountType === 'percent' ? `${coupon.discountValue}% OFF` :
+                                                     coupon.discountType === 'flat' ? `₹${coupon.discountValue} OFF` :
+                                                     coupon.discountType === 'free_shipping' ? 'Free Shipping' : 
+                                                     coupon.discountType === 'free_product' ? 'Free Product' : ''}
+                                                </div>
+                                            )}
+                                            {coupon.validUntil && (
+                                                <div style={{ fontSize: '12px', color: '#ccc' }}>
+                                                    {isExpired ? 'Expired' : `Valid until: ${new Date(coupon.validUntil).toLocaleDateString()}`}
+                                                </div>
+                                            )}
+                                            {coupon.isSpinWheelPrize && (
+                                                <div style={{ marginTop: '8px', fontSize: '11px', color: '#F48C06', fontWeight: 'bold' }}>
+                                                    Spin & Win Prize
+                                                </div>
+                                            )}
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
