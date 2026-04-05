@@ -59,8 +59,13 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
 };
 
-// Encrypt password before saving
+// Encrypt password before saving and handle optional phone field
 userSchema.pre('save', async function () {
+    // Handle phone field: if it's null or empty, remove it to avoid unique index conflict with sparse: true
+    if (this.phone === null || this.phone === "") {
+        this.phone = undefined;
+    }
+
     if (!this.isModified('password')) {
         return;
     }
