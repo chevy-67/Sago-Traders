@@ -44,16 +44,17 @@ const VALUES = [
 ];
 
 const TEAM = [
+     {
+        initials: 'Er',
+        name: 'G.Sakthimohan',
+        role: 'Founder & Managing Director',
+    },
     {
         initials: 'Er',
         name: 'T.Gokulnath',
         role: 'Founder & Managing Director',
     },
-    {
-        initials: 'Er',
-        name: 'G.Sakthimohan',
-        role: 'Founder & Managing Director',
-    },
+   
 
 ];
 
@@ -117,7 +118,7 @@ const About = () => {
                                 onError={(e) => {
                                     e.target.style.display = 'none';
                                     e.target.parentElement.style.background =
-                                        'linear-gradient(135deg, #3E2723 0%, #DC7835 100%)';
+                                        'linear-gradient(135deg, #3E2723 0%, #E85D04 100%)';
                                 }}
                             />
                             <div className="about-two-col__corner-badge">

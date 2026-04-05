@@ -63,53 +63,82 @@ const STATIC_SLIDES = [
 ];
 
 /* ─── Live media slide rendered from API data ─── */
-const MediaSlide = ({ banner, isActive }) => (
-    <div className={`hero-media-slide ${isActive ? 'active' : ''}`}>
-        {/* Background media */}
-        {banner.mediaType === 'video' ? (
-            <video
-                key={banner._id}
-                className={`hero-media-bg ${isActive ? 'zoom-effect' : ''}`}
-                src={banner.mediaUrl}
-                autoPlay
-                muted
-                loop
-                playsInline
-            />
-        ) : (
-            <img
-                key={banner._id}
-                className={`hero-media-bg ${isActive ? 'zoom-effect' : ''}`}
-                src={banner.mediaUrl}
-                alt={banner.title || 'Banner'}
-            />
-        )}
+const MediaSlide = ({ banner, isActive, isFirstSlide }) => {
+    const handleScrollToDeals = (e) => {
+        e.preventDefault();
+        const dealsSection = document.getElementById('deals');
+        const offset = 80; // Adjust for sticky header
+        if (dealsSection) {
+            const bodyRect = document.body.getBoundingClientRect().top;
+            const elementRect = dealsSection.getBoundingClientRect().top;
+            const elementPosition = elementRect - bodyRect;
+            const offsetPosition = elementPosition - offset;
 
-        {/* Dark overlay for text readability */}
-        <div className="hero-media-overlay" />
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+    };
 
-        {/* Overlay text */}
-        {(banner.title || banner.subtitle || banner.link) && (
-            <div className="hero-media-text">
-                {banner.title && <h1 className="hero-media-h1">{banner.title}</h1>}
-                {banner.subtitle && <p className="hero-media-sub">{banner.subtitle}</p>}
-                {banner.link && (
-                    <div className="hero-cta-group" style={{ justifyContent: 'center', marginTop: '24px' }}>
-                        <Link to={banner.link} className="hero-btn-primary">
-                            <ShoppingBag size={18} /> {banner.linkLabel || 'Shop Now'}
-                        </Link>
-                    </div>
-                )}
-            </div>
-        )}
-    </div>
-);
+    return (
+        <div className={`hero-media-slide ${isActive ? 'active' : ''}`}>
+            {/* Background media */}
+            {banner.mediaType === 'video' ? (
+                <video
+                    key={banner._id}
+                    className={`hero-media-bg ${isActive ? 'zoom-effect' : ''}`}
+                    src={banner.mediaUrl}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                />
+            ) : (
+                <img
+                    key={banner._id}
+                    className={`hero-media-bg ${isActive ? 'zoom-effect' : ''}`}
+                    src={banner.mediaUrl}
+                    alt={banner.title || 'Banner'}
+                />
+            )}
+
+            {/* Dark overlay for text readability */}
+            <div className="hero-media-overlay" />
+
+            {/* Overlay text */}
+            {(banner.title || banner.subtitle || banner.link || isFirstSlide) && (
+                <div className="hero-media-text">
+                    {banner.title && <h1 className="hero-media-h1">{banner.title}</h1>}
+                    {banner.subtitle && <p className="hero-media-sub">{banner.subtitle}</p>}
+                    
+                    {isFirstSlide ? (
+                        <div className="hero-cta-group" style={{ justifyContent: 'center', marginTop: '64px' }}>
+                            <button onClick={handleScrollToDeals} className="hero-btn-primary" style={{ background: '#FFC107', color: '#1a1a2e', padding: '16px 42px', fontSize: '1.1rem', border: '2px solid white', boxShadow: '0 8px 32px rgba(255, 193, 7, 0.4)' }}>
+                                <ShoppingBag size={22} style={{ marginRight: '8px' }} /> Click Here For Deals!
+                            </button>
+                        </div>
+                    ) : (
+                        banner.link && (
+                            <div className="hero-cta-group" style={{ justifyContent: 'center', marginTop: '24px' }}>
+                                <Link to={banner.link} className="hero-btn-primary">
+                                    <ShoppingBag size={18} /> {banner.linkLabel || 'Shop Now'}
+                                </Link>
+                            </div>
+                        )
+                    )}
+                </div>
+            )}
+        </div>
+    );
+};
 
 const Hero = () => {
     const [slides, setSlides] = useState([]);
     const [currentSlide, setCurrentSlide] = useState(0);
     const [isLive, setIsLive] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [isHovered, setIsHovered] = useState(false);
 
     useEffect(() => {
         fetch(API)
@@ -141,11 +170,11 @@ const Hero = () => {
     // Reset to slide 0 if slides change (e.g. banner loaded)
     useEffect(() => { setCurrentSlide(0); }, [slides]);
 
-    // Auto-slide every 5 s
+    // Auto-slide logic: 5s normally, or wait 4s when hovered before forcing slide
     useEffect(() => {
-        const timer = setInterval(nextSlide, 5000);
+        const timer = setInterval(nextSlide, isHovered ? 4000 : 5000);
         return () => clearInterval(timer);
-    }, [nextSlide]);
+    }, [nextSlide, isHovered]);
 
     if (isLoading) {
         return (
@@ -159,7 +188,11 @@ const Hero = () => {
 
     return (
         <div className="hero-section">
-            <div className="carousel-container">
+            <div 
+                className="carousel-container" 
+                onMouseEnter={() => setIsHovered(true)} 
+                onMouseLeave={() => setIsHovered(false)}
+            >
                 <button className="carousel-btn prev" onClick={prevSlide} aria-label="Previous">
                     <ChevronLeft size={22} />
                 </button>
@@ -175,7 +208,7 @@ const Hero = () => {
                                 key={slide._id || index}
                             >
                                 {isLive ? (
-                                    <MediaSlide banner={slide} isActive={currentSlide === index} />
+                                    <MediaSlide banner={slide} isActive={currentSlide === index} isFirstSlide={index === 0} />
                                 ) : (
                                     <div className={`static-wrapper ${currentSlide === index ? 'active' : ''}`}>
                                         {slide.content}

@@ -103,7 +103,7 @@ const DealsSection = () => {
 
 
     return (
-        <div className="deals-container">
+        <div id="deals" className="deals-container">
             <div className="deals-header">
                 <div className="deals-header-text">
                     <span className="deals-label">Hot Picks</span>

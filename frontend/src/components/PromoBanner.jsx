@@ -62,7 +62,7 @@ const PromoBanner = () => {
                         */}
                         <iframe
                             title="Sago Traders Store Location"
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3890.0!2d80.0!3d13.0!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDAwJzAwLjAiTiA4MMKwMDAnMDAuMCJF!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d500432.6194133628!2d77.07695142951499!3d11.506603284527777!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba93db5a4d0c5f1%3A0x269e409018a888a2!2sSAGO%20TRADERS!5e0!3m2!1sen!2sin!4v1775367881980!5m2!1sen!2sin"
                             className="map-iframe"
                             allowFullScreen=""
                             loading="lazy"

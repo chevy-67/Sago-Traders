@@ -110,5 +110,23 @@ const getDeals = async (req, res) => {
   }
 };
 
-module.exports = { getProducts, getProductById, createProduct, updateProduct, deleteProduct, getDeals };
+// GET sidebar filters (distinct names + brands) for a category
+const getFilters = async (req, res) => {
+  try {
+    const { category } = req.query;
+    const filter = {};
+    if (category) filter.category = category;
+
+    const [names, brands] = await Promise.all([
+      Product.distinct('name', filter),
+      Product.distinct('brand', filter),
+    ]);
+
+    res.json({ names: names.sort(), brands: brands.sort() });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};
+
+module.exports = { getProducts, getProductById, createProduct, updateProduct, deleteProduct, getDeals, getFilters };
 
