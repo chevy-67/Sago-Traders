@@ -244,8 +244,6 @@
     align-items: center;
 }
 
-
-
 .about-two-col__img-wrap {
     position: relative;
     border-radius: var(--about-radius);
@@ -265,6 +263,7 @@
     width: 100%;
     height: 380px;
     object-fit: cover;
+    object-position: center;
     display: block;
     transition: transform 0.6s ease;
 }
@@ -301,8 +300,6 @@
     font-weight: 900;
     color: var(--about-gold);
 }
-
-
 
 .about-two-col__list {
     margin: 24px 0 0;
@@ -479,93 +476,111 @@
 
 /* ---------- TEAM CARDS ---------- */
 .about-team-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 32px;
     margin-top: 40px;
 }
 
 .about-team-card {
+    flex: 1 1 320px;
+    max-width: 380px;
     background: var(--about-white);
-    border-radius: var(--about-radius);
+    border-radius: var(--about-radius-sm);
     overflow: hidden;
-    border: 1px solid var(--about-border);
-    box-shadow: var(--about-shadow);
+    border: none;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
     transition: var(--about-transition);
-    text-align: center;
+    text-align: left;
+    padding: 16px;
 }
 
 .about-team-card:hover {
     transform: translateY(-8px);
-    box-shadow: var(--about-shadow-hover);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
 }
 
+/* ── Photo wrap ── */
 .about-team-card__img-wrap {
     position: relative;
-    height: 200px;
+    aspect-ratio: 1 / 1.05;
     overflow: hidden;
-    background: linear-gradient(135deg, var(--about-cream), #ffe8d6);
+    background: var(--about-grey);
+    border-radius: 4px;
 }
 
+/* Real photo — fills the wrap, keeps face visible */
 .about-team-card__avatar {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border: 4px solid white;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    object-position: center top;
+    display: block;
+    transition: transform 0.5s ease;
 }
 
-.about-team-card__avatar-placeholder {
+.about-team-card:hover .about-team-card__avatar {
+    transform: scale(1.05);
+}
+
+/* Fallback shown only when image fails to load */
+.about-team-card__fallback {
+    display: none;               /* hidden by default; JS reveals it on error */
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--about-orange), var(--about-brown));
-    display: flex;
+    inset: 0;
+    background: linear-gradient(135deg, var(--about-grey), #e5e7eb);
     align-items: center;
     justify-content: center;
-    font-size: 2.4rem;
+    font-size: 3rem;
     font-weight: 800;
-    color: white;
-    border: 4px solid white;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    color: var(--about-text-muted);
+    letter-spacing: -0.02em;
 }
 
+/* Removing old stripes */
 .about-team-card__img-stripe {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--about-orange), var(--about-gold));
+    display: none;
+}
+
+.about-team-card__img-wrap::after {
+    display: none;
 }
 
 .about-team-card__body {
-    padding: 20px 20px 28px;
+    padding: 20px 4px 8px;
 }
 
 .about-team-card__name {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--about-brown);
-    margin: 0 0 4px;
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--about-text);
+    margin: 0 0 6px;
 }
 
 .about-team-card__role {
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     font-weight: 600;
-    color: var(--about-orange);
-    letter-spacing: 0.08em;
+    color: var(--about-text-muted);
+    letter-spacing: 0.05em;
     text-transform: uppercase;
-    margin: 0;
+    margin: 0 0 8px;
+}
+
+.about-team-card__mobile {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--about-text-muted);
+    margin: 4px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px;
+    opacity: 0.85;
+}
+
+.about-team-card__mobile-icon {
+    font-size: 0.8rem;
 }
 
 /* ---------- CONTACT BAND ---------- */
@@ -675,8 +690,8 @@
         grid-template-columns: 1fr 1fr;
     }
 
-    .about-team-grid {
-        grid-template-columns: 1fr 1fr;
+    .about-team-card {
+        max-width: 100%;
     }
 
     .about-stats-strip__inner {
@@ -736,8 +751,9 @@
         grid-template-columns: 1fr;
     }
 
-    .about-team-grid {
-        grid-template-columns: 1fr;
+    .about-team-card {
+        flex: 1 1 100%;
+        max-width: 100%;
     }
 
     .about-mv-card {

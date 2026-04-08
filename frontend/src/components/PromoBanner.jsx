@@ -4,7 +4,7 @@ import '../styles/PromoBanner.css';
 
 // ──────────────────────────────────────────────
 //  Replace the src below with your store image
-//  e.g.: import storeImg from '../assets/images/store/front.jpg';
+import storeImg from '../assets/images/Logo/Brands/Company Logo.jpeg';
 //  then swap the placeholder <div> with <img src={storeImg} ... />
 // ──────────────────────────────────────────────
 // import storeImg from '../assets/images/store/front.jpg';
@@ -29,17 +29,7 @@ const PromoBanner = () => {
 
                 {/* ── LEFT: Store Picture ── */}
                 <div className="promo-left store-photo-side">
-                    {/* ── STORE PHOTO PLACEHOLDER ──
-                        To add your store picture:
-                        1. Import your image at the top of the file
-                        2. Replace the <div className="store-photo-placeholder"> block
-                           with: <img src={storeImg} alt="Sago Traders Store" className="store-photo-img" />
-                    */}
-                    <div className="store-photo-placeholder">
-                        <div className="placeholder-icon">🏪</div>
-                        <p className="placeholder-text">Add Your Store Photo Here</p>
-                        <span className="placeholder-hint">Replace this placeholder with your store image</span>
-                    </div>
+                    <img src={storeImg} alt="Sago Traders Store" className="store-photo-img" />
 
                     {/* Store name badge */}
                     <div className="store-name-badge">
