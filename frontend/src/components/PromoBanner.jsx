@@ -37,8 +37,8 @@ const PromoBanner = () => {
                     */}
                     <div className="store-photo-placeholder">
                         <div className="placeholder-icon">🏪</div>
-                        <p className="placeholder-text">Add Your Store Photo Here</p>
-                        <span className="placeholder-hint">Replace this placeholder with your store image</span>
+                        <p className="placeholder-text">Photos</p>
+                        <span className="placeholder-hint">SaGo Traders</span>
                     </div>
 
                     {/* Store name badge */}
@@ -62,7 +62,7 @@ const PromoBanner = () => {
                         */}
                         <iframe
                             title="Sago Traders Store Location"
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d500432.6194133628!2d77.07695142951499!3d11.506603284527777!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba93db5a4d0c5f1%3A0x269e409018a888a2!2sSAGO%20TRADERS!5e0!3m2!1sen!2sin!4v1775367881980!5m2!1sen!2sin"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d870.7708490734053!2d77.40222455750978!3d11.50667695923838!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba93d9d7c9d927d%3A0x6aa05fa325de030c!2sSaGo%20kattumanam%20and%20Traders!5e0!3m2!1sen!2sin!4v1775664971350!5m2!1sen!2sin"
                             className="map-iframe"
                             allowFullScreen=""
                             loading="lazy"

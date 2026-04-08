@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import ProductCard from './ProductCard';
 import '../styles/DealsSection.css';
 
-const API_BASE = 'http://localhost:2004/api/products';
+const API_BASE = `${import.meta.env.VITE_PROD_URL}/api/products`;
 
 const DealsSection = () => {
     const scrollRef = useRef(null);
