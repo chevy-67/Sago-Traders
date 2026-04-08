@@ -93,8 +93,9 @@ const SearchResults = () => {
                 </div>
 
                 {loading ? (
-                    <div className="loading-spinner">
-                        <p>Loading products...</p>
+                    <div className="pd-loader">
+                        <div className="pd-spinner" />
+                        <p>Loading products…</p>
                     </div>
                 ) : error && products.length === 0 ? (
                     <div className="no-products">
