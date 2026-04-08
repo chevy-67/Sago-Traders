@@ -32,7 +32,7 @@ const Footer = () => {
                         <a href="https://www.facebook.com/p/Sago-kattumanam-traders-100064317240132/" target="_blank" rel="noopener noreferrer">
                             <Facebook className="social-icon" />
                         </a>
-                        <a href="https://www.instagram.com/sago__kattumanam/" target="_blank" rel="noopener noreferrer">
+                        <a href="https://www.instagram.com/sago__traders" target="_blank" rel="noopener noreferrer">
                             <Instagram className="social-icon" />
                         </a>
                     </div>
