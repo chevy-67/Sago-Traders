@@ -20,8 +20,7 @@
     "google-auth-library": "^10.6.2",
     "jsonwebtoken": "^9.0.3",
     "mongodb": "^7.1.0",
-    "mongoose": "^9.3.0",
-    "razorpay": "^2.9.6"
+    "mongoose": "^9.3.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"

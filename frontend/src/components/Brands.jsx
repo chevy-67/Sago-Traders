@@ -1,16 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; // triggering HMR
+import havellsLogo from '../assets/images/Logo/Brands/Havells_Logo.svg';
+import asianpaints from '../assets/images/Logo/Brands/asian-paint-2.svg';
+import Philips from '../assets/images/Logo/Brands/Philips_logo_new.svg';
+import Hindware from '../assets/images/Logo/Brands/Hindware.svg';
+import Legrand from '../assets/images/Logo/Brands/Legrand.svg';
+import birlaopus from '../assets/images/Logo/Brands/birlaopus.svg';
+import Finolex from '../assets/images/Logo/Brands/Finolex_Logo.svg';
+import WaterTec from '../assets/images/Logo/Brands/WaterTec_logo.svg';
+import Ultratec from '../assets/images/Logo/Brands/UltraTech_Cement_Ltd logo.svg';
 import '../styles/Brands.css';
 
 const adminSettings = {
     showSection: true,
     title: 'Brands We Trust',
     brands: [
-        { name: 'Havells', url: 'https://placehold.co/150x70/ffffff/DC7835?text=Havells&font=inter' },
-        { name: 'Philips', url: 'https://placehold.co/150x70/ffffff/003a70?text=Philips&font=inter' },
-        { name: 'Hindware', url: 'https://placehold.co/150x70/ffffff/b22222?text=Hindware&font=inter' },
-        { name: 'Asian Paints', url: 'https://placehold.co/150x70/ffffff/e85d04?text=AsianPaints&font=inter' },
-        { name: 'Birla Opus', url: 'https://placehold.co/150x70/ffffff/228b22?text=BirlaOpus&font=inter' },
-        { name: 'Schneider', url: 'https://placehold.co/150x70/ffffff/3b5998?text=Schneider&font=inter' },
+        { name: 'Havells', url: havellsLogo },
+        { name: 'Asian Paints', url: asianpaints },
+        { name: 'Philips', url: Philips },
+        { name: 'Hindware', url: Hindware },
+        { name: 'Legrand', url: Legrand },
+        { name: 'Birla Opus', url: birlaopus },
+        { name: 'Finolex', url: Finolex },
+        {name:'WaterTec', url:WaterTec},
+        {name:'UltraTech', url:Ultratec}
     ]
 };
 

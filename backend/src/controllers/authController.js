@@ -66,11 +66,15 @@ exports.googleLogin = async (req, res) => {
 };
 
 exports.getMe = async (req, res) => {
-  const user = await User.findById(req.user.userId).select("-__v");
+  const user = await User.findById(req.user.userId).select("-__v").lean();
 
   if (!user) {
     return res.status(404).json({ message: "User not found" });
   }
+
+  const Coupon = require('../models/Coupon');
+  const coupons = await Coupon.find({ user: user._id }).sort({ createdAt: -1 });
+  user.coupons = coupons;
 
   res.json(user);
 };

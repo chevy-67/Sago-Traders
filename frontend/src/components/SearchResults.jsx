@@ -86,22 +86,23 @@ const SearchResults = () => {
                 </div>
             </aside>
 
-            <main className="products-container">
+            <main className="main-content">
                 <div className="products-header">
                     <h3>Search Results for "{query}"</h3>
                     {!loading && <p className="product-count">{products.length} products found</p>}
                 </div>
 
                 {loading ? (
-                    <div className="loading-spinner">
-                        <p>Loading products...</p>
+                    <div className="pd-loader">
+                        <div className="pd-spinner" />
+                        <p>Loading products…</p>
                     </div>
                 ) : error && products.length === 0 ? (
                     <div className="no-products">
                         <p>{error}</p>
                     </div>
                 ) : (
-                    <div className="products-grid">
+                    <div className="product-grid">
                         {products.map((product) => (
                             <Link key={product._id} to={`/product/${product._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                                 <ProductCard key={product._id} product={product} />

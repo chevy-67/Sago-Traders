@@ -24,6 +24,16 @@
     pointer-events: none;
 }
 
+.features-heading {
+    text-align: center;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 800;
+    margin-bottom: 30px;
+    color: white;
+    position: relative;
+    z-index: 1;
+}
+
 .features-inner {
     width: 100%;
     margin: 0;

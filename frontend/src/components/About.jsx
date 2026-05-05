@@ -3,6 +3,21 @@ import '../styles/About.css';
 
 /* ─── DATA ─────────────────────────────────────────────── */
 
+const TEAM = [
+    {
+        img: '/assets/images/Human/S.jpeg',
+        name: 'G.Sakthimohan BE',
+        role: 'Founder & Managing Director',
+        mobile: '8778866080',
+    },
+    {
+        img: '/assets/images/Human/G.jpeg',
+        name: 'T.Gokulnath ME',
+        role: 'Founder & Managing Director',
+        mobile: '8807710937',
+    },
+];
+
 const STATS = [
     { number: '15+', label: 'Years of Excellence' },
     { number: '5,000+', label: 'Products in Stock' },
@@ -43,20 +58,6 @@ const VALUES = [
     },
 ];
 
-const TEAM = [
-    {
-        initials: 'Er',
-        name: 'T.Gokulnath',
-        role: 'Founder & Managing Director',
-    },
-    {
-        initials: 'Er',
-        name: 'G.Sakthimohan',
-        role: 'Founder & Managing Director',
-    },
-
-];
-
 const STORY_POINTS = [
     'Founded in 2009 with a single showroom in Bangalowpudur, Erode.',
     'Expanded to over 5,000 SKUs spanning structural, finishing, and electrical categories.',
@@ -70,27 +71,7 @@ const About = () => {
     return (
         <div className="about-page">
 
-            {/* ───── HERO ───── */}
-            <section className="about-hero">
-                <div className="about-hero__bg-overlay" />
-                <div className="about-hero__pattern" />
-                <div className="about-hero__content">
-                    <span className="about-hero__badge">
-                        <span className="about-hero__badge-dot" />
-                        Established 2009 · Bangalowpudur, Erode
-                    </span>
-                    <h1 className="about-hero__title">
-                        Building Tamil Nadu's&nbsp;Future,<br />
-                        <span>One Material at a Time.</span>
-                    </h1>
-                    <p className="about-hero__subtitle">
-                        Sago Traders is your trusted specialist for hardware and construction
-                        materials — combining an industry-wide product range with the
-                        personalised service of a neighbourhood partner.
-                    </p>
-                    <div className="about-hero__divider" />
-                </div>
-            </section>
+
 
             {/* ───── STATS STRIP ───── */}
             <div className="about-stats-strip">
@@ -101,6 +82,45 @@ const About = () => {
                             <div className="about-stat__label">{s.label}</div>
                         </div>
                     ))}
+                </div>
+            </div>
+
+            {/* ───── TEAM ───── */}
+            <div className="about-section--cream">
+                <div className="about-section">
+                    <span className="about-section__label">The People Behind It</span>
+                    <h2 className="about-section__title">Meet Our Leadership</h2>
+                    <div className="about-section__divider" />
+                    <div className="about-team-grid">
+                        {TEAM.map((member) => (
+                            <div className="about-team-card" key={member.name}>
+                                <div className="about-team-card__img-wrap">
+                                    <img
+                                        src={member.img}
+                                        alt={member.name}
+                                        className="about-team-card__avatar"
+                                        onError={(e) => {
+                                            e.target.style.display = 'none';
+                                            const fallback = e.target.parentElement.querySelector('.about-team-card__fallback');
+                                            if (fallback) fallback.style.display = 'flex';
+                                        }}
+                                    />
+                                    <div className="about-team-card__fallback">
+                                        {member.name.charAt(0)}
+                                    </div>
+                                    <div className="about-team-card__img-stripe" />
+                                </div>
+                                <div className="about-team-card__body">
+                                    <h3 className="about-team-card__name">{member.name}</h3>
+                                    <p className="about-team-card__role">{member.role}</p>
+                                    <p className="about-team-card__mobile">
+                                        <span className="about-team-card__mobile-icon">📞</span>
+                                        {member.mobile}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
 
@@ -117,7 +137,7 @@ const About = () => {
                                 onError={(e) => {
                                     e.target.style.display = 'none';
                                     e.target.parentElement.style.background =
-                                        'linear-gradient(135deg, #3E2723 0%, #DC7835 100%)';
+                                        'linear-gradient(135deg, #3E2723 0%, #E85D04 100%)';
                                 }}
                             />
                             <div className="about-two-col__corner-badge">
@@ -205,31 +225,6 @@ const About = () => {
                 </div>
             </div>
 
-            {/* ───── TEAM ───── */}
-            <div className="about-section--cream">
-                <div className="about-section">
-                    <span className="about-section__label">The People Behind It</span>
-                    <h2 className="about-section__title">Meet Our Leadership</h2>
-                    <div className="about-section__divider" />
-                    <div className="about-team-grid">
-                        {TEAM.map((member) => (
-                            <div className="about-team-card" key={member.name}>
-                                <div className="about-team-card__img-wrap">
-                                    <div className="about-team-card__avatar-placeholder">
-                                        {member.initials}
-                                    </div>
-                                    <div className="about-team-card__img-stripe" />
-                                </div>
-                                <div className="about-team-card__body">
-                                    <h3 className="about-team-card__name">{member.name}</h3>
-                                    <p className="about-team-card__role">{member.role}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-
             {/* ───── CONTACT BAND ───── */}
             <div className="about-contact-band">
                 <div className="about-contact-band__inner">
@@ -242,7 +237,7 @@ const About = () => {
                         <div className="about-contact-card">
                             <span className="about-contact-card__icon">📞</span>
                             <span className="about-contact-card__label">Phone</span>
-                            <span className="about-contact-card__value">+91 8807710937</span>
+                            <span className="about-contact-card__value">+91 8807810937</span>
                         </div>
                         <div className="about-contact-card">
                             <span className="about-contact-card__icon">✉️</span>

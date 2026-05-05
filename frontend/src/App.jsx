@@ -26,6 +26,8 @@ import HeroBannerManager from './components/HeroBannerManager';
 import AdminOrders from './components/AdminOrders';
 import DemandAnalytics from './components/DemandAnalytics';
 import Cart from './components/Cart';
+import SpinWheelModal from './components/SpinWheel/SpinWheelModal';
+import AdminSpinWheelManager from './components/SpinWheel/AdminSpinWheelManager';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
 
@@ -40,6 +42,7 @@ const Home = () => {
       <DealsSection />
       <Features />
       <Brands />
+      <SpinWheelModal />
     </>
   );
 };
@@ -106,6 +109,7 @@ function App() {
                 <Route path="hero" element={<HeroBannerManager />} />
                 <Route path="orders" element={<AdminOrders />} />
                 <Route path="demand-analytics" element={<DemandAnalytics />} />
+                <Route path="spin-wheel" element={<AdminSpinWheelManager />} />
               </Route>
             </Routes>
           </div>

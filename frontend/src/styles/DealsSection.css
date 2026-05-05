@@ -41,11 +41,43 @@
 }
 
 /* ─── Scroll Arrow Buttons ─── */
+.deals-header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.view-all-btn {
+    padding: 8px 20px;
+    border-radius: 99px;
+    border: 2px solid var(--primary-orange, #E85D04);
+    background: transparent;
+    color: var(--primary-orange, #E85D04);
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    transition: all 0.25s ease;
+}
+
+.view-all-btn:hover {
+    background: var(--primary-orange, #E85D04);
+    color: white;
+}
+
 .scroll-arrows {
     display: flex;
     gap: 10px;
     flex-shrink: 0;
 }
+
+/* ─── Shimmer skeleton ─── */
+@keyframes shimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
 
 .arrow-btn {
     background: white;
